@@ -1,5 +1,5 @@
 package it.beer2beer.kiloliters;
-// test comment for github commit test
+// Test comment for github commit test
 
 import java.util.Locale;
 

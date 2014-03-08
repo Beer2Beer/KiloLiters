@@ -45,7 +45,7 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
         final ActionBar actionBar = getActionBar();
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 
-        // Create the adapter that will return a fragment for each of the three
+        // Create the adapter that will return a fragment for each of the four
         // primary sections of the activity.
         mSectionsPagerAdapter = new SectionsPagerAdapter(getFragmentManager());
 
@@ -90,11 +90,21 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
+        switch (item.getItemId()) {
+
+            case R.id.action_settings:
+
+                //qui posso lanciare l'activity associata alle impostazioni (creare la classe)
+                return true;
+
+            case R.id.action_about:
+
+                //qui posso lanciare l'activity associata alle info sull'app (creare la classe)
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
         }
-        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -131,8 +141,8 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
 
         @Override
         public int getCount() {
-            // Show 3 total pages.
-            return 3;
+            // Returns 4 pages
+            return 4;
         }
 
         @Override
@@ -145,6 +155,8 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
                     return getString(R.string.title_section2).toUpperCase(l);
                 case 2:
                     return getString(R.string.title_section3).toUpperCase(l);
+                case 3:
+                    return getString(R.string.title_section4).toUpperCase(l);
             }
             return null;
         }

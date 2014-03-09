@@ -13,6 +13,8 @@ import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.content.Context;
+import android.widget.Toast;
 
 
 public class MainActivity extends Activity implements ActionBar.TabListener {
@@ -89,12 +91,22 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
 
             case R.id.action_settings:
 
+                Context context_settings = getApplicationContext();
+                Toast toast_settings = Toast.makeText(context_settings, "Da implementare", Toast.LENGTH_SHORT);
+                toast_settings.show();
+
                 //qui posso lanciare l'activity associata alle impostazioni (creare la classe)
+
                 return true;
 
             case R.id.action_about:
 
+                Context context_about = getApplicationContext();
+                Toast toast_about = Toast.makeText(context_about, "Da implementare", Toast.LENGTH_SHORT);
+                toast_about.show();
+
                 //qui posso lanciare l'activity associata alle info sull'app (creare la classe)
+
                 return true;
 
             default:

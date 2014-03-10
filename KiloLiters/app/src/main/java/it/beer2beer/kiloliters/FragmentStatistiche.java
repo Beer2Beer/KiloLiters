@@ -11,10 +11,25 @@ import android.os.Bundle;
  */
 public class FragmentStatistiche extends Fragment {
 
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+
+        super.onCreate(savedInstanceState);
+    }
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.view_statistiche, container, false);
         return v;
     }
 
-}
+    /*
+    @Override
+    public void onPause() {
+
+    }
+    */
+
+} //chiusura classe

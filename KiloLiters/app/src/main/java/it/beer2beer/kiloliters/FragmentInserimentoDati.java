@@ -11,9 +11,25 @@ import android.view.ViewGroup;
  */
 public class FragmentInserimentoDati extends Fragment {
 
+     @Override
+     public void onCreate(Bundle savedInstanceState) {
+
+          super.onCreate(savedInstanceState);
+
+          }
+
+
     @Override
-   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.view_inserimento_dati, container, false);
         return v;
     }
-}
+
+    /*
+    @Override
+    public void onPause() {
+
+
+    }
+    */
+} //chiusura classe

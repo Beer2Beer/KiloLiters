@@ -17,26 +17,21 @@ public class FragmentCalcolaBollo extends Fragment {
 
     private String url_ACI = "http://online.aci.it/acinet/calcolobollo/#inizio-pagina";
 
-    /*
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
 
+        super.onCreate(savedInstanceState);
     }
 
-    @Override
-    public void onPause() {
 
 
-    }
-    */
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
 
         super.onCreate(savedInstanceState);
-        Toast toast_caricamento = Toast.makeText(getActivity(), "Caricamento in corso...", Toast.LENGTH_SHORT);
-        toast_caricamento.show();
         View mainView = (View) inflater.inflate(R.layout.view_calcola_bollo, container, false);
         WebView webView = (WebView) mainView.findViewById(R.id.web_view_calcola_bollo); //faccio un cast così uso la funzione findViewById
 
@@ -50,4 +45,16 @@ public class FragmentCalcolaBollo extends Fragment {
         return mainView;
 
     }
-}
+
+   /*
+
+    @Override
+    public void onPause() {
+
+
+
+    }
+    */
+
+
+} //chiusura classe

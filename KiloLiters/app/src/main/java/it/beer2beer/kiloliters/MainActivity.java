@@ -128,6 +128,7 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
 
     @Override
     public void onTabReselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
+
     }
 
     /**
@@ -179,7 +180,8 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
         @Override
         public int getCount() {
             // Returns 4 pages
-            return 4;
+            int fragmentNumber = 4;
+            return fragmentNumber;
         }
 
         @Override

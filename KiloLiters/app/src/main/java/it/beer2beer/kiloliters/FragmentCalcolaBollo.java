@@ -21,10 +21,7 @@ public class FragmentCalcolaBollo extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        if (savedInstanceState != null) {
 
-          int controlla_posizione = savedInstanceState.getInt("salva_view_bollo", 0);
-        }
     }
 
 

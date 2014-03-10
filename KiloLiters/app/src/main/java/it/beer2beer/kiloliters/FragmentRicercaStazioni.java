@@ -37,4 +37,4 @@ public class FragmentRicercaStazioni extends Fragment {
 
     */
 
-} //chiusura classe
+}

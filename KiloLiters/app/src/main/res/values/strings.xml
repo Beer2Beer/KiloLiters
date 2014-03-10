@@ -2,6 +2,7 @@
 <resources>
 
     <string name="app_name">KiloLiters</string>
+    <string name="title_section0">Statistiche Totali</string>
     <string name="title_section1">Statistiche</string>
     <string name="title_section2">Inserimento Dati</string>
     <string name="title_section3">Distributori</string>

@@ -71,6 +71,7 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
                             .setText(mSectionsPagerAdapter.getPageTitle(i))
                             .setTabListener(this));
         }
+        mViewPager.setCurrentItem(2); //setta la tab centrale come predefinita
     }
 
     @Override
@@ -118,7 +119,8 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
         // When the given tab is selected, switch to the corresponding page in
         // the ViewPager.
         mViewPager.setCurrentItem(tab.getPosition());
-        mViewPager.setOffscreenPageLimit(4); //setta il limite per non ricaricare i fragments
+        mViewPager.setOffscreenPageLimit(5); //setta il limite per non ricaricare i fragments
+
     }
 
     @Override
@@ -150,21 +152,25 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
             switch(position) {
 
                 case 0:
-
-                    fragment = new FragmentStatistiche();
+                    fragment = new FragmentStatisticheTotali();
                     break;
 
                 case 1:
 
-                    fragment = new FragmentInserimentoDati();
+                    fragment = new FragmentStatistiche();
                     break;
 
                 case 2:
 
-                    fragment = new FragmentRicercaStazioni();
+                    fragment = new FragmentInserimentoDati();
                     break;
 
                 case 3:
+
+                    fragment = new FragmentRicercaStazioni();
+                    break;
+
+                case 4:
 
                     fragment = new FragmentCalcolaBollo();
                     break;
@@ -180,7 +186,7 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
         @Override
         public int getCount() {
             // Returns 4 pages
-            int fragmentNumber = 4;
+            int fragmentNumber = 5;
             return fragmentNumber;
         }
 
@@ -189,12 +195,14 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
             Locale l = Locale.getDefault();
             switch (position) {
                 case 0:
-                    return getString(R.string.title_section1).toUpperCase(l);
+                    return getString(R.string.title_section0).toUpperCase(l);
                 case 1:
-                    return getString(R.string.title_section2).toUpperCase(l);
+                    return getString(R.string.title_section1).toUpperCase(l);
                 case 2:
-                    return getString(R.string.title_section3).toUpperCase(l);
+                    return getString(R.string.title_section2).toUpperCase(l);
                 case 3:
+                    return getString(R.string.title_section3).toUpperCase(l);
+                case 4:
                     return getString(R.string.title_section4).toUpperCase(l);
             }
             return null;

@@ -6,7 +6,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
 import android.view.LayoutInflater;
-import android.widget.Toast;
 
 
 /**
@@ -22,9 +21,11 @@ public class FragmentCalcolaBollo extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
+        if (savedInstanceState != null) {
+
+          int controlla_posizione = savedInstanceState.getInt("salva_view_bollo", 0);
+        }
     }
-
-
 
 
     @Override
@@ -46,11 +47,15 @@ public class FragmentCalcolaBollo extends Fragment {
 
     }
 
-   /*
+    /*
+    @Override
+    public void onSaveInstanceState(Bundle outState){
+
+    }
+
 
     @Override
     public void onPause() {
-
 
 
     }

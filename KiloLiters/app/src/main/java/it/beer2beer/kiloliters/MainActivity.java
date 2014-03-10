@@ -16,7 +16,6 @@ import android.view.MenuItem;
 import android.content.Context;
 import android.widget.Toast;
 
-
 public class MainActivity extends Activity implements ActionBar.TabListener {
 
     /**
@@ -119,10 +118,12 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
         // When the given tab is selected, switch to the corresponding page in
         // the ViewPager.
         mViewPager.setCurrentItem(tab.getPosition());
+        mViewPager.setOffscreenPageLimit(4); //setta il limite per non ricaricare i fragments
     }
 
     @Override
     public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
+
     }
 
     @Override

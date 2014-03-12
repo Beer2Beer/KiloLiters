@@ -5,20 +5,33 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.GoogleMapOptions;
+import com.google.android.gms.maps.MapFragment;
 
 /**
  * Created by federico on 08/03/14.
  */
-public class FragmentRicercaStazioni extends Fragment {
+public class FragmentRicercaStazioni extends Fragment  {
 
+    GoogleMap googleMap;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-         }
 
 
+        try {
+            // Loading map
+            onStart();
+            initializeMap();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
 
 
     @Override
@@ -28,13 +41,27 @@ public class FragmentRicercaStazioni extends Fragment {
 
     }
 
-
-    /*
-
+/*
     @Override
     public void onPause() {
     }
+*/
 
-    */
+    public void initializeMap() {
+
+        if (googleMap == null) {
+            GoogleMapOptions mapOptions = new GoogleMapOptions();
+
+            mapOptions.mapType(GoogleMap.MAP_TYPE_NORMAL)
+                    .compassEnabled(true)
+                    .rotateGesturesEnabled(true);
+
+            googleMap.setMyLocationEnabled(true);
+
+            googleMap = ((MapFragment) getFragmentManager().findFragmentById(
+                    R.id.map)).getMap();
+
+        }
+    }
 
 }

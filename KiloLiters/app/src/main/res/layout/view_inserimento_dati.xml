@@ -1,8 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content" >
+
+
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent" android:layout_height="match_parent">
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
 
 
     <TextView
@@ -10,7 +17,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/actual_km"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="61dp"
+        android:layout_marginTop="40dp"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentLeft="true"
@@ -86,7 +93,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/station"
         android:layout_below="@id/price"
-        android:text="Distributore"
+        android:text="Marca distributore"
         android:layout_marginTop="20dp"/>
 
     <EditText
@@ -99,13 +106,34 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"/>
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/station_address"
+        android:layout_below="@id/station"
+        android:text="Indirizzo"
+        android:layout_marginTop="20dp"/>
 
-
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="numberDecimal"
+        android:ems="10"
+        android:id="@+id/insert_station_address"
+        android:layout_below="@id/station"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:hint="(campo opzionale)"
+        />
     <Button
         android:layout_width="250dp"
         android:layout_height="50dp"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:id="@+id/button"
-        android:text="Salva rifornimento"/>
+        android:id="@+id/save_data_button"
+        android:text="Salva rifornimento"
+        android:layout_marginTop="370dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
 </RelativeLayout>
+
+</ScrollView>

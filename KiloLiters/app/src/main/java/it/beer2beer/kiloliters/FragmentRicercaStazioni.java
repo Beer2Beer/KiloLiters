@@ -12,7 +12,7 @@ import com.google.android.gms.maps.MapFragment;
 /**
  * Created by federico on 08/03/14.
  */
-public class FragmentRicercaStazioni extends Fragment  {
+public class FragmentRicercaStazioni extends Fragment {
 
     GoogleMap googleMap;
 
@@ -58,9 +58,14 @@ public class FragmentRicercaStazioni extends Fragment  {
 
             googleMap.setMyLocationEnabled(true);
 
-            googleMap = ((MapFragment) getFragmentManager().findFragmentById(
-                    R.id.map)).getMap();
+            try {
+                googleMap = ((MapFragment) getFragmentManager().findFragmentById(
+                        R.id.map)).getMap();
+            } catch (Exception e) {
 
+                throw new NullPointerException("Errore di inizializzazione mappe");
+
+            }
         }
     }
 

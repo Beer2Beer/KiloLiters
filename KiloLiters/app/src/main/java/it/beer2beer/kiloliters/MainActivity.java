@@ -185,7 +185,7 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
 
         @Override
         public int getCount() {
-            // Returns 4 pages
+            // Returns 5 pages
             int fragmentNumber = 5;
             return fragmentNumber;
         }

@@ -59,8 +59,7 @@ public class FragmentRicercaStazioni extends Fragment {
             googleMap.setMyLocationEnabled(true);
 
             try {
-                googleMap = ((MapFragment) getFragmentManager().findFragmentById(
-                        R.id.map)).getMap();
+                googleMap = ((MapFragment) getFragmentManager().findFragmentById(R.id.map)).getMap();
             } catch (Exception e) {
 
                 throw new NullPointerException("Errore di inizializzazione mappe");

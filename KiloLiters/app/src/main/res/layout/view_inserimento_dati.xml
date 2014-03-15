@@ -99,7 +99,7 @@
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:inputType="numberDecimal"
+        android:inputType="text"
         android:ems="10"
         android:id="@+id/insert_station"
         android:layout_below="@id/price"
@@ -109,22 +109,42 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/station_address"
+        android:id="@+id/city"
         android:layout_below="@id/station"
-        android:text="Indirizzo"
+        android:text="Città"
+        android:layout_marginTop="20dp"
+        />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="text"
+        android:ems="10"
+        android:id="@+id/insert_city"
+        android:layout_below="@id/station"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/description"
+        android:layout_below="@id/city"
+        android:text="Descrizione"
         android:layout_marginTop="20dp"/>
 
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:inputType="numberDecimal"
+        android:inputType="text"
         android:ems="10"
-        android:id="@+id/insert_station_address"
-        android:layout_below="@id/station"
+        android:id="@+id/insert_description"
+        android:layout_below="@id/city"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:hint="(campo opzionale)"
+        android:hint="(es. indirizzo)"
         />
+
     <Button
         android:layout_width="250dp"
         android:layout_height="50dp"

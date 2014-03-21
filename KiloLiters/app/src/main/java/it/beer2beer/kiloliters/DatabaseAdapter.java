@@ -121,13 +121,23 @@ public class DatabaseAdapter {
         return mCursor;
     }
 
-    /* update a refuel
-    public boolean updateRefuel(database camps) {
-        ContentValues args = new ContentValues();
-        args.put(KEY_CAMP, camp);
+
+    public boolean updateRefuel(String data, String ora, int chilometri,
+                                float prezzo, float litri, float importo,
+                                String distributore, String citta, String descrizione) {
+        ContentValues values = new ContentValues();
+        values.put(KEY_DATA, data);
+        values.put(KEY_ORA, ora);
+        values.put(KEY_CHILOMETRI, chilometri);
+        values.put(KEY_PREZZO, prezzo);
+        values.put(KEY_LITRI, litri);
+        values.put(KEY_IMPORTO, importo);
+        values.put(KEY_DISTRIBUTORE, distributore);
+        values.put(KEY_CITTA, citta);
+        values.put(KEY_DESCRIZIONE, descrizione);
         return db.update(DATABASE_TABLE, args,
                 KEY_PK + "=" + pk, null) > 0;
-    }*/
+    }
 
 
 

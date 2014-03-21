@@ -37,8 +37,7 @@ public class FragmentCalcolaBollo extends Fragment {
 
         super.onCreate(savedInstanceState);
         View mainView = (View) inflater.inflate(R.layout.view_calcola_bollo, container, false);
-        webView = (WebView) mainView.findViewById(R.id.web_view_calcola_bollo); //faccio un cast così uso la funzione findViewById
-        WebSettings.ZoomDensity zoomDensity = WebSettings.ZoomDensity.FAR;
+        webView = (WebView) mainView.findViewById(R.id.web_view_calcola_bollo);
 
         webView.setInitialScale(1);
         webView.getSettings().setJavaScriptEnabled(true);

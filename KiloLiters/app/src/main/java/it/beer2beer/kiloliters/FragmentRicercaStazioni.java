@@ -1,18 +1,22 @@
 package it.beer2beer.kiloliters;
 
+import android.app.AlertDialog;
 import android.app.Fragment;
+import android.app.FragmentManager;
 import android.content.Context;
 import android.location.Location;
 import android.location.LocationListener;
 
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.support.v4.view.ViewPager;
 import android.view.InflateException;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
+import android.app.AlertDialog;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -40,7 +44,9 @@ public class FragmentRicercaStazioni extends Fragment implements LocationListene
   //  private LocationClient locationClient;
     private LocationManager locationManager;
     MapFragment googleMap;
-
+    LatLng lastLatLng;
+    double lat;
+    double lng;
     View view;
 
     public FragmentRicercaStazioni() {
@@ -146,11 +152,26 @@ public class FragmentRicercaStazioni extends Fragment implements LocationListene
 
     }
 
+
     private void updatePlaces(){
         //get location manager
+
+
+
         try {
 
             locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
+
+            if (!locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER) &&
+                    !locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+
+                if (googleMap.getUserVisibleHint() == true) {
+                    Context context = getActivity();
+                    Toast t = Toast.makeText(context, "Abilitare servizi di localizzazione", Toast.LENGTH_LONG);
+                    t.show();
+                }
+
+            }
 
         } catch (NullPointerException e) {
 
@@ -158,11 +179,36 @@ public class FragmentRicercaStazioni extends Fragment implements LocationListene
         }
 
         //get last location
-        Location lastKnownLocation = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-        double lat = lastKnownLocation.getLatitude();
-        double lng = lastKnownLocation.getLongitude();
-        //create LatLng
-        LatLng lastLatLng = new LatLng(lat, lng);
+        if (locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER) ||
+                locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+
+            if (locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
+                Location lastKnownLocation = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+                lat = lastKnownLocation.getLatitude();
+                lng = lastKnownLocation.getLongitude();
+
+                lastLatLng = new LatLng(lat, lng);
+
+                locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 30000, 100, this);
+
+                googleMap.getMap().animateCamera(CameraUpdateFactory.newLatLng(lastLatLng), 3000, null);
+            }
+
+            else if (locationManager.isProviderEnabled((LocationManager.GPS_PROVIDER))) {
+
+                Location lastKnownLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+                lat = lastKnownLocation.getLatitude();
+                lng = lastKnownLocation.getLongitude();
+                //create LatLng
+                lastLatLng = new LatLng(lat, lng);
+
+                locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 30000, 100, this);
+
+                googleMap.getMap().animateCamera(CameraUpdateFactory.newLatLng(lastLatLng), 3000, null);
+
+            }
+
+        }
 
         //remove any existing marker
      //   if(userMarker!=null) userMarker.remove();
@@ -176,7 +222,7 @@ public class FragmentRicercaStazioni extends Fragment implements LocationListene
        */
 
         //move to location
-        googleMap.getMap().animateCamera(CameraUpdateFactory.newLatLng(lastLatLng), 3000, null);
+
 
         //build places query string
         String placesSearchStr = "https://maps.googleapis.com/maps/api/place/nearbysearch/" +
@@ -188,7 +234,6 @@ public class FragmentRicercaStazioni extends Fragment implements LocationListene
         //execute query
       //  new GetPlaces().execute(placesSearchStr);
 
-        locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 30000, 100, this);
     }
 
     @Override
@@ -211,4 +256,15 @@ public class FragmentRicercaStazioni extends Fragment implements LocationListene
             locationManager.removeUpdates(this);
         }
     }
+
+/*
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isVisibleToUser) {
+
+        }
+        else {  }
+    }
+*/
 }

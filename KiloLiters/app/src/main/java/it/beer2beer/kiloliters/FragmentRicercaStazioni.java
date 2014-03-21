@@ -1,13 +1,18 @@
 package it.beer2beer.kiloliters;
 
 import android.app.Fragment;
+import android.content.Context;
 import android.location.Location;
 import android.location.LocationListener;
 
+import android.location.LocationManager;
 import android.os.Bundle;
+import android.view.InflateException;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -21,20 +26,19 @@ import com.google.android.gms.maps.GoogleMapOptions;
 
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.MapsInitializer;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 
 /**
  * Created by federico on 08/03/14.
  */
-public class FragmentRicercaStazioni extends Fragment
-        implements
-        GooglePlayServicesClient.ConnectionCallbacks,
-        GooglePlayServicesClient.OnConnectionFailedListener,
-        LocationListener {
+public class FragmentRicercaStazioni extends Fragment implements LocationListener {
 
-    private LocationRequest locationRequest;
-    private LocationClient locationClient;
+  //  private LocationRequest locationRequest;
+  //  private LocationClient locationClient;
+    private LocationManager locationManager;
     MapFragment googleMap;
 
     View view;
@@ -52,46 +56,54 @@ public class FragmentRicercaStazioni extends Fragment
                 parent.removeView(view);
         }
     */
-         try {
 
             view = inflater.inflate(R.layout.view_ricerca_stazioni, container,
                     false);
-            try {
+            if (googleMap == null) {
+                try {
 
-                googleMap = ((MapFragment) this.getActivity()
-                        .getFragmentManager().findFragmentById(R.id.map));
+                    googleMap = ((MapFragment) this.getActivity()
+                            .getFragmentManager().findFragmentById(R.id.map));
 
-            }catch (Exception e){
+                } catch (Exception e) {
 
-                e.printStackTrace();
+                    e.printStackTrace();
+                }
+            }
+            if (googleMap != null) {
+
+                GoogleMapOptions mapOptions = new GoogleMapOptions();
+
+                mapOptions.rotateGesturesEnabled(true);
+                googleMap.getMap().setMyLocationEnabled(true);
+                googleMap.getMap().getUiSettings().setAllGesturesEnabled(true);
+                googleMap.getMap().getUiSettings().setMyLocationButtonEnabled(true);
+                googleMap.getMap().getUiSettings().setZoomControlsEnabled(true);
+                googleMap.getMap();
+                updatePlaces();
             }
 
-
-            GoogleMapOptions mapOptions = new GoogleMapOptions();
-
-            mapOptions.rotateGesturesEnabled(true);
-            mapOptions.compassEnabled(true);
-            googleMap.getMap().setMyLocationEnabled(true);
-            googleMap.getMap().getUiSettings().setAllGesturesEnabled(true);
-            googleMap.getMap().getUiSettings().setMyLocationButtonEnabled(true);
-            googleMap.getMap().getUiSettings().setZoomControlsEnabled(true);
-            googleMap.getMap();
-
-            MapsInitializer.initialize(this.getActivity());
-
+            //     MapsInitializer.initialize(this.getActivity());
+    /*
         } catch (GooglePlayServicesNotAvailableException e) {
-             Toast.makeText(getActivity(), "Google Play Services missing !",
+             Toast.makeText(getActivity(), "Google Play Services mancanti",
                      Toast.LENGTH_LONG).show();
-         }
-        /*
-         } catch (InflateException e) {
-            Toast.makeText(getActivity(), "Problems inflating the view !",
+        } catch (InflateException e) {
+            Toast.makeText(getActivity(), "Problemi con la view",
                     Toast.LENGTH_LONG).show();
         } catch (NullPointerException e) {
-            Toast.makeText(getActivity(), "Google Play Services missing !",
+            Toast.makeText(getActivity(), "Google Play Services mancanti",
                     Toast.LENGTH_LONG).show();
         }
-        */
+            */
+
+        view.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean b) {
+                ((InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(
+                        view.getWindowToken(), 0);
+            }
+        });
 
         return view;
     }
@@ -101,27 +113,22 @@ public class FragmentRicercaStazioni extends Fragment
 
         super.onCreate(savedInstanceState);
 
-        locationRequest = LocationRequest.create();
-        locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-
-        try{
-
-            locationClient = new LocationClient(this.getActivity().getApplicationContext(), this, this);
-
-        }catch (Exception e) {
-
-            e.printStackTrace();
-        }
-
-        locationClient.connect();
     }
 
     @Override
     public void onLocationChanged(Location location) {
 
-        CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(
-                new LatLng(location.getLatitude(), location.getLongitude()), 15);
+        LatLng latLng;
+
+        double latitude = location.getLatitude();
+        double longitude = location.getLongitude();
+
+        latLng = new LatLng(latitude,longitude);
+
+        CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLng(latLng);
+
         googleMap.getMap().animateCamera(cameraUpdate);
+
     }
 
     @Override
@@ -132,27 +139,76 @@ public class FragmentRicercaStazioni extends Fragment
     @Override
     public void onProviderEnabled(String s) {
 
-    }
+        };
 
     @Override
     public void onProviderDisabled(String s) {
 
     }
 
-    @Override
-    public void onConnectionFailed(ConnectionResult arg0) {
+    private void updatePlaces(){
+        //get location manager
+        try {
 
+            locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
+
+        } catch (NullPointerException e) {
+
+            e.printStackTrace();
+        }
+
+        //get last location
+        Location lastKnownLocation = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+        double lat = lastKnownLocation.getLatitude();
+        double lng = lastKnownLocation.getLongitude();
+        //create LatLng
+        LatLng lastLatLng = new LatLng(lat, lng);
+
+        //remove any existing marker
+     //   if(userMarker!=null) userMarker.remove();
+        //create and set marker properties
+      /*
+       userMarker = theMap.addMarker(new MarkerOptions()
+                .position(lastLatLng)
+                .title("You are here")
+                .icon(BitmapDescriptorFactory.fromResource(userIcon))
+                .snippet("Your last recorded location"));
+       */
+
+        //move to location
+        googleMap.getMap().animateCamera(CameraUpdateFactory.newLatLng(lastLatLng), 3000, null);
+
+        //build places query string
+        String placesSearchStr = "https://maps.googleapis.com/maps/api/place/nearbysearch/" +
+                "json?location="+lat+","+lng+
+                "&radius=1000&sensor=true" +
+                "&types=gas_station"+
+                "&key=AIzaSyA7ttpFSTYMgDsan6GvsznzN-xkhN1M8n0";//ADD KEY
+
+        //execute query
+      //  new GetPlaces().execute(placesSearchStr);
+
+        locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 30000, 100, this);
     }
 
     @Override
-    public void onConnected(Bundle connectionHint) {
-        locationClient.getLastLocation();
-      // lc.requestLocationUpdates(lr, (com.google.android.gms.location.LocationListener) lc);
+    public void onPause(){
 
+        super.onPause();
+        if (googleMap !=null) {
+
+            locationManager.removeUpdates(this);
+
+        }
     }
 
     @Override
-    public void onDisconnected() {
+    public void onDestroy() {
 
+        super.onDestroy();
+        if(googleMap != null) {
+
+            locationManager.removeUpdates(this);
+        }
     }
 }

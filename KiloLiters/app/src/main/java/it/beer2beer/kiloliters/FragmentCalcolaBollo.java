@@ -1,9 +1,13 @@
 package it.beer2beer.kiloliters;
 
 import android.app.Fragment;
+import android.content.Context;
 import android.os.Bundle;
+import android.provider.ContactsContract;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.webkit.WebView;
 import android.view.LayoutInflater;
 
@@ -24,6 +28,7 @@ public class FragmentCalcolaBollo extends Fragment {
 
     }
 
+    WebView webView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -31,7 +36,7 @@ public class FragmentCalcolaBollo extends Fragment {
 
         super.onCreate(savedInstanceState);
         View mainView = (View) inflater.inflate(R.layout.view_calcola_bollo, container, false);
-        WebView webView = (WebView) mainView.findViewById(R.id.web_view_calcola_bollo); //faccio un cast così uso la funzione findViewById
+        webView = (WebView) mainView.findViewById(R.id.web_view_calcola_bollo); //faccio un cast così uso la funzione findViewById
 
         webView.getSettings().setJavaScriptEnabled(true);
         webView.getSettings().setBuiltInZoomControls(true);
@@ -40,23 +45,47 @@ public class FragmentCalcolaBollo extends Fragment {
 
         webView.loadUrl(url_ACI);
 
+        mainView.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean b) {
+                ((InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(
+                        view.getWindowToken(), 0);
+            }
+        });
+
         return mainView;
 
     }
 
-    /*
+
     @Override
     public void onSaveInstanceState(Bundle outState){
-
+        super.onSaveInstanceState(outState);
     }
 
 
     @Override
     public void onPause() {
 
+        super.onPause();
 
     }
-    */
+
+    @Override
+    public void onDestroy() {
+
+        super.onDestroy();
+    }
+/*
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event){
+
+        if((keyCode == KeyEvent.KEYCODE_BACK) && webView.canGoBack()) {
+            webView.goBack();
+            return true;
+        }
 
 
+    };
+*/
 } //chiusura classe

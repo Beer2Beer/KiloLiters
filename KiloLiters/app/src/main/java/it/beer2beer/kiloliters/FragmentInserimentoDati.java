@@ -25,11 +25,17 @@ public class FragmentInserimentoDati extends Fragment {
         return v;
     }
 
-    /*
+
     @Override
     public void onPause() {
 
-
+        super.onPause();
     }
-    */
+
+      @Override
+    public void onDestroy() {
+
+        super.onDestroy();
+    }
+
 } //chiusura classe

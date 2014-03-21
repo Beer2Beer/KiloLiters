@@ -18,11 +18,12 @@
         android:id="@+id/actual_km"
         android:layout_alignParentTop="true"
         android:layout_marginTop="40dp"
+        android:layout_marginLeft="4dp"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:text="Chilometri attuali"/>
+        android:text="@string/actual_km"/>
 
     <EditText
         android:layout_width="wrap_content"
@@ -39,8 +40,9 @@
         android:layout_height="wrap_content"
         android:id="@+id/oil_price"
         android:layout_below="@id/actual_km"
-        android:text="Prezzo carburante"
-        android:layout_marginTop="20dp"/>
+        android:text="@string/oil_price"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="4dp"/>
 
     <EditText
         android:layout_width="wrap_content"
@@ -57,8 +59,9 @@
         android:layout_height="wrap_content"
         android:id="@+id/liters"
         android:layout_below="@id/oil_price"
-        android:text="Litri erogati"
-        android:layout_marginTop="20dp"/>
+        android:text="@string/liters"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="4dp"/>
 
     <EditText
         android:layout_width="wrap_content"
@@ -75,8 +78,9 @@
         android:layout_height="wrap_content"
         android:id="@+id/price"
         android:layout_below="@id/liters"
-        android:text="Importo pagato"
-        android:layout_marginTop="20dp"/>
+        android:text="@string/price"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="4dp"/>
 
     <EditText
         android:layout_width="wrap_content"
@@ -93,8 +97,9 @@
         android:layout_height="wrap_content"
         android:id="@+id/station"
         android:layout_below="@id/price"
-        android:text="Marca distributore"
-        android:layout_marginTop="20dp"/>
+        android:text="@string/station"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="4dp"/>
 
     <EditText
         android:layout_width="wrap_content"
@@ -111,8 +116,9 @@
         android:layout_height="wrap_content"
         android:id="@+id/city"
         android:layout_below="@id/station"
-        android:text="Città"
+        android:text="@string/city"
         android:layout_marginTop="20dp"
+        android:layout_marginLeft="4dp"
         />
 
     <EditText
@@ -130,8 +136,9 @@
         android:layout_height="wrap_content"
         android:id="@+id/description"
         android:layout_below="@id/city"
-        android:text="Descrizione"
-        android:layout_marginTop="20dp"/>
+        android:text="@string/description"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="4dp"/>
 
     <EditText
         android:layout_width="wrap_content"
@@ -142,14 +149,14 @@
         android:layout_below="@id/city"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:hint="(es. indirizzo)"
+        android:hint="@string/insert_description"
         />
 
     <Button
         android:layout_width="250dp"
         android:layout_height="50dp"
         android:id="@+id/save_data_button"
-        android:text="Salva rifornimento"
+        android:text="@string/save_data_button"
         android:layout_marginTop="370dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />

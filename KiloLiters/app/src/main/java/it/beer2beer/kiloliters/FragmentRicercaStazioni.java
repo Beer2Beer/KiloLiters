@@ -32,8 +32,6 @@ import com.google.android.gms.maps.model.LatLng;
 
 public class FragmentRicercaStazioni extends Fragment implements LocationListener {
 
-  //  private LocationRequest locationRequest;
-  //  private LocationClient locationClient;
     private LocationManager locationManager;
     MapFragment googleMap;
     LatLng lastLatLng;
@@ -80,8 +78,6 @@ public class FragmentRicercaStazioni extends Fragment implements LocationListene
                 googleMap.getMap();
                 updatePlaces();
             }
-
-            //     MapsInitializer.initialize(this.getActivity());
     /*
         } catch (GooglePlayServicesNotAvailableException e) {
              Toast.makeText(getActivity(), "Google Play Services mancanti",
@@ -197,7 +193,7 @@ public class FragmentRicercaStazioni extends Fragment implements LocationListene
 
                 Location lastKnownLocation = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
 
-                if (lastKnownLocation != null) {
+               if (lastKnownLocation != null) {
                     lat = lastKnownLocation.getLatitude();
                     lng = lastKnownLocation.getLongitude();
 

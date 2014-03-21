@@ -9,5 +9,14 @@
     <string name="title_section4">Calcola Bollo</string>
     <string name="action_settings">Impostazioni</string>
     <string name="action_about">Info su KiloLiters</string>
+    <string name="actual_km">Chilometri attuali</string>
+    <string name="oil_price">Prezzo carburante</string>
+    <string name="liters">Litri erogati</string>
+    <string name="price">Importo pagato</string>
+    <string name="station">Marca distributore</string>
+    <string name="city">Città</string>
+    <string name="description">Descrizione</string>
+    <string name="insert_description">Indirizzo - Riferimenti</string>
+    <string name="save_data_button">Salva rifornimento</string>
 
 </resources>

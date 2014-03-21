@@ -145,7 +145,7 @@ public class FragmentRicercaStazioni extends Fragment implements LocationListene
     @Override
     public void onProviderEnabled(String s) {
 
-        };
+        }
 
     @Override
     public void onProviderDisabled(String s) {
@@ -183,29 +183,31 @@ public class FragmentRicercaStazioni extends Fragment implements LocationListene
                 locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
 
             if (locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
+
+                locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 100, 0, this);
+
                 Location lastKnownLocation = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-                lat = lastKnownLocation.getLatitude();
-                lng = lastKnownLocation.getLongitude();
+                if (lastKnownLocation != null) {
+                    lat = lastKnownLocation.getLatitude();
+                    lng = lastKnownLocation.getLongitude();
 
-                lastLatLng = new LatLng(lat, lng);
+                    lastLatLng = new LatLng(lat, lng);
 
-                locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 30000, 100, this);
-
-                googleMap.getMap().animateCamera(CameraUpdateFactory.newLatLng(lastLatLng), 3000, null);
+                    googleMap.getMap().animateCamera(CameraUpdateFactory.newLatLng(lastLatLng), 3000, null);
+                }
             }
 
             else if (locationManager.isProviderEnabled((LocationManager.GPS_PROVIDER))) {
 
+                locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 100, 0, this);
                 Location lastKnownLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-                lat = lastKnownLocation.getLatitude();
-                lng = lastKnownLocation.getLongitude();
-                //create LatLng
-                lastLatLng = new LatLng(lat, lng);
-
-                locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 30000, 100, this);
-
-                googleMap.getMap().animateCamera(CameraUpdateFactory.newLatLng(lastLatLng), 3000, null);
-
+               if (lastKnownLocation != null) {
+                   lat = lastKnownLocation.getLatitude();
+                   lng = lastKnownLocation.getLongitude();
+                   //create LatLng
+                   lastLatLng = new LatLng(lat, lng);
+                   googleMap.getMap().animateCamera(CameraUpdateFactory.newLatLng(lastLatLng), 3000, null);
+               }
             }
 
         }

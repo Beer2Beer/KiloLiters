@@ -38,7 +38,8 @@ public class FragmentRicercaStazioni extends Fragment implements LocationListene
     double lat;
     double lng;
     View view;
-    boolean toastLocalizzazioneVisualizzato = false;
+    boolean toastNoLocation = false;
+    boolean toastFindingPosition = false;
 
     public FragmentRicercaStazioni() {
     }
@@ -106,9 +107,16 @@ public class FragmentRicercaStazioni extends Fragment implements LocationListene
 
                             Context context = getActivity();
                             Toast t = Toast.makeText(context, "Per poter utilizzare al meglio il servizio di Ricerca Distributori, " +
-                                    "attivare la localizzazione", Toast.LENGTH_LONG);
+                                    "attiva la localizzazione", Toast.LENGTH_LONG);
                             t.show();
 
+                        }
+
+                        else {
+
+                                Context context = getActivity();
+                                Toast t = Toast.makeText(context, "Ricerco posizione...", Toast.LENGTH_SHORT);
+                                t.show();
                         }
 
                         return true;
@@ -120,14 +128,24 @@ public class FragmentRicercaStazioni extends Fragment implements LocationListene
                 if (!locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER) &&
                         !locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
 
-                    if (!toastLocalizzazioneVisualizzato) {
+                    if (!toastNoLocation) {
                         Context context = getActivity();
                         Toast t = Toast.makeText(context, "Per poter utilizzare al meglio il servizio di Ricerca Distributori, " +
-                                "attivare la localizzazione", Toast.LENGTH_LONG);
+                                "attiva la localizzazione", Toast.LENGTH_LONG);
                         t.show();
-                        toastLocalizzazioneVisualizzato = true;
+                        toastNoLocation = true;
                     }
 
+                }
+
+                else {
+
+                    if (!toastFindingPosition) {
+                        Context context = getActivity();
+                        Toast t = Toast.makeText(context, "Ricerco posizione...", Toast.LENGTH_SHORT);
+                        t.show();
+                        toastFindingPosition = true;
+                    }
                 }
         }
         });

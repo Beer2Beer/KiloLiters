@@ -9,7 +9,9 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:focusable="true"
+    android:focusableInTouchMode="true">
 
 
     <TextView
@@ -18,7 +20,7 @@
         android:id="@+id/actual_km"
         android:layout_alignParentTop="true"
         android:layout_marginTop="40dp"
-        android:layout_marginLeft="4dp"
+        android:layout_marginLeft="6dp"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentLeft="true"
@@ -42,7 +44,7 @@
         android:layout_below="@id/actual_km"
         android:text="@string/oil_price"
         android:layout_marginTop="20dp"
-        android:layout_marginLeft="4dp"/>
+        android:layout_marginLeft="6dp"/>
 
     <EditText
         android:layout_width="wrap_content"
@@ -61,7 +63,7 @@
         android:layout_below="@id/oil_price"
         android:text="@string/liters"
         android:layout_marginTop="20dp"
-        android:layout_marginLeft="4dp"/>
+        android:layout_marginLeft="6dp"/>
 
     <EditText
         android:layout_width="wrap_content"
@@ -80,7 +82,7 @@
         android:layout_below="@id/liters"
         android:text="@string/price"
         android:layout_marginTop="20dp"
-        android:layout_marginLeft="4dp"/>
+        android:layout_marginLeft="6dp"/>
 
     <EditText
         android:layout_width="wrap_content"
@@ -99,12 +101,12 @@
         android:layout_below="@id/price"
         android:text="@string/station"
         android:layout_marginTop="20dp"
-        android:layout_marginLeft="4dp"/>
+        android:layout_marginLeft="6dp"/>
 
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:inputType="text"
+        android:inputType="textCapSentences"
         android:ems="10"
         android:id="@+id/insert_station"
         android:layout_below="@id/price"
@@ -118,13 +120,13 @@
         android:layout_below="@id/station"
         android:text="@string/city"
         android:layout_marginTop="20dp"
-        android:layout_marginLeft="4dp"
+        android:layout_marginLeft="6dp"
         />
 
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:inputType="text"
+        android:inputType="textCapSentences"
         android:ems="10"
         android:id="@+id/insert_city"
         android:layout_below="@id/station"
@@ -138,12 +140,12 @@
         android:layout_below="@id/city"
         android:text="@string/description"
         android:layout_marginTop="20dp"
-        android:layout_marginLeft="4dp"/>
+        android:layout_marginLeft="6dp"/>
 
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:inputType="text"
+        android:inputType="textCapSentences"
         android:ems="10"
         android:id="@+id/insert_description"
         android:layout_below="@id/city"

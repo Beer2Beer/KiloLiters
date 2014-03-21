@@ -8,6 +8,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.view.LayoutInflater;
 
@@ -37,11 +38,14 @@ public class FragmentCalcolaBollo extends Fragment {
         super.onCreate(savedInstanceState);
         View mainView = (View) inflater.inflate(R.layout.view_calcola_bollo, container, false);
         webView = (WebView) mainView.findViewById(R.id.web_view_calcola_bollo); //faccio un cast così uso la funzione findViewById
+        WebSettings.ZoomDensity zoomDensity = WebSettings.ZoomDensity.FAR;
 
+        webView.setInitialScale(1);
         webView.getSettings().setJavaScriptEnabled(true);
         webView.getSettings().setBuiltInZoomControls(true);
         webView.getSettings().setDisplayZoomControls(false);
         webView.getSettings().setLoadsImagesAutomatically(true);
+        webView.getSettings().setUseWideViewPort(true);
 
         webView.loadUrl(url_ACI);
 

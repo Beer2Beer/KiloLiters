@@ -5,6 +5,7 @@ import android.content.Context;
 import android.location.Location;
 import android.location.LocationListener;
 
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -42,7 +43,7 @@ public class FragmentRicercaStazioni extends Fragment
     private LocationClient locationClient;
     MapFragment googleMap;
     boolean firstSearch = true;
-    boolean isLocationOn = true;
+    boolean toastLocationVisualized = false;
 
     View view;
 
@@ -52,13 +53,7 @@ public class FragmentRicercaStazioni extends Fragment
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-    /*
-        if (view != null) {
-            ViewGroup parent = (ViewGroup) view.getParent();
-            if (parent != null)
-                parent.removeView(view);
-        }
-    */
+
          try {
 
             view = inflater.inflate(R.layout.view_ricerca_stazioni, container,
@@ -105,8 +100,10 @@ public class FragmentRicercaStazioni extends Fragment
                 ((InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(
                         view.getWindowToken(), 0);
 
+                LocationManager locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
 
-                if (!firstSearch && locationClient.getLastLocation() !=null) {
+                if ((firstSearch) && (locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)
+                        || locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER))) {
 
                     Context context = getActivity();
                     Toast t = Toast.makeText(context, "Ricerca posizione...", Toast.LENGTH_SHORT);
@@ -115,13 +112,14 @@ public class FragmentRicercaStazioni extends Fragment
                     firstSearch = false;
                 }
 
-                if (isLocationOn && locationClient.getLastLocation() == null) {
+                if ((!toastLocationVisualized) && !locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER) &&
+                        !locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
 
                     Context context = getActivity();
                     Toast t = Toast.makeText(context, "Per usufruire al meglio del servizio Ricerca Distributori, " +
                             "attiva la localizzazione", Toast.LENGTH_LONG);
                     t.show();
-                    isLocationOn = false;
+                    toastLocationVisualized = true;
                 }
             }
         });
@@ -150,8 +148,6 @@ public class FragmentRicercaStazioni extends Fragment
 
 
     }
-
-
 
     @Override
     public void onLocationChanged(Location location) {

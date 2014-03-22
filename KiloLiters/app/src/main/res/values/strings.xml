@@ -2,21 +2,28 @@
 <resources>
 
     <string name="app_name">KiloLiters</string>
+
+    <string name="action_about">Info su KiloLiters</string>
+    <string name="action_settings">Impostazioni</string>
+    <string name="actual_km">Chilometri attuali</string>
+    <string name="city">Città</string>
+    <string name="description">Descrizione</string>
+    <string name="fav_station">Distributore preferito</string>
+    <string name="insert_description">Indirizzo - Riferimenti</string>
+    <string name="kiloliters">Chilometri/litro</string>
+    <string name="liters">Litri erogati</string>
+    <string name="medium_price">Prezzo medio</string>
+    <string name="oil_price">Prezzo carburante</string>
+    <string name="price">Importo pagato</string>
+    <string name="save_data_button">Salva rifornimento</string>
+    <string name="station">Marca distributore</string>
     <string name="title_section0">Statistiche Totali</string>
     <string name="title_section1">Statistiche</string>
     <string name="title_section2">Inserimento Dati</string>
     <string name="title_section3">Distributori</string>
     <string name="title_section4">Calcola Bollo</string>
-    <string name="action_settings">Impostazioni</string>
-    <string name="action_about">Info su KiloLiters</string>
-    <string name="actual_km">Chilometri attuali</string>
-    <string name="oil_price">Prezzo carburante</string>
-    <string name="liters">Litri erogati</string>
-    <string name="price">Importo pagato</string>
-    <string name="station">Marca distributore</string>
-    <string name="city">Città</string>
-    <string name="description">Descrizione</string>
-    <string name="insert_description">Indirizzo - Riferimenti</string>
-    <string name="save_data_button">Salva rifornimento</string>
+    <string name="total_km">Chilometri percorsi</string>
+    <string name="total_liters">Litri consumati</string>
+    <string name="total_paid">Spese totali</string>
 
 </resources>

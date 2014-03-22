@@ -35,7 +35,7 @@ public class DatabaseAdapter {
             "create table rifornimenti (_id integer primary key autoincrement, timestamp text not null, " +
                     "chilometri integer not null, prezzo real not null, litri integer not null, " +
                     "importo real not null, distributore text not null, " +
-                    "citta text not null, descrizione text, (data, ora) primary_key);";
+                    "citta text not null, descrizione text);";
 
     private final Context context;
     private DatabaseHelper DBHelper;
@@ -77,8 +77,8 @@ public class DatabaseAdapter {
         DBHelper.close();
     }
 
-    public long insertRefuel(String timestamp, int chilometri,
-                             float prezzo, float litri, float importo,
+    public long insertRefuel(String timestamp, double chilometri,
+                             double prezzo, double litri, double importo,
                              String distributore, String citta, String descrizione){
 
         ContentValues initialValues = new ContentValues();

@@ -1,6 +1,6 @@
 package it.beer2beer.kiloliters;
-// Test comment for github commit test
 
+import java.sql.SQLException;
 import java.util.Locale;
 
 import android.app.Activity;
@@ -8,17 +8,21 @@ import android.app.ActionBar;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.database.Cursor;
 import android.location.LocationManager;
 import android.support.v13.app.FragmentPagerAdapter;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.content.Context;
+import android.webkit.WebView;
 import android.widget.Toast;
 
 public class MainActivity extends Activity implements ActionBar.TabListener {
 
+    public static final String TAG = "MainActivity";
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
      * fragments for each of the sections. We use a
@@ -73,6 +77,27 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
                             .setTabListener(this));
         }
         mViewPager.setCurrentItem(2); //setta la tab centrale come predefinita
+    /*
+        DatabaseAdapter db = new DatabaseAdapter(this);
+
+        // DB TEST
+
+        try {
+            db.open();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        long id;
+
+        id = db.insertRefuel("Prova 16:38",250,1.599,35.84,50,"ESSO CESSO","PORNOLO","ABBESTIA");
+        if(id == -1) Log.w(TAG, "Errore inizializzazione del database");
+
+        Cursor c = db.getRefuel(1);
+        String toast = c.toString();
+        Toast t = Toast.makeText(this, toast, Toast.LENGTH_LONG);
+        t.show();
+        db.close();
+    */
 
     }
 
@@ -209,5 +234,7 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
             }
             return null;
         }
+
     }
+
 }

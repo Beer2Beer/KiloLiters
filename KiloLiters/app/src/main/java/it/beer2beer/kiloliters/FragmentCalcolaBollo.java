@@ -3,12 +3,9 @@ package it.beer2beer.kiloliters;
 import android.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
-import android.provider.ContactsContract;
-import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
-import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.view.LayoutInflater;
 import android.widget.Toast;
@@ -23,6 +20,8 @@ public class FragmentCalcolaBollo extends Fragment {
     private String url_ACI = "http://online.aci.it/acinet/calcolobollo/#inizio-pagina";
     boolean toastLoadingPage = false;
 
+    WebView webView;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -31,14 +30,12 @@ public class FragmentCalcolaBollo extends Fragment {
 
     }
 
-    WebView webView;
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
 
         super.onCreate(savedInstanceState);
-        View mainView = (View) inflater.inflate(R.layout.view_calcola_bollo, container, false);
+        View mainView = inflater.inflate(R.layout.view_calcola_bollo, container, false);
         webView = (WebView) mainView.findViewById(R.id.web_view_calcola_bollo);
 
         webView.setInitialScale(1);
@@ -92,16 +89,5 @@ public class FragmentCalcolaBollo extends Fragment {
 
         super.onDestroy();
     }
-/*
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event){
 
-        if((keyCode == KeyEvent.KEYCODE_BACK) && webView.canGoBack()) {
-            webView.goBack();
-            return true;
-        }
-
-
-    };
-*/
 } //chiusura classe

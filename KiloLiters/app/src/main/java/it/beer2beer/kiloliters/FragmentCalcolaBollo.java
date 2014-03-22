@@ -11,6 +11,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.view.LayoutInflater;
+import android.widget.Toast;
 
 
 /**
@@ -20,6 +21,7 @@ import android.view.LayoutInflater;
 public class FragmentCalcolaBollo extends Fragment {
 
     private String url_ACI = "http://online.aci.it/acinet/calcolobollo/#inizio-pagina";
+    boolean toastLoadingPage = false;
 
 
     @Override
@@ -37,8 +39,7 @@ public class FragmentCalcolaBollo extends Fragment {
 
         super.onCreate(savedInstanceState);
         View mainView = (View) inflater.inflate(R.layout.view_calcola_bollo, container, false);
-        webView = (WebView) mainView.findViewById(R.id.web_view_calcola_bollo); //faccio un cast così uso la funzione findViewById
-        WebSettings.ZoomDensity zoomDensity = WebSettings.ZoomDensity.FAR;
+        webView = (WebView) mainView.findViewById(R.id.web_view_calcola_bollo);
 
         webView.setInitialScale(1);
         webView.getSettings().setJavaScriptEnabled(true);
@@ -54,6 +55,17 @@ public class FragmentCalcolaBollo extends Fragment {
             public void onFocusChange(View view, boolean b) {
                 ((InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(
                         view.getWindowToken(), 0);
+
+
+                if (!toastLoadingPage) {
+
+                    Context context = getActivity();
+                    Toast t = Toast.makeText(context, "Caricamento pagina ACI in corso...", Toast.LENGTH_SHORT);
+                    t.show();
+
+                    toastLoadingPage = true;
+                }
+
             }
         });
 

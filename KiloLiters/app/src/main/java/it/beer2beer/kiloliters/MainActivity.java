@@ -1,6 +1,5 @@
 package it.beer2beer.kiloliters;
 
-import java.sql.SQLException;
 import java.util.Locale;
 
 import android.app.Activity;
@@ -8,16 +7,12 @@ import android.app.ActionBar;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
-import android.database.Cursor;
-import android.location.LocationManager;
 import android.support.v13.app.FragmentPagerAdapter;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.content.Context;
-import android.webkit.WebView;
 import android.widget.Toast;
 
 public class MainActivity extends Activity implements ActionBar.TabListener {
@@ -77,7 +72,7 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
                             .setTabListener(this));
         }
         mViewPager.setCurrentItem(2); //setta la tab centrale come predefinita
-    /*
+/*
         DatabaseAdapter db = new DatabaseAdapter(this);
 
         // DB TEST
@@ -93,12 +88,11 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
         if(id == -1) Log.w(TAG, "Errore inizializzazione del database");
 
         Cursor c = db.getRefuel(1);
-        String toast = c.toString();
-        Toast t = Toast.makeText(this, toast, Toast.LENGTH_LONG);
+        Toast t = Toast.makeText(this, c.getString(0), Toast.LENGTH_LONG);
         t.show();
         db.close();
-    */
 
+*/
     }
 
     @Override

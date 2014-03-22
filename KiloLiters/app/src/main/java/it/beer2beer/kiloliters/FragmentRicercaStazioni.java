@@ -1,45 +1,50 @@
 package it.beer2beer.kiloliters;
 
-
 import android.app.Fragment;
 import android.content.Context;
 import android.location.Location;
 import android.location.LocationListener;
 
-import android.location.LocationManager;
 import android.os.Bundle;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
-
 import android.widget.Toast;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesClient;
+import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
+import com.google.android.gms.location.LocationClient;
+import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.GoogleMapOptions;
 
 import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.model.LatLng;
 
 
+import java.net.ConnectException;
 
 /**
  * Created by federico on 08/03/14.
  */
+public class FragmentRicercaStazioni extends Fragment
+        implements
+        GooglePlayServicesClient.ConnectionCallbacks,
+        GooglePlayServicesClient.OnConnectionFailedListener,
+        LocationListener {
 
-public class FragmentRicercaStazioni extends Fragment implements LocationListener {
-
-    private LocationManager locationManager;
+    private LocationRequest locationRequest;
+    private LocationClient locationClient;
     MapFragment googleMap;
-    LatLng lastLatLng;
-    double lat;
-    double lng;
+    boolean firstSearch = true;
+    boolean isLocationOn = true;
+
     View view;
-    boolean toastNoLocation = false;
-    boolean toastFindingPosition = false;
 
     public FragmentRicercaStazioni() {
     }
@@ -54,43 +59,45 @@ public class FragmentRicercaStazioni extends Fragment implements LocationListene
                 parent.removeView(view);
         }
     */
+         try {
+
             view = inflater.inflate(R.layout.view_ricerca_stazioni, container,
                     false);
-            if (googleMap == null) {
-                try {
+            try {
 
-                    googleMap = ((MapFragment) this.getActivity()
-                            .getFragmentManager().findFragmentById(R.id.map));
+                googleMap = ((MapFragment) this.getActivity()
+                        .getFragmentManager().findFragmentById(R.id.map));
 
-                } catch (Exception e) {
+            }catch (Exception e){
 
-                    e.printStackTrace();
-                }
+                e.printStackTrace();
             }
-            if (googleMap != null) {
 
-                GoogleMapOptions mapOptions = new GoogleMapOptions();
+            GoogleMapOptions mapOptions = new GoogleMapOptions();
 
-                mapOptions.rotateGesturesEnabled(true);
-                googleMap.getMap().setMyLocationEnabled(true);
-                googleMap.getMap().getUiSettings().setAllGesturesEnabled(true);
-                googleMap.getMap().getUiSettings().setMyLocationButtonEnabled(true);
-                googleMap.getMap().getUiSettings().setZoomControlsEnabled(true);
-                googleMap.getMap();
-                updatePlaces();
-            }
-    /*
+            mapOptions.rotateGesturesEnabled(true);
+            mapOptions.compassEnabled(true);
+            googleMap.getMap().setMyLocationEnabled(true);
+            googleMap.getMap().getUiSettings().setAllGesturesEnabled(true);
+            googleMap.getMap().getUiSettings().setMyLocationButtonEnabled(true);
+            googleMap.getMap().getUiSettings().setZoomControlsEnabled(true);
+            googleMap.getMap();
+
+            MapsInitializer.initialize(this.getActivity());
+
         } catch (GooglePlayServicesNotAvailableException e) {
-             Toast.makeText(getActivity(), "Google Play Services mancanti",
+             Toast.makeText(getActivity(), "Google Play Services missing !",
                      Toast.LENGTH_LONG).show();
-        } catch (InflateException e) {
-            Toast.makeText(getActivity(), "Problemi con la view",
+         }
+        /*
+         } catch (InflateException e) {
+            Toast.makeText(getActivity(), "Problems inflating the view !",
                     Toast.LENGTH_LONG).show();
         } catch (NullPointerException e) {
-            Toast.makeText(getActivity(), "Google Play Services mancanti",
+            Toast.makeText(getActivity(), "Google Play Services missing !",
                     Toast.LENGTH_LONG).show();
         }
-            */
+        */
 
         view.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
@@ -98,56 +105,25 @@ public class FragmentRicercaStazioni extends Fragment implements LocationListene
                 ((InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(
                         view.getWindowToken(), 0);
 
-                GoogleMap.OnMyLocationButtonClickListener locationButtonClickListener = new GoogleMap.OnMyLocationButtonClickListener() {
-                    @Override
-                    public boolean onMyLocationButtonClick() {
 
-                        if (!locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER) &&
-                                !locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+                if (!firstSearch && locationClient.getLastLocation() !=null) {
 
-                            Context context = getActivity();
-                            Toast t = Toast.makeText(context, "Per poter utilizzare al meglio il servizio di Ricerca Distributori, " +
-                                    "attiva la localizzazione", Toast.LENGTH_LONG);
-                            t.show();
+                    Context context = getActivity();
+                    Toast t = Toast.makeText(context, "Ricerca posizione...", Toast.LENGTH_SHORT);
+                    t.show();
 
-                        }
-
-                        else {
-
-                                Context context = getActivity();
-                                Toast t = Toast.makeText(context, "Ricerco posizione...", Toast.LENGTH_SHORT);
-                                t.show();
-                        }
-
-                        return true;
-                    }
-                };
-
-                googleMap.getMap().setOnMyLocationButtonClickListener(locationButtonClickListener);
-
-                if (!locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER) &&
-                        !locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-
-                    if (!toastNoLocation) {
-                        Context context = getActivity();
-                        Toast t = Toast.makeText(context, "Per poter utilizzare al meglio il servizio di Ricerca Distributori, " +
-                                "attiva la localizzazione", Toast.LENGTH_LONG);
-                        t.show();
-                        toastNoLocation = true;
-                    }
-
+                    firstSearch = false;
                 }
 
-                else {
+                if (isLocationOn && locationClient.getLastLocation() == null) {
 
-                    if (!toastFindingPosition) {
-                        Context context = getActivity();
-                        Toast t = Toast.makeText(context, "Ricerco posizione...", Toast.LENGTH_SHORT);
-                        t.show();
-                        toastFindingPosition = true;
-                    }
+                    Context context = getActivity();
+                    Toast t = Toast.makeText(context, "Per usufruire al meglio del servizio Ricerca Distributori, " +
+                            "attiva la localizzazione", Toast.LENGTH_LONG);
+                    t.show();
+                    isLocationOn = false;
                 }
-        }
+            }
         });
 
         return view;
@@ -158,21 +134,31 @@ public class FragmentRicercaStazioni extends Fragment implements LocationListene
 
         super.onCreate(savedInstanceState);
 
+        locationRequest = LocationRequest.create();
+        locationRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
+
+        try{
+
+            locationClient = new LocationClient(this.getActivity().getApplicationContext(), this, this);
+
+        }catch (Exception e) {
+
+            e.printStackTrace();
+        }
+
+        locationClient.connect();
+
+
     }
+
+
 
     @Override
     public void onLocationChanged(Location location) {
 
-        LatLng latLng;
-
-        double latitude = location.getLatitude();
-        double longitude = location.getLongitude();
-
-        latLng = new LatLng(latitude,longitude);
-
-        CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLng(latLng);
+        CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(
+                new LatLng(location.getLatitude(), location.getLongitude()), 15);
         googleMap.getMap().animateCamera(cameraUpdate);
-
     }
 
     @Override
@@ -183,104 +169,28 @@ public class FragmentRicercaStazioni extends Fragment implements LocationListene
     @Override
     public void onProviderEnabled(String s) {
 
-        }
+    }
 
     @Override
     public void onProviderDisabled(String s) {
 
     }
 
+    @Override
+    public void onConnectionFailed(ConnectionResult arg0) {
 
-    private void updatePlaces(){
-        //get location manager
-
-        try {
-            locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
-        } catch (NullPointerException e) {
-
-            e.printStackTrace();
-        }
-
-        //get last location
-        if (locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER) ||
-                locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-
-            if (locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
-
-                locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 100, 0, this);
-
-                Location lastKnownLocation = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-
-               if (lastKnownLocation != null) {
-                    lat = lastKnownLocation.getLatitude();
-                    lng = lastKnownLocation.getLongitude();
-
-                    lastLatLng = new LatLng(lat, lng);
-
-                    googleMap.getMap().animateCamera(CameraUpdateFactory.newLatLng(lastLatLng), 3000, null);
-                }
-            }
-
-            else if (locationManager.isProviderEnabled((LocationManager.GPS_PROVIDER))) {
-
-                locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 100, 0, this);
-                Location lastKnownLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-               if (lastKnownLocation != null) {
-                   lat = lastKnownLocation.getLatitude();
-                   lng = lastKnownLocation.getLongitude();
-                   //create LatLng
-                   lastLatLng = new LatLng(lat, lng);
-                   googleMap.getMap().animateCamera(CameraUpdateFactory.newLatLng(lastLatLng), 3000, null);
-               }
-            }
-
-        }
-
-        //remove any existing marker
-     //   if(userMarker!=null) userMarker.remove();
-        //create and set marker properties
-      /*
-       userMarker = googleMap.addMarker(new MarkerOptions()
-                .position(lastLatLng)
-                .title("You are here")
-                .icon(BitmapDescriptorFactory.fromResource(userIcon))
-                .snippet("Your last recorded location"));
-       */
-
-        //move to location
-
-
-        //build places query string
-        String placesSearchStr = "https://maps.googleapis.com/maps/api/place/nearbysearch/" +
-                "json?location="+lat+","+lng+
-                "&radius=1000&sensor=true" +
-                "&types=gas_station"+
-                "&key=AIzaSyA7ttpFSTYMgDsan6GvsznzN-xkhN1M8n0";
-
-        //execute query
-      //  new GetPlaces().execute(placesSearchStr);
 
     }
 
     @Override
-    public void onPause(){
+    public void onConnected(Bundle connectionHint) {
 
-        super.onPause();
-        if (googleMap !=null) {
+        locationClient.getLastLocation();
 
-            locationManager.removeUpdates(this);
-
-        }
     }
 
     @Override
-    public void onDestroy() {
+    public void onDisconnected() {
 
-        super.onDestroy();
-        if(googleMap != null) {
-
-            locationManager.removeUpdates(this);
-        }
     }
 }
-

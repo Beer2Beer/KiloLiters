@@ -40,46 +40,8 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/oil_price"
-        android:layout_below="@id/actual_km"
-        android:text="@string/oil_price"
-        android:layout_marginTop="20dp"
-        android:layout_marginLeft="6dp"/>
-
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="numberDecimal"
-        android:ems="10"
-        android:id="@+id/insert_oil_price"
-        android:layout_below="@id/actual_km"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/liters"
-        android:layout_below="@id/oil_price"
-        android:text="@string/liters"
-        android:layout_marginTop="20dp"
-        android:layout_marginLeft="6dp"/>
-
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="numberDecimal"
-        android:ems="10"
-        android:id="@+id/insert_liters"
-        android:layout_below="@id/oil_price"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:id="@+id/price"
-        android:layout_below="@id/liters"
+        android:layout_below="@id/actual_km"
         android:text="@string/price"
         android:layout_marginTop="20dp"
         android:layout_marginLeft="6dp"/>
@@ -90,6 +52,44 @@
         android:inputType="numberDecimal"
         android:ems="10"
         android:id="@+id/insert_price"
+        android:layout_below="@id/actual_km"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/liters"
+        android:layout_below="@id/price"
+        android:text="@string/liters"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="6dp"/>
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="numberDecimal"
+        android:ems="10"
+        android:id="@+id/insert_liters"
+        android:layout_below="@id/price"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/oil_price"
+        android:layout_below="@id/liters"
+        android:text="@string/oil_price"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="6dp"/>
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="numberDecimal"
+        android:ems="10"
+        android:id="@+id/insert_oil_price"
         android:layout_below="@id/liters"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"/>
@@ -98,7 +98,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/station"
-        android:layout_below="@id/price"
+        android:layout_below="@id/oil_price"
         android:text="@string/station"
         android:layout_marginTop="20dp"
         android:layout_marginLeft="6dp"/>
@@ -109,7 +109,7 @@
         android:inputType="textCapSentences"
         android:ems="10"
         android:id="@+id/insert_station"
-        android:layout_below="@id/price"
+        android:layout_below="@id/oil_price"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"/>
 

@@ -72,9 +72,10 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
                             .setTabListener(this));
         }
         mViewPager.setCurrentItem(2); //setta la tab centrale come predefinita
-/*
+
         DatabaseAdapter db = new DatabaseAdapter(this);
 
+/*
         // DB TEST
 
         try {

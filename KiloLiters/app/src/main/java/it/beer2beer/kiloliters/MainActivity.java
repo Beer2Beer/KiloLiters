@@ -76,7 +76,8 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
         }
         mViewPager.setCurrentItem(2); //setta la tab centrale come predefinita
 
-        DatabaseAdapter databaseAdapter = new DatabaseAdapter(this);
+       // DatabaseAdapter databaseAdapter = new DatabaseAdapter(this);
+
 
 /*
         // DB TEST

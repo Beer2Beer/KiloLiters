@@ -18,9 +18,9 @@ import java.sql.SQLException;
  */
 public class FragmentInserimentoDati extends Fragment {
 
-    DatabaseAdapter db = new DatabaseAdapter(getActivity());
     Button saveData;
     public static String TAG = "Inserimento dati";
+    DatabaseAdapter db;
 
 
     @Override
@@ -75,12 +75,23 @@ public class FragmentInserimentoDati extends Fragment {
                                      double liters, double price, String station,
                                      String city, String description) {
 
+        Log.d(TAG, "Timestamp: " + timeStamp + "km: "+  km + "Prezzo carburante:  "+ oilPrice +
+                "litri: "+ liters +"prezzo: " + price  +"Distributore: "+ station +"Città: "+ city +
+                        "Desc: "+ description);
+        db = new DatabaseAdapter(getActivity());
+        Toast t = Toast.makeText(getActivity(), "Dentro inserFuelFromUser", Toast.LENGTH_LONG);
+        t.show();
         try {
             db.open();
+            Log.d(TAG, "Dentro al try");
         } catch (SQLException e) {
             e.printStackTrace();
         }
         long id = db.insertRefuel(timeStamp, km, oilPrice, liters, price, station, city, description);
+        Log.d(TAG,"chiamata insertRefuel");
+        String l = Long.toString(id);
+        Log.d(TAG, l);
+        if (id==-1) Log.d(TAG, "Errore inizializzazione database");
         db.close();
 
     }

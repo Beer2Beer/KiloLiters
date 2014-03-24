@@ -1,5 +1,6 @@
 package it.beer2beer.kiloliters;
 
+import java.sql.SQLException;
 import java.util.Locale;
 
 import android.app.Activity;
@@ -7,9 +8,11 @@ import android.app.ActionBar;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.database.Cursor;
 import android.support.v13.app.FragmentPagerAdapter;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.content.Context;
@@ -73,26 +76,26 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
         }
         mViewPager.setCurrentItem(2); //setta la tab centrale come predefinita
 
-        DatabaseAdapter db = new DatabaseAdapter(this);
+       // DatabaseAdapter databaseAdapter = new DatabaseAdapter(this);
+
 
 /*
         // DB TEST
 
         try {
-            db.open();
+            databaseAdapter.open();
         } catch (SQLException e) {
             e.printStackTrace();
         }
         long id;
 
-        id = db.insertRefuel("Prova 16:38",250,1.599,35.84,50,"ESSO CESSO","PORNOLO","ABBESTIA");
+        id = databaseAdapter.insertRefuel("Prova2 16:42",250,1.599,35.84,50,"ENI","PARMA","ABBESTIA");
         if(id == -1) Log.w(TAG, "Errore inizializzazione del database");
 
-        Cursor c = db.getRefuel(1);
+        Cursor c = databaseAdapter.getRefuel(1);
         Toast t = Toast.makeText(this, c.getString(0), Toast.LENGTH_LONG);
         t.show();
-        db.close();
-
+        databaseAdapter.close();
 */
     }
 

@@ -187,7 +187,7 @@ public class FragmentRicercaStazioni extends Fragment
             e.printStackTrace();
         }
 
-        locationClient.connect(); //prima connessione non serve verificare che sia connesso
+        locationClient.connect();
 
 
     }
@@ -226,52 +226,6 @@ public class FragmentRicercaStazioni extends Fragment
     @Override
     public void onProviderEnabled(String s) {
 
-        locationRequest = LocationRequest.create();
-        locationRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
-
-        try{
-
-            locationClient = new LocationClient(this.getActivity().getApplicationContext(), this, this);
-
-        }catch (Exception e) {
-
-            e.printStackTrace();
-        }
-
-        if (!locationClient.isConnected()) {
-
-            locationClient.connect();
-        }
-
-        if (locationClient.isConnected()) {
-
-            Location location = locationClient.getLastLocation();
-            if (location != null) {
-                CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(
-                        new LatLng(location.getLatitude(), location.getLongitude()), 15);
-                googleMap.getMap().animateCamera(cameraUpdate);
-
-                double lat = location.getLatitude();
-                double lon = location.getLongitude();
-
-                String placesSearchStr = "https://maps.googleapis.com/maps/api/place/nearbysearch/" +
-                        "json?location=" + lat + "," + lon +
-                        "&radius=5000&sensor=true" +
-                        "&keyword=stazioni%20di%20servizio" +
-                        "&key=AIzaSyDQOzSn_VhdDuz26Hes3wtci9HHW6WZnyQ";
-
-
-                Log.d(TAG,
-                        "LocationTrackingService ---> onLocationChanged(): Provider: "
-                                + location.getProvider() + " Lat: "
-                                + location.getLatitude() + " Lng: "
-                                + location.getLongitude() + " Accuracy: "
-                                + location.getAccuracy()
-                );
-
-                new GetPlaces().execute(placesSearchStr);
-            }
-        }
     }
 
     @Override
@@ -282,27 +236,11 @@ public class FragmentRicercaStazioni extends Fragment
     @Override
     public void onConnectionFailed(ConnectionResult arg0) {
 
+
     }
 
     @Override
     public void onConnected(Bundle connectionHint) {
-
-        locationRequest = LocationRequest.create();
-        locationRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
-
-        try{
-
-            locationClient = new LocationClient(this.getActivity().getApplicationContext(), this, this);
-
-        }catch (Exception e) {
-
-            e.printStackTrace();
-        }
-
-        if(!locationClient.isConnected()) {
-            locationClient.connect();
-        }
-
 
         if (locationClient.isConnected()) {
 

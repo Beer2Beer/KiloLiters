@@ -18,6 +18,7 @@ import android.widget.Toast;
 public class FragmentCalcolaBollo extends Fragment {
 
     private String url_ACI = "http://online.aci.it/acinet/calcolobollo/#inizio-pagina";
+
     boolean toastLoadingPage = false;
 
     WebView webView;

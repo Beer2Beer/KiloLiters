@@ -78,7 +78,7 @@ public class FragmentInserimentoDati extends Fragment {
         Log.d(TAG, "Timestamp: " + timeStamp + "km: "+  km + "Prezzo carburante:  "+ oilPrice +
                 "litri: "+ liters +"prezzo: " + price  +"Distributore: "+ station +"Città: "+ city +
                         "Desc: "+ description);
-        db = new DatabaseAdapter(getActivity());
+        db = new DatabaseAdapter(this.getActivity());
         Toast t = Toast.makeText(getActivity(), "Dentro inserFuelFromUser", Toast.LENGTH_LONG);
         t.show();
         try {
@@ -126,7 +126,6 @@ public class FragmentInserimentoDati extends Fragment {
         insertRefuelFromUser(timeStamp, km, oilPrice, liters, price, station, city, description);
 
     }
-
 
     public double getOilPrice(double price, double liters) {
         double result = price/liters;

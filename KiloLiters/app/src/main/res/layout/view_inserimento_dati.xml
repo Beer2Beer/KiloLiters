@@ -90,6 +90,7 @@
         android:inputType="numberDecimal"
         android:ems="10"
         android:id="@+id/insert_oil_price"
+        android:digits="4"
         android:layout_below="@id/liters"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"/>

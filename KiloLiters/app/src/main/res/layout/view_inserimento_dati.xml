@@ -78,6 +78,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+<<<<<<< HEAD
         android:id="@+id/oil_price"
         android:layout_below="@id/liters"
         android:text="@string/oil_price"
@@ -98,8 +99,10 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+=======
+>>>>>>> FETCH_HEAD
         android:id="@+id/station"
-        android:layout_below="@id/oil_price"
+        android:layout_below="@id/liters"
         android:text="@string/station"
         android:layout_marginTop="20dp"
         android:layout_marginLeft="6dp"/>
@@ -110,7 +113,7 @@
         android:inputType="textCapSentences"
         android:ems="10"
         android:id="@+id/insert_station"
-        android:layout_below="@id/oil_price"
+        android:layout_below="@id/liters"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"/>
 

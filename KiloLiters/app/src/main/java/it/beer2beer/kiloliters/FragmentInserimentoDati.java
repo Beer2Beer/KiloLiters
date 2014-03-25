@@ -12,6 +12,8 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * Created by federico on 08/03/14.
@@ -71,7 +73,7 @@ public class FragmentInserimentoDati extends Fragment {
 
     }
 
-    public void insertRefuelFromUser(String timeStamp, double km, double oilPrice,
+    public void insertRefuelFromUser(String timeStamp, int km, double oilPrice,
                                      double liters, double price, String station,
                                      String city, String description) {
 
@@ -98,38 +100,76 @@ public class FragmentInserimentoDati extends Fragment {
 
     public void getDataFromUser() {
 
-        Long ts = System.currentTimeMillis()/1000;
-        String timeStamp = ts.toString();
+        SimpleDateFormat ts = new SimpleDateFormat("ddMMyyyyhhmmss");
+        String timeStamp = ts.format(new Date());
+
+        int km = 0;
+        double liters = 0.0d;
+        double price = 0.0d;
+        String station = null;
+        String city = null;
+        String description = null;
 
         EditText k = (EditText)getActivity().findViewById(R.id.insert_actual_km);
-        double km = Double.parseDouble(k.getText().toString());
+        if (!k.getText().toString().equals("")) {
+            double kil = Double.parseDouble(k.getText().toString());
+            kil = Math.round(kil);
+            km = (int) kil;
+        }
+
 
         EditText  l = (EditText)getActivity().findViewById(R.id.insert_liters);
-        double liters = Double.parseDouble(l.getText().toString());
+        if (!l.getText().toString().equals("")) {
+            double lit = Double.parseDouble(l.getText().toString());
+            int i = (int)(lit*100);
+            liters = i/100d;
+        }
 
         EditText p = (EditText)getActivity().findViewById(R.id.insert_price);
-        double price = Double.parseDouble(p.getText().toString());
+        if (!p.getText().toString().equals("")) {
+            double pr = Double.parseDouble(p.getText().toString());
+            int mInt = (int)(pr*100);
+            price = mInt/100d;
+        }
 
-        EditText op = (EditText)getActivity().findViewById(R.id.insert_oil_price);
-        double oilPrice = getOilPrice(price, liters);
-        op.setText(String.valueOf(oilPrice));
+        double oilPrice = 0.0d;
+        if (liters != 0.0d) {
+            getOilPrice(price, liters);
+        }
 
         EditText s = (EditText)getActivity().findViewById(R.id.insert_station);
-        String station = (s.getText().toString());
+        if (!s.getText().toString().equals("")) {
+            station = (s.getText().toString());
+        }
 
         EditText c = (EditText)getActivity().findViewById(R.id.insert_city);
-        String city = c.getText().toString();
+        if (!c.getText().toString().equals("")) {
+            city = c.getText().toString();
+        }
 
         EditText d = (EditText)getActivity().findViewById(R.id.insert_description);
-        String description = d.getText().toString();
+        if (!d.getText().toString().equals("")) {
+            description = d.getText().toString();
+        }
 
-        insertRefuelFromUser(timeStamp, km, oilPrice, liters, price, station, city, description);
+        if (km == 0 || oilPrice == 0.0d || liters == 0.0d || price == 0.0d ||
+                station == null || city == null || description == null) {
+
+            Toast t = Toast.makeText(getActivity(), "Completare tutti i campi", Toast.LENGTH_LONG);
+            t.show();
+
+        }
+        else {
+            insertRefuelFromUser(timeStamp, km, oilPrice, liters, price, station, city, description);
+        }
 
     }
 
     public double getOilPrice(double price, double liters) {
-        double result = price/liters;
+        double r = price/liters;
+        int i = (int)(r*1000);
+        double result = i/1000d;
         return result;
     }
 
-} //chiusura classe
+}

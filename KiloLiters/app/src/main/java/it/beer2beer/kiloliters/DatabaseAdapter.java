@@ -77,7 +77,7 @@ public class DatabaseAdapter {
         DBHelper.close();
     }
 
-    public long insertRefuel(String timestamp, double chilometri,
+    public long insertRefuel(String timestamp, int chilometri,
                              double prezzo, double litri, double importo,
                              String distributore, String citta, String descrizione){
 

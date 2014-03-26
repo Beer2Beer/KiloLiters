@@ -16,6 +16,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.content.Context;
+import android.view.View;
 import android.widget.Toast;
 
 public class MainActivity extends Activity implements ActionBar.TabListener {
@@ -233,6 +234,14 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
             return null;
         }
 
+    }
+
+    public void startSettings (View v) {
+
+    }
+
+    public void startAbout (View v) {
+        
     }
 
 }

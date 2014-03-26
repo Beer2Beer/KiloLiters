@@ -137,4 +137,32 @@ public class DatabaseAdapter {
         return db.update(DATABASE_TABLE, values, KEY_ID + "=" + id, null) > 0;
     }
 
+    public int getSumKilometers () {
+        Cursor c = db.rawQuery("SELECT SUM(chilometri) FROM rifornimenti", null);
+        return c.getInt(0);
+    }
+
+    public int getSumLiters () {
+        Cursor c = db.rawQuery("SELECT SUM(litri) FROM rifornimenti", null);
+        return c.getInt(0);
+    }
+
+    public int getSumPaid () {
+        Cursor c = db.rawQuery("SELECT SUM(importo) FROM rifornimenti", null);
+        return c.getInt(0);
+    }
+
+    public double getAvgPrice () {
+        Cursor c = db.rawQuery("SELECT AVG(prezzo) FROM rifornimenti", null);
+        int i = (int)(c.getDouble(0)*1000);
+        return i/1000d;
+    }
+
+    public double getKiloliters () {
+        int l = getSumLiters();
+        int k = getSumKilometers();
+        int kl = (int) (k/l*100);
+        return kl/100;
+    }
+
 }

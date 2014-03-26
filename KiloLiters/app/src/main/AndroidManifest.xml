@@ -29,14 +29,9 @@
             android:value="AIzaSyBXjTvZz5WlMFBq6p0Vl3kzYS2bmp75r-4"/>
 
         <activity
-            android:parentActivityName="it.beer2beer.kiloliters.MainActivity"
+            android:name="it.beer2beer.kiloliters.MainActivity"
             android:label="@string/app_name"
-            android:configChanges="orientation|screenSize"
-            android:name=".AboutActivity">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="it.beer2beer.kiloliters.MainActivity"/>
-
+            android:configChanges="orientation|screenSize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

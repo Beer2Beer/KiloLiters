@@ -8,7 +8,6 @@ import android.app.ActionBar;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
-import android.content.Intent;
 import android.database.Cursor;
 import android.support.v13.app.FragmentPagerAdapter;
 import android.os.Bundle;
@@ -133,7 +132,6 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
                 toast_about.show();
 
                 //qui posso lanciare l'activity associata alle info sull'app (creare la classe)
-                // startAbout(findViewById(R.id.about_activity));
 
                 return true;
 
@@ -238,20 +236,12 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
 
     }
 
-    /* Parte per il menu delle applicazioni
     public void startSettings (View v) {
-
-
-        Intent intent = new Intent (this, SettingsActivity.class);
-        startActivity(intent);
 
     }
 
     public void startAbout (View v) {
-
-        Intent intent = new Intent (this, AboutActivity.class);
-        startActivity(intent);
-
+        
     }
-    */
+
 }

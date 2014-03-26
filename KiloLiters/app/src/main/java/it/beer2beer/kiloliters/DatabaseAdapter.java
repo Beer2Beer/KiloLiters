@@ -36,6 +36,12 @@ public class DatabaseAdapter {
                     "chilometri integer not null, prezzo real not null, litri integer not null, " +
                     "importo real not null, distributore text not null, " +
                     "citta text not null, descrizione text);";
+    public static final String VIEW_DROP = "drop view distributori_preferiti if exists";
+    public static final String VIEW_CREATE =
+            "create view distributori_preferiti as " +
+                    "select distributore, descrizione count(distributore) as visite " +
+                    "from rifornimenti " +
+                    "ordered by visite"; /*where citta1 = citta2  and descrizione1 = descrizione2*/
 
     private final Context context;
     private DatabaseHelper DBHelper;
@@ -55,6 +61,7 @@ public class DatabaseAdapter {
         @Override
         public void onCreate(SQLiteDatabase db) {
             db.execSQL(DATABASE_CREATE);
+            db.execSQL(VIEW_CREATE);
         }
 
         @Override
@@ -163,6 +170,14 @@ public class DatabaseAdapter {
         int k = getSumKilometers();
         int kl = (int) (k/l*100);
         return kl/100;
+    }
+
+    public String getMostUsedStation () {
+        db.execSQL(VIEW_DROP);
+        db.execSQL(VIEW_CREATE);
+        Cursor c = db.rawQuery("SELECT distributore FROM distributori WHERE visite = MAX(visite)", null);
+        return c.getString(0);
+
     }
 
 }

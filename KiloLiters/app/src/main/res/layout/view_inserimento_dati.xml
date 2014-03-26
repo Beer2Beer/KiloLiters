@@ -31,7 +31,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:inputType="numberDecimal"
-        android:ems="10"
+        android:ems="8"
         android:id="@+id/insert_actual_km"
         android:layout_alignBottom="@+id/actual_km"
         android:layout_alignParentRight="true"
@@ -50,7 +50,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:inputType="numberDecimal"
-        android:ems="10"
+        android:ems="8"
         android:id="@+id/insert_price"
         android:layout_below="@id/actual_km"
         android:layout_alignParentRight="true"
@@ -69,7 +69,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:inputType="numberDecimal"
-        android:ems="10"
+        android:ems="8"
         android:id="@+id/insert_liters"
         android:layout_below="@id/price"
         android:layout_alignParentRight="true"
@@ -78,29 +78,6 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-<<<<<<< HEAD
-        android:id="@+id/oil_price"
-        android:layout_below="@id/liters"
-        android:text="@string/oil_price"
-        android:layout_marginTop="20dp"
-        android:layout_marginLeft="6dp"/>
-
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="numberDecimal"
-        android:ems="10"
-        android:id="@+id/insert_oil_price"
-        android:digits="4"
-        android:layout_below="@id/liters"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-=======
->>>>>>> FETCH_HEAD
         android:id="@+id/station"
         android:layout_below="@id/liters"
         android:text="@string/station"
@@ -111,7 +88,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:inputType="textCapSentences"
-        android:ems="10"
+        android:ems="8"
         android:id="@+id/insert_station"
         android:layout_below="@id/liters"
         android:layout_alignParentRight="true"
@@ -131,7 +108,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:inputType="textCapSentences"
-        android:ems="10"
+        android:ems="8"
         android:id="@+id/insert_city"
         android:layout_below="@id/station"
         android:layout_alignParentRight="true"
@@ -146,11 +123,11 @@
         android:layout_marginTop="20dp"
         android:layout_marginLeft="6dp"/>
 
-    <EditText
+    s<EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:inputType="textCapSentences"
-        android:ems="10"
+        android:ems="8"
         android:id="@+id/insert_description"
         android:layout_below="@id/city"
         android:layout_alignParentRight="true"

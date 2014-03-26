@@ -9,7 +9,7 @@
     <string name="city">Città</string>
     <string name="description">Descrizione</string>
     <string name="fav_station">Distributore preferito</string>
-    <string name="insert_description">Indirizzo - Riferimenti</string>
+    <string name="insert_description">es. Indirizzo</string>
     <string name="kiloliters">Chilometri/litro</string>
     <string name="liters">Litri erogati</string>
     <string name="medium_price">Prezzo medio</string>

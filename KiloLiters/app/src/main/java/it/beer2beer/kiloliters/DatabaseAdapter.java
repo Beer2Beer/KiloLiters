@@ -180,4 +180,9 @@ public class DatabaseAdapter {
 
     }
 
+    public int getLastId () {
+        Cursor c = db.rawQuery("SELECT MAX(_id) FROM rifornimenti", null);
+        return c.getInt(0);
+    }
+
 }

@@ -160,7 +160,8 @@ public class FragmentInserimentoDati extends Fragment {
 
         }
         else {
-            insertRefuelFromUser(timeStamp, km, oilPrice, liters, price, station, city, description);
+            insertRefuelFromUser(timeStamp, km, oilPrice, liters, price,
+                    station.toUpperCase(), city.toUpperCase(), description.toUpperCase());
         }
 
     }

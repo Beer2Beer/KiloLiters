@@ -35,10 +35,10 @@ public class FragmentInserimentoDati extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        View v = inflater.inflate(R.layout.view_inserimento_dati, container, false);
+        View view = inflater.inflate(R.layout.view_inserimento_dati, container, false);
 
 
-        saveData = (Button) v.findViewById(R.id.save_data_button);
+        saveData = (Button) view.findViewById(R.id.save_data_button);
 
         saveData.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -48,7 +48,7 @@ public class FragmentInserimentoDati extends Fragment {
             }
         });
 
-        return v;
+        return view;
 
     };
 

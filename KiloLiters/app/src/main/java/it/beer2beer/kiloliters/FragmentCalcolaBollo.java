@@ -36,8 +36,8 @@ public class FragmentCalcolaBollo extends Fragment {
 
 
         super.onCreate(savedInstanceState);
-        View mainView = inflater.inflate(R.layout.view_calcola_bollo, container, false);
-        webView = (WebView) mainView.findViewById(R.id.web_view_calcola_bollo);
+        View view = inflater.inflate(R.layout.view_calcola_bollo, container, false);
+        webView = (WebView) view.findViewById(R.id.web_view_calcola_bollo);
 
         webView.setInitialScale(1);
         webView.getSettings().setJavaScriptEnabled(true);
@@ -48,7 +48,7 @@ public class FragmentCalcolaBollo extends Fragment {
 
         webView.loadUrl(url_ACI);
 
-        mainView.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+        view.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View view, boolean b) {
                 ((InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(
@@ -57,17 +57,19 @@ public class FragmentCalcolaBollo extends Fragment {
 
                 if (!toastLoadingPage) {
 
-                    Context context = getActivity();
-                    Toast t = Toast.makeText(context, "Caricamento pagina ACI in corso...", Toast.LENGTH_SHORT);
-                    t.show();
+                    if (view == null) {
 
-                    toastLoadingPage = true;
+                        Context context = getActivity();
+                        Toast t = Toast.makeText(context, "Caricamento pagina ACI in corso...", Toast.LENGTH_SHORT);
+                        t.show();
+
+                        toastLoadingPage = true;
+                    }
                 }
-
             }
         });
 
-        return mainView;
+        return view;
 
     }
 
@@ -89,6 +91,13 @@ public class FragmentCalcolaBollo extends Fragment {
     public void onDestroy() {
 
         super.onDestroy();
+
+    }
+
+    @Override
+    public void onResume() {
+
+        super.onResume();
     }
 
 } //chiusura classe

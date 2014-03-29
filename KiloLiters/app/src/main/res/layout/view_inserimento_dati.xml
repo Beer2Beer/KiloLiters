@@ -35,7 +35,8 @@
         android:id="@+id/insert_actual_km"
         android:layout_alignBottom="@+id/actual_km"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="true"
+        android:maxLength="7"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -54,7 +55,8 @@
         android:id="@+id/insert_price"
         android:layout_below="@id/actual_km"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"/>
+        android:layout_alignParentEnd="true"
+        android:maxLength="5"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -73,7 +75,8 @@
         android:id="@+id/insert_liters"
         android:layout_below="@id/price"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"/>
+        android:layout_alignParentEnd="true"
+        android:maxLength="5"/>
 
     <TextView
         android:layout_width="wrap_content"

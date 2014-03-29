@@ -63,6 +63,7 @@ public class FragmentRicercaStazioni extends Fragment
     public static String TAG = "LocalizationService";
     private LocationRequest locationRequest;
     private LocationClient locationClient;
+    private Location locationBeforeChange;
     MapFragment googleMap;
     //places of interest
     private Marker[] placeMarkers;
@@ -168,10 +169,15 @@ public class FragmentRicercaStazioni extends Fragment
     @Override
     public void onLocationChanged(Location location) {
 
-        getLocationUpdates();
-        getMarkers();
+        // se la distanza tra la nuova locazione e quella presa dalla onConnected è minore di 2,5 km
+        // allora non richiamo la getMarkers per evitare overhead e chiamate inutili alle API
 
-        //TODO diminuire il numero di richieste fatte alle places api siccome ho 1000 token al giorno
+        if (location.distanceTo(locationBeforeChange) > 2500) {
+
+            getMarkers();
+
+        }
+
 
         Log.d(TAG,
                 "LocationTrackingService ---> onLocationChanged(): Provider: "
@@ -268,6 +274,8 @@ public class FragmentRicercaStazioni extends Fragment
         if(locationClient.isConnected()&&firstTimeConnected){
 
             Location location=locationClient.getLastLocation();
+
+            locationBeforeChange = location;
 
             if(location!=null){
             CameraUpdate cameraUpdate=CameraUpdateFactory.newLatLngZoom(

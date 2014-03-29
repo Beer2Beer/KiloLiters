@@ -73,6 +73,7 @@ public class FragmentRicercaStazioni extends Fragment
     private int otherIcon = R.drawable.gas_station;
     boolean firstSearch = true;
     boolean toastLocationVisualized = false;
+    boolean firstTimeConnected = true;
 
     View view;
 
@@ -83,7 +84,7 @@ public class FragmentRicercaStazioni extends Fragment
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-         try {
+
 
             view = inflater.inflate(R.layout.view_ricerca_stazioni, container,
                     false);
@@ -94,6 +95,7 @@ public class FragmentRicercaStazioni extends Fragment
 
             }catch (Exception e){
 
+                Log.d(TAG, "Errore inizializzazione mappa");
                 e.printStackTrace();
             }
 
@@ -101,31 +103,12 @@ public class FragmentRicercaStazioni extends Fragment
 
                 placeMarkers = new Marker[MAX_PLACES];
             }
-            GoogleMapOptions mapOptions = new GoogleMapOptions();
 
-            mapOptions.rotateGesturesEnabled(true);
-            mapOptions.compassEnabled(true);
-            googleMap.getMap().setMyLocationEnabled(true);
-            googleMap.getMap().getUiSettings().setAllGesturesEnabled(true);
-            googleMap.getMap().getUiSettings().setMyLocationButtonEnabled(true);
-            googleMap.getMap().getUiSettings().setZoomControlsEnabled(true);
-            googleMap.getMap();
+            //setto la mappa e la ottengo
 
-            MapsInitializer.initialize(this.getActivity());
+            setMapOptions(googleMap);
+            getMapFragment(googleMap);
 
-        } catch (GooglePlayServicesNotAvailableException e) {
-             Toast.makeText(getActivity(), "Google Play Services missing !",
-                     Toast.LENGTH_LONG).show();
-         }
-        /*
-         } catch (InflateException e) {
-            Toast.makeText(getActivity(), "Problems inflating the view !",
-                    Toast.LENGTH_LONG).show();
-        } catch (NullPointerException e) {
-            Toast.makeText(getActivity(), "Google Play Services missing !",
-                    Toast.LENGTH_LONG).show();
-        }
-        */
 
         view.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
@@ -157,17 +140,8 @@ public class FragmentRicercaStazioni extends Fragment
             }
         });
 
-        /*
-        Location locationForQuery = locationClient.getLastLocation();
-        String locationForQueryToString = locationForQuery.toString();
-        String placesQuery = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?\n" +
-                locationForQueryToString +
-                "    &radius=1000\n" +
-                "    &sensor=true\n" +
-                "    &types=gas_station\n" +
-                "    &key=AIzaSyA7ttpFSTYMgDsan6GvsznzN-xkhN1M8n0";
-*/
         return view;
+
     }
 
     @Override
@@ -189,26 +163,15 @@ public class FragmentRicercaStazioni extends Fragment
 
         locationClient.connect();
 
-
     }
 
     @Override
     public void onLocationChanged(Location location) {
 
-        CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(
-                new LatLng(location.getLatitude(), location.getLongitude()), 15);
-        googleMap.getMap().animateCamera(cameraUpdate);
+        getLocationUpdates();
+        getMarkers();
 
-        double lat = location.getLatitude();
-        double lon = location.getLongitude();
-
-        String placesSearchStr = "https://maps.googleapis.com/maps/api/place/nearbysearch/" +
-                "json?location=" + lat + "," + lon +
-                "&radius=5000&sensor=true" +
-                "&keyword=stazioni%20di%20servizio" +
-                "&key=AIzaSyDQOzSn_VhdDuz26Hes3wtci9HHW6WZnyQ";
-
-        new GetPlaces().execute(placesSearchStr);
+        //TODO diminuire il numero di richieste fatte alle places api siccome ho 1000 token al giorno
 
         Log.d(TAG,
                 "LocationTrackingService ---> onLocationChanged(): Provider: "
@@ -235,43 +198,17 @@ public class FragmentRicercaStazioni extends Fragment
 
     @Override
     public void onConnectionFailed(ConnectionResult arg0) {
-
-
+        Log.d(TAG, "Connessione al location client fallita");
     }
 
     @Override
     public void onConnected(Bundle connectionHint) {
 
-        if (locationClient.isConnected()) {
+        getLocationUpdates();
+        getMarkers();
+        firstTimeConnected = false;
 
-
-            Location location = locationClient.getLastLocation();
-            if (location != null) {
-                CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(
-                        new LatLng(location.getLatitude(), location.getLongitude()), 15);
-                googleMap.getMap().animateCamera(cameraUpdate);
-
-                double lat = location.getLatitude();
-                double lon = location.getLongitude();
-
-                String placesSearchStr = "https://maps.googleapis.com/maps/api/place/nearbysearch/" +
-                        "json?location=" + lat + "," + lon +
-                        "&radius=5000&sensor=true" +
-                        "&keyword=stazioni%20di%20servizio" +
-                        "&key=AIzaSyDQOzSn_VhdDuz26Hes3wtci9HHW6WZnyQ";
-
-
-                Log.d(TAG,
-                        "LocationTrackingService ---> onLocationChanged(): Provider: "
-                                + location.getProvider() + " Lat: "
-                                + location.getLatitude() + " Lng: "
-                                + location.getLongitude() + " Accuracy: "
-                                + location.getAccuracy()
-                );
-
-                new GetPlaces().execute(placesSearchStr);
-            }
-        }
+        Log.d(TAG, "onConnected");
 
     }
 
@@ -281,42 +218,86 @@ public class FragmentRicercaStazioni extends Fragment
     }
 
     @Override
-    public void onResume() {
-    super.onResume();
+    public void onResume(){
 
-        locationRequest = LocationRequest.create();
-        locationRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
+        super.onResume();
 
-        try{
+        Log.d(TAG,"onResume");
 
-            locationClient = new LocationClient(this.getActivity().getApplicationContext(), this, this);
+        if(!locationClient.isConnected()) { //se esco dall'app non dovrebbe mai esserlo, faccio disconnect
 
-        }catch (Exception e) {
-
-            e.printStackTrace();
+            locationClient.connect();
+            Log.d(TAG, "Connessione al location client");
         }
 
-        locationClient.connect();
+    }
 
-        if (locationClient.isConnected()) {
+    public void onPause(){
 
-            Location location = locationClient.getLastLocation();
-            CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(
-                    new LatLng(location.getLatitude(), location.getLongitude()), 15);
+        super.onPause();
+        locationClient.disconnect();
+    }
+
+    public void onDestroy() {
+
+        super.onDestroy();
+        locationClient.disconnect();
+    }
+
+    private void setMapOptions(MapFragment googleMap) {
+
+        GoogleMapOptions mapOptions = new GoogleMapOptions();
+
+        mapOptions.rotateGesturesEnabled(true);
+        mapOptions.compassEnabled(true);
+        googleMap.getMap().setMyLocationEnabled(true);
+        googleMap.getMap().getUiSettings().setAllGesturesEnabled(true);
+        googleMap.getMap().getUiSettings().setMyLocationButtonEnabled(true);
+        googleMap.getMap().getUiSettings().setZoomControlsEnabled(true);
+        googleMap.getMap();
+
+    }
+
+    private void getMapFragment(MapFragment googleMap) {
+
+        googleMap.getMap();
+    }
+
+    private void getLocationUpdates(){
+
+        if(locationClient.isConnected()&&firstTimeConnected){
+
+            Location location=locationClient.getLastLocation();
+
+            if(location!=null){
+            CameraUpdate cameraUpdate=CameraUpdateFactory.newLatLngZoom(
+            new LatLng(location.getLatitude(),location.getLongitude()),15);
             googleMap.getMap().animateCamera(cameraUpdate);
+            }
 
-            double lat = location.getLatitude();
-            double lon = location.getLongitude();
+            Log.d(TAG,
+                    "LocationTrackingService ---> getLocationUpdates(): Provider: "
+                            + location.getProvider() + " Lat: "
+                            + location.getLatitude() + " Lng: "
+                            + location.getLongitude() + " Accuracy: "
+                            + location.getAccuracy()
+            );
 
+        }
+    }
 
+    private void getMarkers() {
+
+        Location location = locationClient.getLastLocation();
         String placesSearchStr = "https://maps.googleapis.com/maps/api/place/nearbysearch/" +
-                "json?location=" + lat + "," + lon +
+                "json?location=" + location.getLatitude() + "," + location.getLongitude() +
                 "&radius=5000&sensor=true" +
                 "&keyword=stazioni%20di%20servizio" +
                 "&key=AIzaSyDQOzSn_VhdDuz26Hes3wtci9HHW6WZnyQ";
 
-            new GetPlaces().execute(placesSearchStr);
-        }
+        Log.d(TAG, "getMarkers()");
+        new GetPlaces().execute(placesSearchStr);
+
     }
 
 
@@ -367,17 +348,12 @@ public class FragmentRicercaStazioni extends Fragment
         //process data retrieved from doInBackground
         protected void onPostExecute(String result) {
             //parse place data returned from Google Places
-            //remove existing markers
-/*
-            if (result != null) {
 
-                Toast t = Toast.makeText(getActivity(), result, Toast.LENGTH_LONG);
-                t.show();
-            }
-*/
+
             if (result == null) {
 
-                Toast t = Toast.makeText(getActivity(), "Nessun risultato", Toast.LENGTH_LONG);
+                Toast t = Toast.makeText(getActivity(), "Nessun distributore trovato nelle vicinanze",
+                        Toast.LENGTH_LONG);
                 t.show();
             }
 

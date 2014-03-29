@@ -134,7 +134,7 @@ public class FragmentInserimentoDati extends Fragment {
 
         double oilPrice = 0.0d;
         if (liters != 0.0d) {
-            getOilPrice(price, liters);
+            oilPrice = getOilPrice(price, liters);
         }
 
         EditText s = (EditText)getActivity().findViewById(R.id.insert_station);

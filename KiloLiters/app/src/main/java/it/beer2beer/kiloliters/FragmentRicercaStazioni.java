@@ -63,7 +63,7 @@ public class FragmentRicercaStazioni extends Fragment
     public static String TAG = "LocalizationService";
     private LocationRequest locationRequest;
     private LocationClient locationClient;
-    private Location locationBeforeChange;
+    private Location locationFromConnection;
     MapFragment googleMap;
     //places of interest
     private Marker[] placeMarkers;
@@ -86,29 +86,28 @@ public class FragmentRicercaStazioni extends Fragment
                              Bundle savedInstanceState) {
 
 
+        view = inflater.inflate(R.layout.view_ricerca_stazioni, container,
+                false);
+        try {
 
-            view = inflater.inflate(R.layout.view_ricerca_stazioni, container,
-                    false);
-            try {
+            googleMap = ((MapFragment) this.getActivity()
+                    .getFragmentManager().findFragmentById(R.id.map));
 
-                googleMap = ((MapFragment) this.getActivity()
-                        .getFragmentManager().findFragmentById(R.id.map));
+        } catch (Exception e) {
 
-            }catch (Exception e){
+            Log.d(TAG, "Errore inizializzazione mappa");
+            e.printStackTrace();
+        }
 
-                Log.d(TAG, "Errore inizializzazione mappa");
-                e.printStackTrace();
-            }
+        if (googleMap != null) {
 
-            if (googleMap!=null) {
+            placeMarkers = new Marker[MAX_PLACES];
+        }
 
-                placeMarkers = new Marker[MAX_PLACES];
-            }
+        //setto la mappa e la ottengo
 
-            //setto la mappa e la ottengo
-
-            setMapOptions(googleMap);
-            getMapFragment(googleMap);
+        setMapOptions(googleMap);
+        getMapFragment(googleMap);
 
 
         view.setOnFocusChangeListener(new View.OnFocusChangeListener() {
@@ -141,8 +140,16 @@ public class FragmentRicercaStazioni extends Fragment
             }
         });
 
-        return view;
+        if (locationClient.isConnected()) {
+            Location location = locationClient.getLastLocation();
+            if (location != null) {
+                CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(
+                        new LatLng(location.getLatitude(), location.getLongitude()), 15);
+                googleMap.getMap().animateCamera(cameraUpdate);
 
+            }
+        }
+        return view;
     }
 
     @Override
@@ -172,12 +179,11 @@ public class FragmentRicercaStazioni extends Fragment
         // se la distanza tra la nuova locazione e quella presa dalla onConnected è minore di 2,5 km
         // allora non richiamo la getMarkers per evitare overhead e chiamate inutili alle API
 
-        if (location.distanceTo(locationBeforeChange) > 2500) {
+        if (location.distanceTo(locationFromConnection) > 1000) {
 
             getMarkers();
 
         }
-
 
         Log.d(TAG,
                 "LocationTrackingService ---> onLocationChanged(): Provider: "
@@ -210,6 +216,8 @@ public class FragmentRicercaStazioni extends Fragment
     @Override
     public void onConnected(Bundle connectionHint) {
 
+
+        locationFromConnection = locationClient.getLastLocation();
         getLocationUpdates();
         getMarkers();
         firstTimeConnected = false;
@@ -229,6 +237,9 @@ public class FragmentRicercaStazioni extends Fragment
         super.onResume();
 
         Log.d(TAG,"onResume");
+
+        locationRequest = LocationRequest.create();
+        locationRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
 
         if(!locationClient.isConnected()) { //se esco dall'app non dovrebbe mai esserlo, faccio disconnect
 
@@ -275,8 +286,6 @@ public class FragmentRicercaStazioni extends Fragment
 
             Location location=locationClient.getLastLocation();
 
-            locationBeforeChange = location;
-
             if(location!=null){
             CameraUpdate cameraUpdate=CameraUpdateFactory.newLatLngZoom(
             new LatLng(location.getLatitude(),location.getLongitude()),15);
@@ -299,7 +308,7 @@ public class FragmentRicercaStazioni extends Fragment
         Location location = locationClient.getLastLocation();
         String placesSearchStr = "https://maps.googleapis.com/maps/api/place/nearbysearch/" +
                 "json?location=" + location.getLatitude() + "," + location.getLongitude() +
-                "&radius=5000&sensor=true" +
+                "&radius=7500&sensor=true" +
                 "&keyword=stazioni%20di%20servizio" +
                 "&key=AIzaSyDQOzSn_VhdDuz26Hes3wtci9HHW6WZnyQ";
 

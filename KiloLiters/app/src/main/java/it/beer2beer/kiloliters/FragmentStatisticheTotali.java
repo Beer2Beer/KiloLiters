@@ -97,6 +97,9 @@ public class FragmentStatisticheTotali extends Fragment {
         double k = db.getKiloliters(km, l);
         statisticKiloliters.setText(Double.toString(k));
 
+        TextView statisticLastRefuel = (TextView) view.findViewById(R.id.statistic_last_refuel);
+        statisticLastRefuel.setText(db.getLastRefuel());
+
         db.close();
     }
 

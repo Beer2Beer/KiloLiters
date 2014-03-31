@@ -36,7 +36,7 @@ public class DatabaseAdapter {
                     "chilometri integer not null, prezzo real not null, litri integer not null, " +
                     "importo real not null, distributore text not null, " +
                     "citta text not null, descrizione text);";
-    public static final String VIEW_DROP = "drop view distributori_preferiti if exists";
+    public static final String VIEW_DROP = "drop view distributori_preferiti";
     public static final String VIEW_CREATE = "create view distributori_preferiti as " +
             "select distinct distributore, descrizione, count(distributore) as visite " +
             "from rifornimenti " +
@@ -186,8 +186,8 @@ public class DatabaseAdapter {
     }
 
     public String getMostUsedStation () {
-        // db.execSQL(VIEW_DROP);
-        // db.execSQL(VIEW_CREATE);
+        db.execSQL(VIEW_DROP);
+        db.execSQL(VIEW_CREATE);
         Cursor c = db.rawQuery("SELECT distributore, descrizione, MAX(visite) FROM distributori_preferiti;", null);
         if (c != null) {
             c.moveToFirst();
@@ -202,6 +202,17 @@ public class DatabaseAdapter {
             c.moveToFirst();
         }
         return c.getInt(0);
+    }
+
+    public String getLastRefuel () {
+        long id = getLastId();
+        Cursor c = getRefuel(id);
+        if (c != null) {
+            c.moveToFirst();
+        }
+        /*problema: la prima volta che si apre l'app, cioè senza
+        * nemmeno un inserimento, questa funzione non sa cosa ritornare*/
+        return c.getString(0);
     }
 
 }

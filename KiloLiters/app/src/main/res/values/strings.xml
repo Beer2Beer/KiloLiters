@@ -11,9 +11,9 @@
     <string name="fav_station">Distributore preferito</string>
     <string name="insert_description">es. Indirizzo</string>
     <string name="kiloliters">Chilometri/litro</string>
+    <string name="last_refuel">Data ultimo rifornimento</string>
     <string name="liters">Litri erogati</string>
     <string name="medium_price">Prezzo medio</string>
-    <string name="medium_time">Tempo medio tra i rifornimenti</string>
     <string name="oil_price">Prezzo carburante</string>
     <string name="price">Importo pagato</string>
     <string name="save_data_button">Salva rifornimento</string>

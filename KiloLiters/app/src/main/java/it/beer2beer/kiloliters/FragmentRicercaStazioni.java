@@ -55,31 +55,22 @@ import java.net.ConnectException;
  * Created by federico on 08/03/14.
  */
 public class FragmentRicercaStazioni extends Fragment
-        implements
-        GooglePlayServicesClient.ConnectionCallbacks,
-        GooglePlayServicesClient.OnConnectionFailedListener,
-        LocationListener {
+        implements LocationListener {
 
 
     public static String TAG = "LocalizationService";
-    private LocationRequest locationRequest;
-    private LocationClient locationClient;
-    private Location locationFromConnection;
+
     private LocationManager locationManager;
-    private Criteria criteria = new Criteria();
-    private String provider;
+
     MapFragment googleMap;
-    //places of interest
+
     private Marker[] placeMarkers;
-    //max
     private final int MAX_PLACES = 20;//most returned from google
-    //marker options
     private MarkerOptions[] places;
     private int otherIcon = R.drawable.gas_station;
+
     boolean firstSearch = true;
     boolean toastLocationVisualized = false;
-    boolean firstTimeConnectedOnLocationChanged = true;
-    boolean firstTimeConnectedOnConnected = true;
 
     View view;
 
@@ -132,6 +123,7 @@ public class FragmentRicercaStazioni extends Fragment
                     t.show();
 
                     firstSearch = false;
+
                 }
 
                 if ((!toastLocationVisualized) && !locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER) &&
@@ -146,15 +138,6 @@ public class FragmentRicercaStazioni extends Fragment
             }
         });
 
-        if (locationClient.isConnected()) {
-            Location location = locationClient.getLastLocation();
-            if (location != null) {
-                CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(
-                        new LatLng(location.getLatitude(), location.getLongitude()), 15);
-                googleMap.getMap().animateCamera(cameraUpdate);
-
-            }
-        }
         return view;
     }
 
@@ -163,12 +146,8 @@ public class FragmentRicercaStazioni extends Fragment
 
         super.onCreate(savedInstanceState);
 
-        locationRequest = LocationRequest.create();
-        locationRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
-
         try{
 
-            locationClient = new LocationClient(this.getActivity().getApplicationContext(), this, this);
             locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
 
         }catch (Exception e) {
@@ -176,7 +155,15 @@ public class FragmentRicercaStazioni extends Fragment
             e.printStackTrace();
         }
 
-        locationClient.connect();
+        if (locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
+
+            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, this);
+        }
+
+        if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
+        }
 
     }
 
@@ -186,34 +173,32 @@ public class FragmentRicercaStazioni extends Fragment
         // se la distanza tra la nuova locazione e quella presa dalla onConnected è minore di 2,5 km
         // allora non richiamo la getMarkers per evitare overhead e chiamate inutili alle API
 
-        if (firstTimeConnectedOnLocationChanged && location != null) {
+        if (location != null) {
 
-            getMarkers();
-            firstTimeConnectedOnLocationChanged = false;
-            Log.d(TAG, "Chiamata a getMarkers(), da firstTimeConnected in onLocationChanged");
-        }
+                //if (location.distanceTo(locationForDistanceCheck) > 1000) {
 
-        if (location != null && locationFromConnection != null) {
+                    getMarkers(location);
+                    Log.d(TAG, "Chiamata a getMarkers() da onLocationChanged");
 
-            if (location.distanceTo(locationFromConnection) > 1000) {
+                    //    }
 
-                getMarkers();
-                Log.d(TAG, "Chiamata a getMarkers(), distanceTo > 1000");
+                    Log.d(TAG,
+                            "LocationTrackingService ---> onLocationChanged(): Provider: "
+                                    + location.getProvider() + " Lat: "
+                                    + location.getLatitude() + " Lng: "
+                                    + location.getLongitude() + " Accuracy: "
+                                    + location.getAccuracy()
+                    );
+                }
+           // } else {
+          //      getMarkers(location);
+            //    Log.d(TAG, "Chiamata a getMarkers, locationForDistanceCheck == null");
 
             }
-        }
-
-        Log.d(TAG,
-                "LocationTrackingService ---> onLocationChanged(): Provider: "
-                        + location.getProvider() + " Lat: "
-                        + location.getLatitude() + " Lng: "
-                        + location.getLongitude() + " Accuracy: "
-                        + location.getAccuracy());
-    }
 
     @Override
     public void onStatusChanged(String s, int i, Bundle bundle) {
-
+        Log.d(TAG, "onStatusChanged");
     }
 
     @Override
@@ -223,30 +208,8 @@ public class FragmentRicercaStazioni extends Fragment
 
     @Override
     public void onProviderDisabled(String s) {
-
-    }
-
-    @Override
-    public void onConnectionFailed(ConnectionResult arg0) {
-        Log.d(TAG, "Connessione al location client fallita");
-    }
-
-    @Override
-    public void onConnected(Bundle connectionHint) {
-
-        locationFromConnection = locationClient.getLastLocation();
-        provider = locationManager.getBestProvider(criteria, false);
-        locationManager.requestLocationUpdates(provider, 200, 10, this);
-
-        getLocationUpdates();
-
-        Log.d(TAG, "onConnected");
-
-    }
-
-    @Override
-    public void onDisconnected() {
-
+        Log.d(TAG, "onProviderDisabled");
+        locationManager.removeUpdates(this);
     }
 
     @Override
@@ -254,18 +217,15 @@ public class FragmentRicercaStazioni extends Fragment
 
         super.onResume();
 
-        Log.d(TAG,"onResume");
+        Log.d(TAG, "onResume");
 
-        locationRequest = LocationRequest.create();
-        locationRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
+        if (locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
 
-        provider = locationManager.getBestProvider(criteria, false);
-        locationManager.requestLocationUpdates(provider, 200 , 10 , this);
+            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, this);
+        }
+        if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
 
-        if(!locationClient.isConnected()) { //se esco dall'app non dovrebbe mai esserlo, faccio disconnect
-
-            locationClient.connect();
-            Log.d(TAG, "Connessione al location client");
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
         }
 
     }
@@ -273,13 +233,15 @@ public class FragmentRicercaStazioni extends Fragment
     public void onPause(){
 
         super.onPause();
-        locationClient.disconnect();
+
+        locationManager.removeUpdates(this);
     }
 
     public void onDestroy() {
 
         super.onDestroy();
-        locationClient.disconnect();
+
+        locationManager.removeUpdates(this);
     }
 
     private void setMapOptions(MapFragment googleMap) {
@@ -301,39 +263,8 @@ public class FragmentRicercaStazioni extends Fragment
         googleMap.getMap();
     }
 
-    private void getLocationUpdates(){
+    private void getMarkers(Location location) {
 
-        if(locationClient.isConnected()){
-
-            Location location=locationClient.getLastLocation();
-
-            if (location != null && firstTimeConnectedOnConnected) {
-
-                getMarkers();
-            }
-
-            if(location!=null){
-            CameraUpdate cameraUpdate=CameraUpdateFactory.newLatLngZoom(
-            new LatLng(location.getLatitude(),location.getLongitude()),15);
-            googleMap.getMap().animateCamera(cameraUpdate);
-
-
-            Log.d(TAG,
-                    "LocationTrackingService ---> getLocationUpdates(): Provider: "
-                            + location.getProvider() + " Lat: "
-                            + location.getLatitude() + " Lng: "
-                            + location.getLongitude() + " Accuracy: "
-                            + location.getAccuracy());
-            }
-
-        }
-    }
-
-    private void getMarkers() {
-
-        if (locationClient.isConnected()) {
-
-            Location location = locationClient.getLastLocation();
             if (location != null) {
                 String placesSearchStr = "https://maps.googleapis.com/maps/api/place/nearbysearch/" +
                         "json?location=" + location.getLatitude() + "," + location.getLongitude() +
@@ -344,7 +275,6 @@ public class FragmentRicercaStazioni extends Fragment
                 Log.d(TAG, "getMarkers()");
                 new GetPlaces().execute(placesSearchStr);
             }
-        }
     }
 
 

@@ -115,6 +115,7 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
         // as you specify a parent activity in AndroidManifest.xml.
         switch (item.getItemId()) {
 
+            /*
             case R.id.action_settings:
 
                 Context context_settings = getApplicationContext();
@@ -124,11 +125,12 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
                 //qui posso lanciare l'activity associata alle impostazioni (creare la classe)
 
                 return true;
-
+            */
             case R.id.action_about:
 
                 Context context_about = getApplicationContext();
-                Toast toast_about = Toast.makeText(context_about, "Da implementare", Toast.LENGTH_SHORT);
+                Toast toast_about = Toast.makeText(context_about, "Coded by Federico Bertoli and " +
+                        "Francesco Trombi - 2014 - version 0.4 Alpha", Toast.LENGTH_LONG);
                 toast_about.show();
 
                 //qui posso lanciare l'activity associata alle info sull'app (creare la classe)

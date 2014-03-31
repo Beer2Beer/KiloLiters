@@ -16,18 +16,9 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GooglePlayServicesClient;
-import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
-import com.google.android.gms.location.LocationClient;
-import com.google.android.gms.location.LocationRequest;
-import com.google.android.gms.maps.CameraUpdate;
-import com.google.android.gms.maps.CameraUpdateFactory;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.GoogleMapOptions;
 
+import com.google.android.gms.maps.GoogleMapOptions;
 import com.google.android.gms.maps.MapFragment;
-import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
@@ -46,10 +37,6 @@ import org.json.JSONObject;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-
-
-
-import java.net.ConnectException;
 
 /**
  * Created by federico on 08/03/14.
@@ -157,12 +144,12 @@ public class FragmentRicercaStazioni extends Fragment
 
         if (locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
 
-            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, this);
+            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 500, 1000, this);
         }
 
         if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
 
-            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 500, 1000, this);
         }
 
     }
@@ -170,17 +157,9 @@ public class FragmentRicercaStazioni extends Fragment
     @Override
     public void onLocationChanged(Location location) {
 
-        // se la distanza tra la nuova locazione e quella presa dalla onConnected è minore di 2,5 km
-        // allora non richiamo la getMarkers per evitare overhead e chiamate inutili alle API
-
         if (location != null) {
 
-                //if (location.distanceTo(locationForDistanceCheck) > 1000) {
-
                     getMarkers(location);
-                    Log.d(TAG, "Chiamata a getMarkers() da onLocationChanged");
-
-                    //    }
 
                     Log.d(TAG,
                             "LocationTrackingService ---> onLocationChanged(): Provider: "
@@ -190,10 +169,6 @@ public class FragmentRicercaStazioni extends Fragment
                                     + location.getAccuracy()
                     );
                 }
-           // } else {
-          //      getMarkers(location);
-            //    Log.d(TAG, "Chiamata a getMarkers, locationForDistanceCheck == null");
-
             }
 
     @Override
@@ -221,11 +196,11 @@ public class FragmentRicercaStazioni extends Fragment
 
         if (locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
 
-            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, this);
+            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 500, 1000, this);
         }
         if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
 
-            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 500, 1000, this);
         }
 
     }
@@ -272,7 +247,7 @@ public class FragmentRicercaStazioni extends Fragment
                         "&keyword=stazioni%20di%20servizio" +
                         "&key=AIzaSyDQOzSn_VhdDuz26Hes3wtci9HHW6WZnyQ";
 
-                Log.d(TAG, "getMarkers()");
+                Log.d(TAG, "getMarkers() chiamata");
                 new GetPlaces().execute(placesSearchStr);
             }
     }

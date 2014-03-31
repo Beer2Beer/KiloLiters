@@ -81,7 +81,7 @@ public class FragmentInserimentoDati extends Fragment {
                 "litri: "+ liters +"prezzo: " + price  +"Distributore: "+ station +"Città: "+ city +
                         "Desc: "+ description);
         db = new DatabaseAdapter(this.getActivity());
-        Toast t = Toast.makeText(getActivity(), "Dentro inserFuelFromUser", Toast.LENGTH_LONG);
+        Toast t = Toast.makeText(getActivity(), "Rifornimento salvato!", Toast.LENGTH_LONG);
         t.show();
         try {
             db.open();

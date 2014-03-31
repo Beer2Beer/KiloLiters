@@ -2,6 +2,7 @@ package it.beer2beer.kiloliters;
 
 import android.app.Fragment;
 import android.content.Context;
+import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
 
@@ -64,6 +65,9 @@ public class FragmentRicercaStazioni extends Fragment
     private LocationRequest locationRequest;
     private LocationClient locationClient;
     private Location locationFromConnection;
+    private LocationManager locationManager;
+    private Criteria criteria = new Criteria();
+    private String provider;
     MapFragment googleMap;
     //places of interest
     private Marker[] placeMarkers;
@@ -74,7 +78,8 @@ public class FragmentRicercaStazioni extends Fragment
     private int otherIcon = R.drawable.gas_station;
     boolean firstSearch = true;
     boolean toastLocationVisualized = false;
-    boolean firstTimeConnected = true;
+    boolean firstTimeConnectedOnLocationChanged = true;
+    boolean firstTimeConnectedOnConnected = true;
 
     View view;
 
@@ -92,6 +97,7 @@ public class FragmentRicercaStazioni extends Fragment
 
             googleMap = ((MapFragment) this.getActivity()
                     .getFragmentManager().findFragmentById(R.id.map));
+
 
         } catch (Exception e) {
 
@@ -163,6 +169,7 @@ public class FragmentRicercaStazioni extends Fragment
         try{
 
             locationClient = new LocationClient(this.getActivity().getApplicationContext(), this, this);
+            locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
 
         }catch (Exception e) {
 
@@ -179,10 +186,21 @@ public class FragmentRicercaStazioni extends Fragment
         // se la distanza tra la nuova locazione e quella presa dalla onConnected è minore di 2,5 km
         // allora non richiamo la getMarkers per evitare overhead e chiamate inutili alle API
 
-        if (location.distanceTo(locationFromConnection) > 1000) {
+        if (firstTimeConnectedOnLocationChanged && location != null) {
 
             getMarkers();
+            firstTimeConnectedOnLocationChanged = false;
+            Log.d(TAG, "Chiamata a getMarkers(), da firstTimeConnected in onLocationChanged");
+        }
 
+        if (location != null && locationFromConnection != null) {
+
+            if (location.distanceTo(locationFromConnection) > 1000) {
+
+                getMarkers();
+                Log.d(TAG, "Chiamata a getMarkers(), distanceTo > 1000");
+
+            }
         }
 
         Log.d(TAG,
@@ -216,11 +234,11 @@ public class FragmentRicercaStazioni extends Fragment
     @Override
     public void onConnected(Bundle connectionHint) {
 
-
         locationFromConnection = locationClient.getLastLocation();
+        provider = locationManager.getBestProvider(criteria, false);
+        locationManager.requestLocationUpdates(provider, 200, 10, this);
+
         getLocationUpdates();
-        getMarkers();
-        firstTimeConnected = false;
 
         Log.d(TAG, "onConnected");
 
@@ -240,6 +258,9 @@ public class FragmentRicercaStazioni extends Fragment
 
         locationRequest = LocationRequest.create();
         locationRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
+
+        provider = locationManager.getBestProvider(criteria, false);
+        locationManager.requestLocationUpdates(provider, 200 , 10 , this);
 
         if(!locationClient.isConnected()) { //se esco dall'app non dovrebbe mai esserlo, faccio disconnect
 
@@ -282,39 +303,48 @@ public class FragmentRicercaStazioni extends Fragment
 
     private void getLocationUpdates(){
 
-        if(locationClient.isConnected()&&firstTimeConnected){
+        if(locationClient.isConnected()){
 
             Location location=locationClient.getLastLocation();
+
+            if (location != null && firstTimeConnectedOnConnected) {
+
+                getMarkers();
+            }
 
             if(location!=null){
             CameraUpdate cameraUpdate=CameraUpdateFactory.newLatLngZoom(
             new LatLng(location.getLatitude(),location.getLongitude()),15);
             googleMap.getMap().animateCamera(cameraUpdate);
-            }
+
 
             Log.d(TAG,
                     "LocationTrackingService ---> getLocationUpdates(): Provider: "
                             + location.getProvider() + " Lat: "
                             + location.getLatitude() + " Lng: "
                             + location.getLongitude() + " Accuracy: "
-                            + location.getAccuracy()
-            );
+                            + location.getAccuracy());
+            }
 
         }
     }
 
     private void getMarkers() {
 
-        Location location = locationClient.getLastLocation();
-        String placesSearchStr = "https://maps.googleapis.com/maps/api/place/nearbysearch/" +
-                "json?location=" + location.getLatitude() + "," + location.getLongitude() +
-                "&radius=7500&sensor=true" +
-                "&keyword=stazioni%20di%20servizio" +
-                "&key=AIzaSyDQOzSn_VhdDuz26Hes3wtci9HHW6WZnyQ";
+        if (locationClient.isConnected()) {
 
-        Log.d(TAG, "getMarkers()");
-        new GetPlaces().execute(placesSearchStr);
+            Location location = locationClient.getLastLocation();
+            if (location != null) {
+                String placesSearchStr = "https://maps.googleapis.com/maps/api/place/nearbysearch/" +
+                        "json?location=" + location.getLatitude() + "," + location.getLongitude() +
+                        "&radius=7500&sensor=true" +
+                        "&keyword=stazioni%20di%20servizio" +
+                        "&key=AIzaSyDQOzSn_VhdDuz26Hes3wtci9HHW6WZnyQ";
 
+                Log.d(TAG, "getMarkers()");
+                new GetPlaces().execute(placesSearchStr);
+            }
+        }
     }
 
 

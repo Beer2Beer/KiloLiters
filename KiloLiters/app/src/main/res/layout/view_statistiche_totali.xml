@@ -25,10 +25,30 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:id="@+id/statistic_total_km"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="40dp"
+        android:layout_marginLeft="6dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignBottom="@id/total_km"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:id="@+id/total_liters"
         android:layout_below="@id/total_km"
         android:text="@string/total_liters"
         android:layout_marginTop="20dp"
+        android:layout_marginLeft="6dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/statistic_total_liters"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="20dp"
+        android:layout_below="@id/total_km"
+        android:layout_alignBottom="@id/total_liters"
         android:layout_marginLeft="6dp"/>
 
     <TextView

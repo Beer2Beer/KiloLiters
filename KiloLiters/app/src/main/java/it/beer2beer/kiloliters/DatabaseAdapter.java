@@ -146,21 +146,33 @@ public class DatabaseAdapter {
 
     public int getTotalKilometers () {
         Cursor c = db.rawQuery("SELECT MAX(chilometri)-MIN(chilometri) FROM rifornimenti", null);
+        if (c != null) {
+            c.moveToFirst();
+        }
         return c.getInt(0);
     }
 
     public int getSumLiters () {
         Cursor c = db.rawQuery("SELECT SUM(litri) FROM rifornimenti", null);
+        if (c != null) {
+            c.moveToFirst();
+        }
         return c.getInt(0);
     }
 
     public int getSumPaid () {
         Cursor c = db.rawQuery("SELECT SUM(importo) FROM rifornimenti", null);
+        if (c != null) {
+            c.moveToFirst();
+        }
         return c.getInt(0);
     }
 
     public double getAvgPrice () {
         Cursor c = db.rawQuery("SELECT AVG(prezzo) FROM rifornimenti", null);
+        if (c != null) {
+            c.moveToFirst();
+        }
         int i = (int)(c.getDouble(0)*1000);
         return i/1000d;
     }
@@ -176,12 +188,18 @@ public class DatabaseAdapter {
         db.execSQL(VIEW_DROP);
         db.execSQL(VIEW_CREATE);
         Cursor c = db.rawQuery("SELECT distributore, descrizione, MAX(visite) FROM distributori_preferiti;", null);
+        if (c != null) {
+            c.moveToFirst();
+        }
         return c.getString(0);
 
     }
 
     public int getLastId () {
         Cursor c = db.rawQuery("SELECT MAX(_id) FROM rifornimenti", null);
+        if (c != null) {
+            c.moveToFirst();
+        }
         return c.getInt(0);
     }
 

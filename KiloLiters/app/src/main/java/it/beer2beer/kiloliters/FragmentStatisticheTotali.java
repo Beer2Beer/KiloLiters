@@ -82,6 +82,21 @@ public class FragmentStatisticheTotali extends Fragment {
         int l = db.getSumLiters();
         statisticLiters.setText(Integer.toString(l));
 
+        TextView statisticPaid = (TextView) view.findViewById(R.id.statistic_total_paid);
+        int p = db.getSumPaid();
+        statisticPaid.setText(Integer.toString(p));
+
+        TextView statisticMediumPrice = (TextView) view.findViewById(R.id.statistic_medium_price);
+        double mp = db.getAvgPrice();
+        statisticMediumPrice.setText(Double.toString(mp));
+
+        TextView statisticFavStation = (TextView) view.findViewById(R.id.statistic_fav_station);
+        statisticFavStation.setText(db.getMostUsedStation());
+
+        TextView statisticKiloliters = (TextView) view.findViewById(R.id.statistic_kiloliters);
+        double k = db.getKiloliters(km, l);
+        statisticKiloliters.setText(Double.toString(k));
+
         db.close();
     }
 

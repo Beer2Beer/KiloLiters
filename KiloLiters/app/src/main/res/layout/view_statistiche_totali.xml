@@ -63,10 +63,30 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:id="@+id/statistic_total_paid"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="20dp"
+        android:layout_below="@id/total_liters"
+        android:layout_alignBottom="@id/total_paid"
+        android:layout_marginLeft="6dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:id="@+id/medium_price"
         android:layout_below="@id/total_paid"
         android:text="@string/medium_price"
         android:layout_marginTop="20dp"
+        android:layout_marginLeft="6dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/statistic_medium_price"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="20dp"
+        android:layout_below="@id/total_paid"
+        android:layout_alignBottom="@id/medium_price"
         android:layout_marginLeft="6dp"/>
 
     <TextView
@@ -81,6 +101,16 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:id="@+id/statistic_fav_station"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="20dp"
+        android:layout_below="@id/medium_price"
+        android:layout_alignBottom="@id/fav_station"
+        android:layout_marginLeft="6dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:id="@+id/kiloliters"
         android:layout_below="@id/fav_station"
         android:text="@string/kiloliters"
@@ -90,10 +120,30 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:id="@+id/statistic_kiloliters"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="20dp"
+        android:layout_below="@id/fav_station"
+        android:layout_alignBottom="@id/kiloliters"
+        android:layout_marginLeft="6dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:id="@+id/medium_time"
         android:layout_below="@id/kiloliters"
         android:text="@string/medium_time"
         android:layout_marginTop="20dp"
+        android:layout_marginLeft="6dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/statistic_medium_time"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="20dp"
+        android:layout_below="@id/kiloliters"
+        android:layout_alignBottom="@id/medium_time"
         android:layout_marginLeft="6dp"/>
 
 </RelativeLayout>

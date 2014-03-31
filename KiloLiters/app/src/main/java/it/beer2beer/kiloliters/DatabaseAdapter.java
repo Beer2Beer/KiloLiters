@@ -177,16 +177,17 @@ public class DatabaseAdapter {
         return i/1000d;
     }
 
-    public double getKiloliters () {
-        int l = getSumLiters();
-        int k = getTotalKilometers();
+    public double getKiloliters (int k, int l) {
+
+        if (l == 0) return 0;
+
         int kl = (int) (k/l*100);
         return kl/100;
     }
 
     public String getMostUsedStation () {
-        db.execSQL(VIEW_DROP);
-        db.execSQL(VIEW_CREATE);
+        // db.execSQL(VIEW_DROP);
+        // db.execSQL(VIEW_CREATE);
         Cursor c = db.rawQuery("SELECT distributore, descrizione, MAX(visite) FROM distributori_preferiti;", null);
         if (c != null) {
             c.moveToFirst();

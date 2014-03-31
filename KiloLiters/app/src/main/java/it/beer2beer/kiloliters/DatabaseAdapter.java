@@ -36,6 +36,7 @@ public class DatabaseAdapter {
                     "chilometri integer not null, prezzo real not null, litri integer not null, " +
                     "importo real not null, distributore text not null, " +
                     "citta text not null, descrizione text);";
+    public static final String TABLE_DROP = "drop table rifornimenti if exists;";
     public static final String VIEW_DROP = "drop view distributori_preferiti";
     public static final String VIEW_CREATE = "create view distributori_preferiti as " +
             "select distinct distributore, descrizione, count(distributore) as visite " +
@@ -69,7 +70,7 @@ public class DatabaseAdapter {
             Log.w(TAG, "Upgrading database from version " + oldVersion
                     + " to "
                     + newVersion + ", which will destroy all old data");
-            db.execSQL("DROP TABLE IF EXISTS rifornimenti");
+            db.execSQL(TABLE_DROP);
             onCreate(db);
         }
 
@@ -210,9 +211,17 @@ public class DatabaseAdapter {
         if (c != null) {
             c.moveToFirst();
         }
-        /*problema: la prima volta che si apre l'app, cioè senza
-        * nemmeno un inserimento, questa funzione non sa cosa ritornare*/
-        return c.getString(0);
+        if (c.getString(0) == null)
+            return "Nessun rifornimento";
+        return getCorrectDataFormat(c.getString(0));
+    }
+
+    private String getCorrectDataFormat (String completeData) {
+        /*Parameters: beginIndex -- the begin index, inclusive.
+        endIndex -- the end index, exclusive.*/
+        String onlyData = completeData.substring(0, 8);
+        String formattedData = onlyData.substring(0, 2) + "/" + onlyData.substring(2, 4) + "/" + onlyData.substring(4, 8);
+        return formattedData;
     }
 
 }

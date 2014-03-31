@@ -25,9 +25,9 @@ public class FragmentStatisticheTotali extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.view_statistiche_totali, container, false);
+        View view = inflater.inflate(R.layout.view_statistiche_totali, container, false);
 
-        v.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+        view.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View view, boolean b) {
                 ((InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(
@@ -35,7 +35,7 @@ public class FragmentStatisticheTotali extends Fragment {
             }
         });
 
-        return v;
+        return view;
     }
 
     @Override
@@ -48,6 +48,12 @@ public class FragmentStatisticheTotali extends Fragment {
     public void onDestroy() {
 
         super.onDestroy();
+    }
+
+    @Override
+    public void onResume() {
+
+        super.onResume();
     }
 
 }

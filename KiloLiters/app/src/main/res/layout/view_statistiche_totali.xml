@@ -28,7 +28,7 @@
         android:id="@+id/statistic_total_km"
         android:layout_alignParentTop="true"
         android:layout_marginTop="40dp"
-        android:layout_marginLeft="6dp"
+        android:layout_marginRight="20dp"
         android:layout_alignParentRight="true"
         android:layout_alignBottom="@id/total_km"/>
 
@@ -47,9 +47,9 @@
         android:id="@+id/statistic_total_liters"
         android:layout_alignParentRight="true"
         android:layout_marginTop="20dp"
+        android:layout_marginRight="20dp"
         android:layout_below="@id/total_km"
-        android:layout_alignBottom="@id/total_liters"
-        android:layout_marginLeft="6dp"/>
+        android:layout_alignBottom="@id/total_liters"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -68,7 +68,7 @@
         android:layout_marginTop="20dp"
         android:layout_below="@id/total_liters"
         android:layout_alignBottom="@id/total_paid"
-        android:layout_marginLeft="6dp"/>
+        android:layout_marginRight="20dp"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -87,7 +87,7 @@
         android:layout_marginTop="20dp"
         android:layout_below="@id/total_paid"
         android:layout_alignBottom="@id/medium_price"
-        android:layout_marginLeft="6dp"/>
+        android:layout_marginRight="20dp"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -106,7 +106,7 @@
         android:layout_marginTop="20dp"
         android:layout_below="@id/medium_price"
         android:layout_alignBottom="@id/fav_station"
-        android:layout_marginLeft="6dp"/>
+        android:layout_marginRight="20dp"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -125,7 +125,7 @@
         android:layout_marginTop="20dp"
         android:layout_below="@id/fav_station"
         android:layout_alignBottom="@id/kiloliters"
-        android:layout_marginLeft="6dp"/>
+        android:layout_marginRight="20dp"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -144,7 +144,7 @@
         android:layout_marginTop="20dp"
         android:layout_below="@id/kiloliters"
         android:layout_alignBottom="@id/last_refuel"
-        android:layout_marginLeft="6dp"/>
+        android:layout_marginRight="20dp"/>
 
 </RelativeLayout>
 </ScrollView>

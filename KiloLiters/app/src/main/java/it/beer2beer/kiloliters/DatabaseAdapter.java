@@ -128,6 +128,7 @@ public class DatabaseAdapter {
     }
 
 
+    // TODO reset types
     public boolean updateRefuel(long id, String timestamp, int chilometri,
                                 float prezzo, float litri, float importo,
                                 String distributore, String citta, String descrizione) {
@@ -216,7 +217,7 @@ public class DatabaseAdapter {
         return getCorrectDataFormat(c.getString(0));
     }
 
-    private String getCorrectDataFormat (String completeData) {
+    public String getCorrectDataFormat (String completeData) {
         /*Parameters: beginIndex -- the begin index, inclusive.
         endIndex -- the end index, exclusive.*/
         String onlyData = completeData.substring(0, 8);

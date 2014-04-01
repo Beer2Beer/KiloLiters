@@ -8,8 +8,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.os.Bundle;
+import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import java.sql.SQLException;
@@ -109,6 +111,9 @@ public class FragmentStatistiche extends Fragment {
 
     private void printLayout (LinearLayout root, String t, int k, double pr, double l, double pa,
                               String s, String c, String d) {
+        ScrollView sv = new ScrollView(this.getActivity());
+        sv.setLayoutParams(new WindowManager.LayoutParams(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT));
+
         LinearLayout child = new LinearLayout(this.getActivity());
         child.setOrientation(LinearLayout.VERTICAL);
 
@@ -145,6 +150,8 @@ public class FragmentStatistiche extends Fragment {
         TextView city = new TextView(this.getActivity());
         city.setText("Città: " + c);
         child.addView(city);
+
+        child.addView(sv);
 
         root.addView(child);
 

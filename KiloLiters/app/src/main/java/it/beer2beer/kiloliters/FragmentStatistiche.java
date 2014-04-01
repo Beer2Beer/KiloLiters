@@ -2,22 +2,31 @@ package it.beer2beer.kiloliters;
 
 import android.app.Fragment;
 import android.content.Context;
+import android.database.Cursor;
+import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.os.Bundle;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+
+import java.sql.SQLException;
 
 /**
  * Created by federico on 08/03/14.
  */
 public class FragmentStatistiche extends Fragment {
 
+    DatabaseAdapter db;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
+
+
     }
 
 
@@ -33,6 +42,16 @@ public class FragmentStatistiche extends Fragment {
                         view.getWindowToken(), 0);
             }
         });
+
+        /*code added for statistiche layout*/
+        db = new DatabaseAdapter(this.getActivity());
+
+        LinearLayout root = (LinearLayout) view.findViewById(R.id.root_view);
+
+        initilizeStatistics (root);
+
+        /*end statistic code*/
+
         return view;
     }
 
@@ -53,6 +72,82 @@ public class FragmentStatistiche extends Fragment {
     public void onResume() {
 
         super.onResume();
+    }
+
+    private void initilizeStatistics (LinearLayout root) {
+        /*fa un for da cui ricava le info dal db e le spara nei layout*/
+
+        try {
+            db.open();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        int maxId = db.getLastId();
+
+        for (int i = 1; i <= maxId; i++) {
+            //query al db
+            Cursor c = db.getRefuel(i);
+            String timestamp = c.getString(0);
+            int kilometers = c.getInt(1);
+            Double price = c.getDouble(2);
+            Double liters = c.getDouble(3);
+            Double paid = c.getDouble(4);
+            String station = c.getString(5);
+            String city = c.getString(6);
+            String description = c.getString(7);
+
+            printLayout (root, timestamp, kilometers, price, liters, paid,
+                    station, city, description);
+
+        }
+
+        db.close();
+
+
+    }
+
+    private void printLayout (LinearLayout root, String t, int k, double pr, double l, double pa,
+                              String s, String c, String d) {
+        LinearLayout child = new LinearLayout(this.getActivity());
+        child.setOrientation(LinearLayout.VERTICAL);
+
+        TextView date = new TextView(this.getActivity());
+        date.setText("Data Rifornimento: " + db.getCorrectDataFormat(t));
+        child.addView(date);
+
+        TextView kilometers = new TextView(this.getActivity());
+        kilometers.setText("Chilometri al momento del rifornimento: " + Integer.toString(k));
+        child.addView(kilometers);
+
+        TextView liters = new TextView(this.getActivity());
+        liters.setText("Litri erogati: " + Double.toString(l));
+        child.addView(liters);
+
+        TextView price = new TextView(this.getActivity());
+        price.setText("Prezzo carburante: " + Double.toString(pr));
+        child.addView(price);
+
+        TextView paid = new TextView(this.getActivity());
+        paid.setText("Importo pagato: " + Double.toString(pa));
+        child.addView(paid);
+
+        TextView station = new TextView(this.getActivity());
+        station.setText("Stazione di servizio: " + s);
+        child.addView(station);
+
+        if (d != null) {
+            TextView description = new TextView(this.getActivity());
+            description.setText("Info distributore: " + d);
+            child.addView(description);
+        }
+
+        TextView city = new TextView(this.getActivity());
+        city.setText("Città: " + c);
+        child.addView(city);
+
+        root.addView(child);
+
     }
 
 }

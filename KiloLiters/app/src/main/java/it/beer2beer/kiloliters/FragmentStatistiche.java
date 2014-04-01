@@ -25,20 +25,20 @@ import java.sql.SQLException;
 public class FragmentStatistiche extends Fragment {
 
     DatabaseAdapter db;
+    View view;
+    LinearLayout root;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-
-
     }
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.view_statistiche, container, false);
+        view = inflater.inflate(R.layout.view_statistiche, container, false);
 
         view.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
@@ -50,9 +50,9 @@ public class FragmentStatistiche extends Fragment {
 
         db = new DatabaseAdapter(this.getActivity());
 
-        LinearLayout root = (LinearLayout) view.findViewById(R.id.root_view);
+        root = (LinearLayout) view.findViewById(R.id.root_view);
 
-        initilizeStatistics (root);
+        initializeStatistics();
 
         return view;
     }
@@ -76,7 +76,7 @@ public class FragmentStatistiche extends Fragment {
         super.onResume();
     }
 
-    private void initilizeStatistics (LinearLayout root) {
+    private void initializeStatistics () {
 
         try {
             db.open();
@@ -98,7 +98,7 @@ public class FragmentStatistiche extends Fragment {
             String city = c.getString(6);
             String description = c.getString(7);
 
-            printLayout (root, i, timestamp, kilometers, price, liters, paid,
+            printLayout (i, timestamp, kilometers, price, liters, paid,
                     station, city, description);
 
         }
@@ -108,7 +108,7 @@ public class FragmentStatistiche extends Fragment {
 
     }
 
-    private void printLayout (LinearLayout root, int id, String t, int k, double pr, double l, double pa,
+    private void printLayout (int id, String t, int k, double pr, double l, double pa,
                               String s, String c, String d) {
         ScrollView sv = new ScrollView(this.getActivity());
         sv.setLayoutParams(new WindowManager.LayoutParams(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT));

@@ -20,6 +20,7 @@ public class FragmentStatisticheTotali extends Fragment {
 
     public static String TAG = "Statistiche totali";
     DatabaseAdapter db;
+    View view;
 
     @Override
     public void onCreate(Bundle saveInstanceState){
@@ -30,7 +31,7 @@ public class FragmentStatisticheTotali extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.view_statistiche_totali, container, false);
+        view = inflater.inflate(R.layout.view_statistiche_totali, container, false);
 
         view.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
@@ -41,7 +42,6 @@ public class FragmentStatisticheTotali extends Fragment {
         });
 
         initializeStatistics(view);
-
 
         return view;
     }
@@ -62,6 +62,7 @@ public class FragmentStatisticheTotali extends Fragment {
     public void onResume() {
 
         super.onResume();
+        initializeStatistics(view);
     }
 
     private void initializeStatistics (View view) {

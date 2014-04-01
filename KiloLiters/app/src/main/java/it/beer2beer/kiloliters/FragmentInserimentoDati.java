@@ -45,6 +45,7 @@ public class FragmentInserimentoDati extends Fragment {
             public void onClick(View view) {
                 Log.d(TAG, "Tasto premuto");
                 getDataFromUser();
+
             }
         });
 

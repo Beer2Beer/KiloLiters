@@ -21,6 +21,10 @@ public class FragmentCalcolaBollo extends Fragment {
 
     private String url_ACI = "http://online.aci.it/acinet/calcolobollo/#inizio-pagina";
     boolean toastLoadingPageVisualized = false;
+    boolean wasNotOnline = false;
+    boolean wasNotOnlineVisualized = false;
+    boolean wasOnline = false;
+    boolean wasOnlineVisualized = false;
     NetworkInfo netInfo;
 
     WebView webView;
@@ -63,6 +67,7 @@ public class FragmentCalcolaBollo extends Fragment {
                         Context context = getActivity();
                         Toast t = Toast.makeText(context, "Caricamento sito web ACI in corso...", Toast.LENGTH_SHORT);
                         t.show();
+                        wasOnline = true;
 
                     }
 
@@ -71,11 +76,30 @@ public class FragmentCalcolaBollo extends Fragment {
                         Context context = getActivity();
                         Toast t = Toast.makeText(context, "Attivare la rete dati per accedere al servizio", Toast.LENGTH_LONG);
                         t.show();
+                        wasNotOnline = true;
 
                     }
 
                     toastLoadingPageVisualized = true;
 
+                }
+
+                if (wasNotOnline && isOnline() && !wasNotOnlineVisualized) {
+
+                    Context context = getActivity();
+                    Toast t = Toast.makeText(context, "Caricamento sito web ACI in corso...", Toast.LENGTH_SHORT);
+                    t.show();
+                    webView.loadUrl(url_ACI);
+                    wasNotOnlineVisualized = true;
+
+                }
+
+                if (wasOnline && !isOnline() && !wasOnlineVisualized) {
+
+                    Context context = getActivity();
+                    Toast t = Toast.makeText(context, "Attivare la rete dati per accedere al servizio", Toast.LENGTH_LONG);
+                    t.show();
+                    wasOnlineVisualized = true;
                 }
             }
         });

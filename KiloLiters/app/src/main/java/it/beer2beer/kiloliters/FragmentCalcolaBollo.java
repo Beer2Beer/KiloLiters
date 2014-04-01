@@ -2,6 +2,8 @@ package it.beer2beer.kiloliters;
 
 import android.app.Fragment;
 import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,8 +20,8 @@ import android.widget.Toast;
 public class FragmentCalcolaBollo extends Fragment {
 
     private String url_ACI = "http://online.aci.it/acinet/calcolobollo/#inizio-pagina";
-
-    boolean toastLoadingPage = false;
+    boolean toastLoadingPageVisualized = false;
+    NetworkInfo netInfo;
 
     WebView webView;
 
@@ -55,16 +57,25 @@ public class FragmentCalcolaBollo extends Fragment {
                         view.getWindowToken(), 0);
 
 
-                if (!toastLoadingPage) {
+                if (!toastLoadingPageVisualized) {
 
-                    if (view == null) {
-
+                    if(isOnline()) {
                         Context context = getActivity();
-                        Toast t = Toast.makeText(context, "Caricamento pagina ACI in corso...", Toast.LENGTH_SHORT);
+                        Toast t = Toast.makeText(context, "Caricamento sito web ACI in corso...", Toast.LENGTH_SHORT);
                         t.show();
 
-                        toastLoadingPage = true;
                     }
+
+                    if (!isOnline()) {
+
+                        Context context = getActivity();
+                        Toast t = Toast.makeText(context, "Attivare la rete dati per accedere al servizio", Toast.LENGTH_LONG);
+                        t.show();
+
+                    }
+
+                    toastLoadingPageVisualized = true;
+
                 }
             }
         });
@@ -72,7 +83,6 @@ public class FragmentCalcolaBollo extends Fragment {
         return view;
 
     }
-
 
     @Override
     public void onSaveInstanceState(Bundle outState){
@@ -98,6 +108,21 @@ public class FragmentCalcolaBollo extends Fragment {
     public void onResume() {
 
         super.onResume();
+    }
+
+    private boolean isOnline() {
+
+        try {
+            ConnectivityManager cm =
+                    (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
+            netInfo = cm.getActiveNetworkInfo();
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+        if (netInfo != null && netInfo.isConnectedOrConnecting()) {
+            return true;
+        }
+        return false;
     }
 
 } //chiusura classe

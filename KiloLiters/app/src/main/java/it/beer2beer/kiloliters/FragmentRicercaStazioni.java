@@ -7,6 +7,8 @@ import android.location.Location;
 import android.location.LocationListener;
 
 import android.location.LocationManager;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -55,6 +57,8 @@ public class FragmentRicercaStazioni extends Fragment
     private final int MAX_PLACES = 20;//most returned from google
     private MarkerOptions[] places;
     private int otherIcon = R.drawable.gas_station;
+
+    NetworkInfo netInfo;
 
     boolean firstSearch = true;
     boolean toastLocationVisualized = false;
@@ -106,8 +110,20 @@ public class FragmentRicercaStazioni extends Fragment
                         || locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER))) {
 
                     Context context = getActivity();
-                    Toast t = Toast.makeText(context, "Ricerca posizione...", Toast.LENGTH_SHORT);
-                    t.show();
+
+                    if (isOnline()) {
+                        Toast t = Toast.makeText(context, "Ricerca posizione e distributori nelle vicinanze...",
+                                Toast.LENGTH_SHORT);
+                        t.show();
+                    }
+
+                    if (!isOnline()) {
+
+                        Toast toast = Toast.makeText(context, "Per usufruire al meglio del servizio di ricerca distributori, " +
+                                "attiva la rete dati", Toast.LENGTH_LONG);
+                        toast.show();
+
+                    }
 
                     firstSearch = false;
 
@@ -117,10 +133,20 @@ public class FragmentRicercaStazioni extends Fragment
                         !locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
 
                     Context context = getActivity();
-                    Toast t = Toast.makeText(context, "Per usufruire al meglio del servizio Ricerca Distributori, " +
-                            "attiva la localizzazione", Toast.LENGTH_LONG);
-                    t.show();
-                    toastLocationVisualized = true;
+
+                    if (isOnline()) {
+                        Toast t = Toast.makeText(context, "Per usufruire al meglio del servizio di ricerca distributori, " +
+                                "attiva la localizzazione", Toast.LENGTH_LONG);
+                        t.show();
+                        toastLocationVisualized = true;
+                    }
+
+                    if(!isOnline()) {
+                        Toast t = Toast.makeText(context, "Per usufruire al meglio del servizio di ricerca distributori, " +
+                                "attiva la localizzazione e la rete dati", Toast.LENGTH_LONG);
+                        t.show();
+                        toastLocationVisualized = true;
+                    }
                 }
             }
         });
@@ -252,6 +278,21 @@ public class FragmentRicercaStazioni extends Fragment
             }
     }
 
+    private boolean isOnline() {
+
+        try {
+            ConnectivityManager cm =
+                    (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
+            netInfo = cm.getActiveNetworkInfo();
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+            if (netInfo != null && netInfo.isConnectedOrConnecting()) {
+            return true;
+        }
+        return false;
+    }
+
 
     private class GetPlaces extends AsyncTask<String, Void, String> {
         @Override
@@ -380,16 +421,17 @@ public class FragmentRicercaStazioni extends Fragment
                                 .icon(BitmapDescriptorFactory.fromResource(currIcon))
                                 .snippet(vicinity);
                 }
+
+                     if(places!=null && placeMarkers!=null){
+                        for(int p=0; p<places.length && p<placeMarkers.length; p++){
+                        //will be null if a value was missing
+                         if(places[p]!=null)
+                                placeMarkers[p]=googleMap.getMap().addMarker(places[p]);
+                    }
+                }
             }
             catch (Exception e) {
                 e.printStackTrace();
-            }
-            if(places!=null && placeMarkers!=null){
-                for(int p=0; p<places.length && p<placeMarkers.length; p++){
-                    //will be null if a value was missing
-                    if(places[p]!=null)
-                        placeMarkers[p]=googleMap.getMap().addMarker(places[p]);
-                }
             }
 
         }

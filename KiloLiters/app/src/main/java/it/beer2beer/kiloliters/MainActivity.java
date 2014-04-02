@@ -76,28 +76,6 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
                             .setTabListener(this));
         }
         mViewPager.setCurrentItem(2); //setta la tab centrale come predefinita
-
-       // DatabaseAdapter databaseAdapter = new DatabaseAdapter(this);
-
-
-/*
-        // DB TEST
-
-        try {
-            databaseAdapter.open();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        long id;
-
-        id = databaseAdapter.insertRefuel("Prova2 16:42",250,1.599,35.84,50,"ENI","PARMA","ABBESTIA");
-        if(id == -1) Log.w(TAG, "Errore inizializzazione del database");
-
-        Cursor c = databaseAdapter.getRefuel(1);
-        Toast t = Toast.makeText(this, c.getString(0), Toast.LENGTH_LONG);
-        t.show();
-        databaseAdapter.close();
-*/
     }
 
     @Override

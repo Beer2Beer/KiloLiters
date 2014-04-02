@@ -87,9 +87,6 @@ public class FragmentStatistiche extends Fragment {
         if (!db.checkDataBase())
             return;
 
-        // test row: DELETE IT AFTER TESTS
-        db.deleteAllRefuels();
-
         long maxId = db.getLastId();
 
         for (int i = 1; i <= maxId; i++) {

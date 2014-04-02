@@ -36,7 +36,7 @@ public class DatabaseAdapter {
                     "chilometri integer not null, prezzo real not null, litri integer not null, " +
                     "importo real not null, distributore text not null, " +
                     "citta text not null, descrizione text);";
-    public static final String TABLE_DROP = "drop table rifornimenti if exists;";
+    public static final String TABLE_DROP = "drop table rifornimenti;";
     public static final String VIEW_DROP = "drop view distributori_preferiti";
     public static final String VIEW_CREATE = "create view distributori_preferiti as " +
             "select distinct distributore, descrizione, count(distributore) as visite " +
@@ -103,8 +103,24 @@ public class DatabaseAdapter {
 
     }
 
+    public boolean checkDataBase() {
+        SQLiteDatabase checkDB = null;
+        try {
+            checkDB = SQLiteDatabase.openDatabase(DATABASE_NAME, null,
+                    SQLiteDatabase.OPEN_READONLY);
+            checkDB.close();
+        } catch (Exception e) {
+            // database doesn't exist yet.
+        }
+        return checkDB != null;
+    }
+
     public boolean deleteRefuel(long id) {
         return db.delete(DATABASE_TABLE, KEY_ID + "=" + id, null) > 0;
+    }
+
+    public void deleteAllRefuels() {
+        db.execSQL(TABLE_DROP);
     }
 
     public Cursor getAllRefuels() {
@@ -128,9 +144,8 @@ public class DatabaseAdapter {
     }
 
 
-    // TODO reset types
     public boolean updateRefuel(long id, String timestamp, int chilometri,
-                                float prezzo, float litri, float importo,
+                                double prezzo, double litri, double importo,
                                 String distributore, String citta, String descrizione) {
         ContentValues values = new ContentValues();
         values.put(KEY_TIMESTAMP, timestamp);
@@ -218,8 +233,7 @@ public class DatabaseAdapter {
     }
 
     public String getCorrectDataFormat (String completeData) {
-        /*Parameters: beginIndex -- the begin index, inclusive.
-        endIndex -- the end index, exclusive.*/
+
         String onlyData = completeData.substring(0, 8);
         String formattedData = onlyData.substring(0, 2) + "/" + onlyData.substring(2, 4) + "/" + onlyData.substring(4, 8);
         return formattedData;

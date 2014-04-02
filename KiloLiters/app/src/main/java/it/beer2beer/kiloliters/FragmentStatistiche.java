@@ -84,10 +84,16 @@ public class FragmentStatistiche extends Fragment {
             e.printStackTrace();
         }
 
+        if (!db.checkDataBase())
+            return;
+
+        // test row: DELETE IT AFTER TESTS
+        db.deleteAllRefuels();
+
         long maxId = db.getLastId();
 
         for (int i = 1; i <= maxId; i++) {
-            //query al db
+
             Cursor c = db.getRefuel(i);
             String timestamp = c.getString(0);
             int kilometers = c.getInt(1);

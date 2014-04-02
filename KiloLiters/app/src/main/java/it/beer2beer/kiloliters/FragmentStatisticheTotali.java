@@ -75,6 +75,9 @@ public class FragmentStatisticheTotali extends Fragment {
             e.printStackTrace();
         }
 
+        if (!db.checkDataBase())
+            return;
+
         TextView statisticKm = (TextView) view.findViewById(R.id.statistic_total_km);
         int km = db.getTotalKilometers();
         statisticKm.setText(Integer.toString(km));

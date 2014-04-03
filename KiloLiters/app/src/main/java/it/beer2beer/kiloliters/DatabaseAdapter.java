@@ -31,13 +31,14 @@ public class DatabaseAdapter {
     public static final String DATABASE_TABLE = "rifornimenti";
     public static final int DATABASE_VERSION = 1;
 
+    // redo queries using Strings instead of hard-coded strings
     private static final String DATABASE_CREATE =
             "create table rifornimenti (_id integer primary key autoincrement, timestamp text not null, " +
                     "chilometri integer not null, prezzo real not null, litri integer not null, " +
                     "importo real not null, distributore text not null, " +
                     "citta text not null, descrizione text);";
-    public static final String TABLE_DROP = "drop table rifornimenti;";
-    public static final String VIEW_DROP = "drop view distributori_preferiti";
+    public static final String TABLE_DROP = "drop table if exists rifornimenti;";
+    public static final String VIEW_DROP = "drop view if exists distributori_preferiti";
     public static final String VIEW_CREATE = "create view distributori_preferiti as " +
             "select distinct distributore, descrizione, count(distributore) as visite " +
             "from rifornimenti " +
@@ -85,6 +86,20 @@ public class DatabaseAdapter {
         DBHelper.close();
     }
 
+    public void checkOrInitializeDB () {
+        try{
+            String sql = "SELECT _id FROM rifornimenti;";
+            Cursor cursor = db.rawQuery(sql, null);
+            cursor.close();
+        }
+        catch(Exception s){
+            db.execSQL(VIEW_DROP);
+            db.execSQL(TABLE_DROP);
+            db.execSQL(DATABASE_CREATE);
+            db.execSQL(VIEW_CREATE);
+        }
+    }
+
     public long insertRefuel(String timestamp, int chilometri,
                              double prezzo, double litri, double importo,
                              String distributore, String citta, String descrizione){
@@ -103,33 +118,6 @@ public class DatabaseAdapter {
 
     }
 
-    public boolean checkDataBase() {
-        SQLiteDatabase checkDB = null;
-        try {
-            checkDB = SQLiteDatabase.openDatabase(DATABASE_NAME, null,
-                    SQLiteDatabase.OPEN_READONLY);
-            checkDB.close();
-        } catch (Exception e) {
-            // database doesn't exist yet.
-        }
-        return checkDB != null;
-    }
-
-    public boolean deleteRefuel(long id) {
-        return db.delete(DATABASE_TABLE, KEY_ID + "=" + id, null) > 0;
-    }
-
-    public void deleteAllRefuels() {
-        db.execSQL(TABLE_DROP);
-    }
-
-    public Cursor getAllRefuels() {
-        String[] camps = new String[]{KEY_TIMESTAMP, KEY_CHILOMETRI, KEY_PREZZO,
-        KEY_LITRI, KEY_IMPORTO, KEY_DISTRIBUTORE, KEY_CITTA, KEY_DESCRIZIONE};
-
-        return db.query(DATABASE_TABLE, camps, null, null, null, null, null);
-    }
-
     public Cursor getRefuel(long id) {
         String[] camps = new String[]{KEY_TIMESTAMP, KEY_CHILOMETRI, KEY_PREZZO,
                 KEY_LITRI, KEY_IMPORTO, KEY_DISTRIBUTORE, KEY_CITTA, KEY_DESCRIZIONE};
@@ -141,24 +129,6 @@ public class DatabaseAdapter {
         }
 
         return mCursor;
-    }
-
-
-    public boolean updateRefuel(long id, String timestamp, int chilometri,
-                                double prezzo, double litri, double importo,
-                                String distributore, String citta, String descrizione) {
-        ContentValues values = new ContentValues();
-        values.put(KEY_TIMESTAMP, timestamp);
-        values.put(KEY_CHILOMETRI, chilometri);
-        values.put(KEY_PREZZO, prezzo);
-        values.put(KEY_LITRI, litri);
-        values.put(KEY_IMPORTO, importo);
-        values.put(KEY_DISTRIBUTORE, distributore);
-        values.put(KEY_CITTA, citta);
-        values.put(KEY_DESCRIZIONE, descrizione);
-
-
-        return db.update(DATABASE_TABLE, values, KEY_ID + "=" + id, null) > 0;
     }
 
     public int getTotalKilometers () {
@@ -203,8 +173,7 @@ public class DatabaseAdapter {
     }
 
     public String getMostUsedStation () {
-        db.execSQL(VIEW_DROP);
-        db.execSQL(VIEW_CREATE);
+
         Cursor c = db.rawQuery("SELECT distributore, descrizione, MAX(visite) FROM distributori_preferiti;", null);
         if (c != null) {
             c.moveToFirst();
@@ -222,14 +191,18 @@ public class DatabaseAdapter {
     }
 
     public String getLastRefuel () {
+
         long id = getLastId();
-        Cursor c = getRefuel(id);
-        if (c != null) {
-            c.moveToFirst();
+        // Cursor c = getRefuel(id);
+
+        Cursor c = db.rawQuery("SELECT timestamp FROM rifornimenti where _id = " + id + ";", null);
+
+        if (c != null && c.moveToFirst()){
+            return getCorrectDataFormat(c.getString(0));
         }
-        if (c.getString(0) == null)
+        else {
             return "Nessun rifornimento";
-        return getCorrectDataFormat(c.getString(0));
+        }
     }
 
     public String getCorrectDataFormat (String completeData) {

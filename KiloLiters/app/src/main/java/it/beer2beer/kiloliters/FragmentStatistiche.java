@@ -48,8 +48,6 @@ public class FragmentStatistiche extends Fragment {
             }
         });
 
-        db = new DatabaseAdapter(this.getActivity());
-
         root = (LinearLayout) view.findViewById(R.id.root_view);
 
         initializeStatistics();
@@ -78,14 +76,15 @@ public class FragmentStatistiche extends Fragment {
 
     private void initializeStatistics () {
 
+        db = new DatabaseAdapter(this.getActivity());
+
         try {
             db.open();
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
-        if (!db.checkDataBase())
-            return;
+        db.checkOrInitializeDB ();
 
         long maxId = db.getLastId();
 
@@ -107,8 +106,6 @@ public class FragmentStatistiche extends Fragment {
         }
 
         db.close();
-
-
     }
 
     private void printLayout (int id, String t, int k, double pr, double l, double pa,
@@ -170,5 +167,7 @@ public class FragmentStatistiche extends Fragment {
         root.addView(child);
 
     }
+
+
 
 }

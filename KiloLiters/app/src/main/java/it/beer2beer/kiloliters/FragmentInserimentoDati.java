@@ -81,7 +81,9 @@ public class FragmentInserimentoDati extends Fragment {
         Log.d(TAG, "Timestamp: " + timeStamp + "km: "+  km + "Prezzo carburante:  "+ oilPrice +
                 "litri: "+ liters +"prezzo: " + price  +"Distributore: "+ station +"Città: "+ city +
                         "Desc: "+ description);
+
         db = new DatabaseAdapter(this.getActivity());
+
         Toast t = Toast.makeText(getActivity(), "Rifornimento salvato!", Toast.LENGTH_LONG);
         t.show();
         try {
@@ -90,6 +92,7 @@ public class FragmentInserimentoDati extends Fragment {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
         long id = db.insertRefuel(timeStamp, km, oilPrice, liters, price, station, city, description);
         Log.d(TAG,"chiamata insertRefuel");
         String l = Long.toString(id);

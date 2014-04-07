@@ -45,6 +45,8 @@ public class FragmentStatistiche extends Fragment {
             public void onFocusChange(View view, boolean b) {
                 ((InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(
                         view.getWindowToken(), 0);
+                root.removeAllViews();
+                initializeStatistics();
             }
         });
 

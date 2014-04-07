@@ -216,12 +216,4 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
 
     }
 
-    public void startSettings (View v) {
-
-    }
-
-    public void startAbout (View v) {
-        
-    }
-
 }

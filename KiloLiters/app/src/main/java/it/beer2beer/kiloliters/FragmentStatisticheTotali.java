@@ -29,7 +29,7 @@ public class FragmentStatisticheTotali extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, final ViewGroup container, Bundle savedInstanceState) {
 
         view = inflater.inflate(R.layout.view_statistiche_totali, container, false);
 
@@ -38,6 +38,7 @@ public class FragmentStatisticheTotali extends Fragment {
             public void onFocusChange(View view, boolean b) {
                 ((InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(
                         view.getWindowToken(), 0);
+                initializeStatistics(view);
             }
         });
 
@@ -62,7 +63,6 @@ public class FragmentStatisticheTotali extends Fragment {
     public void onResume() {
 
         super.onResume();
-        initializeStatistics(view);
     }
 
     private void initializeStatistics (View view) {
@@ -74,8 +74,6 @@ public class FragmentStatisticheTotali extends Fragment {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
-        // db.checkOrInitializeDB ();
 
         TextView statisticKm = (TextView) view.findViewById(R.id.statistic_total_km);
         int km = db.getTotalKilometers();

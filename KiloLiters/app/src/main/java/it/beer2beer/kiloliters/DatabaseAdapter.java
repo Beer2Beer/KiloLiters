@@ -176,9 +176,12 @@ public class DatabaseAdapter {
 
         Cursor c = db.rawQuery("SELECT distributore, descrizione, MAX(visite) FROM distributori_preferiti;", null);
         if (c != null && c.moveToFirst()) {
+
             return c.getString(0);
         }
-        return "Nessun distributore";
+        else {
+            return "Nessun distributore";
+        }
     }
 
     public int getLastId () {

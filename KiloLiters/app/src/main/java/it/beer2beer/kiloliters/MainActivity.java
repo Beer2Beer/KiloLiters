@@ -108,7 +108,7 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
 
                 Context context_about = getApplicationContext();
                 Toast toast_about = Toast.makeText(context_about, "Coded by Federico Bertoli and " +
-                        "Francesco Trombi - 2014 - version 0.4 Alpha", Toast.LENGTH_LONG);
+                        "Francesco Trombi - 2014 - version 0.5 Alpha", Toast.LENGTH_LONG);
                 toast_about.show();
 
                 //qui posso lanciare l'activity associata alle info sull'app (creare la classe)

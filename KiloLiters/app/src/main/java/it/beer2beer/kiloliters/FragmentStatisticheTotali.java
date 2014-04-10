@@ -77,26 +77,26 @@ public class FragmentStatisticheTotali extends Fragment {
 
         TextView statisticKm = (TextView) view.findViewById(R.id.statistic_total_km);
         int km = db.getTotalKilometers();
-        statisticKm.setText(Integer.toString(km));
+        statisticKm.setText(Integer.toString(km) + " KM");
 
         TextView statisticLiters = (TextView) view.findViewById(R.id.statistic_total_liters);
         int l = db.getSumLiters();
-        statisticLiters.setText(Integer.toString(l));
+        statisticLiters.setText(Integer.toString(l) + " L");
 
         TextView statisticPaid = (TextView) view.findViewById(R.id.statistic_total_paid);
         int p = db.getSumPaid();
-        statisticPaid.setText(Integer.toString(p));
+        statisticPaid.setText(Integer.toString(p) + " €");
 
         TextView statisticMediumPrice = (TextView) view.findViewById(R.id.statistic_medium_price);
         double mp = db.getAvgPrice();
-        statisticMediumPrice.setText(Double.toString(mp));
+        statisticMediumPrice.setText(Double.toString(mp) + " €/L");
 
         TextView statisticFavStation = (TextView) view.findViewById(R.id.statistic_fav_station);
         statisticFavStation.setText(db.getMostUsedStation());
 
         TextView statisticKiloliters = (TextView) view.findViewById(R.id.statistic_kiloliters);
         double k = db.getKiloliters(km, l);
-        statisticKiloliters.setText(Double.toString(k));
+        statisticKiloliters.setText(Double.toString(k) + " KM/L");
 
         TextView statisticLastRefuel = (TextView) view.findViewById(R.id.statistic_last_refuel);
         statisticLastRefuel.setText(db.getLastRefuel());

@@ -2,14 +2,16 @@
 
 <ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
     android:focusable="true"
-    android:focusableInTouchMode="true">
+    android:focusableInTouchMode="true"
+    android:background="#ff373537">
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    >
 
     <TextView
         android:layout_width="wrap_content"
@@ -18,21 +20,24 @@
         android:layout_alignParentTop="true"
         android:layout_marginTop="40dp"
         android:layout_marginLeft="6dp"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:text="@string/total_km"/>
+        android:textColor="#ffe7d4c7"
+        android:text="@string/total_km"
+        android:textStyle="bold|italic"
+        android:typeface="normal"/>
 
     <TextView
+        android:background="@drawable/statistics_total_border"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/statistic_total_km"
         android:layout_alignParentTop="true"
         android:layout_marginTop="40dp"
         android:layout_marginRight="20dp"
+        android:textColor="#ffe7d4c7"
         android:layout_alignParentRight="true"
-        android:layout_alignBottom="@id/total_km"/>
+        android:layout_alignBottom="@id/total_km"
+        android:textStyle="italic"
+        android:typeface="normal"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -41,17 +46,24 @@
         android:layout_below="@id/total_km"
         android:text="@string/total_liters"
         android:layout_marginTop="20dp"
-        android:layout_marginLeft="6dp"/>
+        android:layout_marginLeft="6dp"
+        android:textColor="#ffe7d4c7"
+        android:textStyle="bold|italic"
+        android:typeface="normal"/>
 
     <TextView
+        android:background="@drawable/statistics_total_border"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/statistic_total_liters"
         android:layout_alignParentRight="true"
         android:layout_marginTop="20dp"
         android:layout_marginRight="20dp"
+        android:textColor="#ffe7d4c7"
         android:layout_below="@id/total_km"
-        android:layout_alignBottom="@id/total_liters"/>
+        android:layout_alignBottom="@id/total_liters"
+        android:textStyle="italic"
+        android:typeface="normal"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -60,9 +72,13 @@
         android:layout_below="@id/total_liters"
         android:text="@string/total_paid"
         android:layout_marginTop="20dp"
-        android:layout_marginLeft="6dp"/>
+        android:layout_marginLeft="6dp"
+        android:textColor="#ffe7d4c7"
+        android:textStyle="bold|italic"
+        android:typeface="normal"/>
 
     <TextView
+        android:background="@drawable/statistics_total_border"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/statistic_total_paid"
@@ -70,7 +86,10 @@
         android:layout_marginTop="20dp"
         android:layout_below="@id/total_liters"
         android:layout_alignBottom="@id/total_paid"
-        android:layout_marginRight="20dp"/>
+        android:layout_marginRight="20dp"
+        android:textColor="#ffe7d4c7"
+        android:textStyle="italic"
+        android:typeface="normal"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -79,9 +98,13 @@
         android:layout_below="@id/total_paid"
         android:text="@string/medium_price"
         android:layout_marginTop="20dp"
-        android:layout_marginLeft="6dp"/>
+        android:layout_marginLeft="6dp"
+        android:textColor="#ffe7d4c7"
+        android:textStyle="bold|italic"
+        android:typeface="normal"/>
 
     <TextView
+        android:background="@drawable/statistics_total_border"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/statistic_medium_price"
@@ -89,7 +112,10 @@
         android:layout_marginTop="20dp"
         android:layout_below="@id/total_paid"
         android:layout_alignBottom="@id/medium_price"
-        android:layout_marginRight="20dp"/>
+        android:layout_marginRight="20dp"
+        android:textColor="#ffe7d4c7"
+        android:textStyle="italic"
+        android:typeface="normal"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -98,9 +124,13 @@
         android:layout_below="@id/medium_price"
         android:text="@string/fav_station"
         android:layout_marginTop="20dp"
-        android:layout_marginLeft="6dp"/>
+        android:layout_marginLeft="6dp"
+        android:textColor="#ffe7d4c7"
+        android:textStyle="bold|italic"
+        android:typeface="normal"/>
 
     <TextView
+        android:background="@drawable/statistics_total_border"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/statistic_fav_station"
@@ -108,7 +138,10 @@
         android:layout_marginTop="20dp"
         android:layout_below="@id/medium_price"
         android:layout_alignBottom="@id/fav_station"
-        android:layout_marginRight="20dp"/>
+        android:layout_marginRight="20dp"
+        android:textColor="#ffe7d4c7"
+        android:textStyle="italic"
+        android:typeface="normal"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -117,9 +150,13 @@
         android:layout_below="@id/fav_station"
         android:text="@string/kiloliters"
         android:layout_marginTop="20dp"
-        android:layout_marginLeft="6dp"/>
+        android:layout_marginLeft="6dp"
+        android:textColor="#ffe7d4c7"
+        android:textStyle="bold|italic"
+        android:typeface="normal"/>
 
     <TextView
+        android:background="@drawable/statistics_total_border"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/statistic_kiloliters"
@@ -127,7 +164,10 @@
         android:layout_marginTop="20dp"
         android:layout_below="@id/fav_station"
         android:layout_alignBottom="@id/kiloliters"
-        android:layout_marginRight="20dp"/>
+        android:layout_marginRight="20dp"
+        android:textColor="#ffe7d4c7"
+        android:textStyle="italic"
+        android:typeface="normal"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -136,9 +176,13 @@
         android:layout_below="@id/kiloliters"
         android:text="@string/last_refuel"
         android:layout_marginTop="20dp"
-        android:layout_marginLeft="6dp"/>
+        android:layout_marginLeft="6dp"
+        android:textColor="#ffe7d4c7"
+        android:textStyle="bold|italic"
+        android:typeface="normal"/>
 
     <TextView
+        android:background="@drawable/statistics_total_border"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/statistic_last_refuel"
@@ -146,7 +190,10 @@
         android:layout_marginTop="20dp"
         android:layout_below="@id/kiloliters"
         android:layout_alignBottom="@id/last_refuel"
-        android:layout_marginRight="20dp"/>
+        android:layout_marginRight="20dp"
+        android:textColor="#ffe7d4c7"
+        android:textStyle="italic"
+        android:typeface="normal"/>
 
 </RelativeLayout>
 </ScrollView>

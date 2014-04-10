@@ -287,8 +287,10 @@ public class FragmentRicercaStazioni extends Fragment
         }catch (Exception e) {
             e.printStackTrace();
         }
-            if (netInfo != null && netInfo.isConnectedOrConnecting()) {
+
+        if (netInfo != null && netInfo.isConnectedOrConnecting()) {
             return true;
+
         }
         return false;
     }

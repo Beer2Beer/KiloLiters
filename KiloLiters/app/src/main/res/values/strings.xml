@@ -18,8 +18,8 @@
     <string name="price">IMPORTO PAGATO</string>
     <string name="save_data_button">SALVA RIFORNIMENTO</string>
     <string name="station">MARCA DISTRIBUTORE</string>
-    <string name="title_section0">Statistiche Totali</string>
-    <string name="title_section1">Statistiche</string>
+    <string name="title_section0">Statistiche</string>
+    <string name="title_section1">Statistiche Totali</string>
     <string name="title_section2">Inserimento Dati</string>
     <string name="title_section3">Distributori</string>
     <string name="title_section4">Calcola Bollo</string>

@@ -4,7 +4,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:background="#ff373537">
+    android:background="@color/hank_in_black">
 
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -13,7 +13,7 @@
     android:layout_height="wrap_content"
     android:focusable="true"
     android:focusableInTouchMode="true"
-    android:background="#ff373537" >
+    android:background="@color/hank_in_black" >
 
     <TextView
         android:layout_width="wrap_content"
@@ -22,7 +22,7 @@
         android:layout_alignParentTop="true"
         android:layout_marginTop="50dp"
         android:layout_marginLeft="6dp"
-        android:textColor="#ffe7d4c7"
+        android:textColor="@color/walter_white"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentLeft="true"
@@ -30,6 +30,7 @@
         android:text="@string/price"
         android:typeface="normal"
         android:textStyle="bold|italic"
+
         />
 
     <EditText
@@ -39,20 +40,21 @@
         android:ems="9"
         android:maxLength="6"
         android:layout_marginRight="6dp"
-        android:textColor="#ffe7d4c7"
+        android:textColor="@color/walter_white"
         android:id="@+id/insert_price"
         android:layout_alignBottom="@id/price"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:textStyle="italic"
-        android:typeface="normal" />
+        android:typeface="normal"
+        android:focusable="false" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/liters"
         android:layout_below="@id/price"
-        android:textColor="#ffe7d4c7"
+        android:textColor="@color/walter_white"
         android:text="@string/liters"
         android:layout_marginTop="20dp"
         android:layout_marginLeft="6dp"
@@ -66,13 +68,14 @@
         android:ems="9"
         android:maxLength="6"
         android:layout_marginRight="6dp"
-        android:textColor="#ffe7d4c7"
+        android:textColor="@color/walter_white"
         android:id="@+id/insert_liters"
         android:layout_below="@id/price"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:textStyle="italic"
-        android:typeface="normal"/>
+        android:typeface="normal"
+        android:focusable="false" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -82,7 +85,7 @@
         android:layout_below="@id/liters"
         android:layout_marginTop="20dp"
         android:layout_marginLeft="6dp"
-        android:textColor="#ffe7d4c7"
+        android:textColor="@color/walter_white"
         android:textStyle="bold|italic"
         android:typeface="normal" />
 
@@ -93,14 +96,15 @@
         android:ems="9"
         android:maxLength="7"
         android:layout_marginRight="6dp"
-        android:textColor="#ffe7d4c7"
+        android:textColor="@color/walter_white"
         android:id="@+id/insert_actual_km"
         android:layout_below="@id/liters"
         android:layout_alignBottom="@+id/actual_km"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:textStyle="italic"
-        android:typeface="normal"/>
+        android:typeface="normal"
+        android:focusable="false" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -110,7 +114,7 @@
         android:text="@string/station"
         android:layout_marginTop="20dp"
         android:layout_marginLeft="6dp"
-        android:textColor="#ffe7d4c7"
+        android:textColor="@color/walter_white"
         android:typeface="normal"
         android:textStyle="bold|italic" />
 
@@ -120,13 +124,14 @@
         android:inputType="textCapSentences"
         android:ems="9"
         android:layout_marginRight="6dp"
-        android:textColor="#ffe7d4c7"
+        android:textColor="@color/walter_white"
         android:id="@+id/insert_station"
         android:layout_below="@id/actual_km"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:textStyle="italic"
-        android:typeface="normal"/>
+        android:typeface="normal"
+        android:focusable="false" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -136,7 +141,7 @@
         android:text="@string/city"
         android:layout_marginTop="20dp"
         android:layout_marginLeft="6dp"
-        android:textColor="#ffe7d4c7"
+        android:textColor="@color/walter_white"
         android:textStyle="bold|italic"
         android:typeface="normal" />
 
@@ -146,13 +151,14 @@
         android:inputType="textCapSentences"
         android:ems="9"
         android:layout_marginRight="6dp"
-        android:textColor="#ffe7d4c7"
+        android:textColor="@color/walter_white"
         android:id="@+id/insert_city"
         android:layout_below="@id/station"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:textStyle="italic"
-        android:typeface="normal"/>
+        android:typeface="normal"
+        android:focusable="false" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -162,7 +168,7 @@
         android:text="@string/description"
         android:layout_marginTop="20dp"
         android:layout_marginLeft="6dp"
-        android:textColor="#ffe7d4c7"
+        android:textColor="@color/walter_white"
         android:textStyle="bold|italic"
         android:typeface="normal" />
 
@@ -172,7 +178,7 @@
         android:inputType="textCapSentences"
         android:ems="9"
         android:layout_marginRight="6dp"
-        android:textColor="#ffe7d4c7"
+        android:textColor="@color/walter_white"
         android:id="@+id/insert_description"
         android:layout_below="@id/city"
         android:layout_alignParentRight="true"
@@ -180,7 +186,8 @@
         android:hint="@string/insert_description"
         android:textColorHint="#ff9b887d"
         android:textStyle="italic"
-        android:typeface="normal"/>
+        android:typeface="normal"
+        android:focusable="false" />
 
     <Button
         android:layout_width="250dp"
@@ -193,7 +200,7 @@
         android:background="@drawable/button_border"
         android:textStyle="bold|italic"
         android:typeface="normal"
-        android:textColor="#ffe7d4c7"
+        android:textColor="@color/walter_white"
         />
 
 </RelativeLayout>

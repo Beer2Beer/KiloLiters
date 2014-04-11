@@ -158,12 +158,12 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
             switch(position) {
 
                 case 0:
-                    fragment = new FragmentStatisticheTotali();
+                    fragment = new FragmentStatistiche();
                     break;
 
                 case 1:
 
-                    fragment = new FragmentStatistiche();
+                    fragment = new FragmentStatisticheTotali();
                     break;
 
                 case 2:

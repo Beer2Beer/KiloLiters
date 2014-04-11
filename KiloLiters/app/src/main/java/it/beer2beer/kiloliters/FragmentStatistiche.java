@@ -56,7 +56,7 @@ public class FragmentStatistiche extends Fragment {
 
         initializeStatistics();
 
-        view.setBackgroundColor(Color.parseColor("#ff373537"));
+        view.setBackgroundColor(Color.parseColor("#ff191719"));
 
         return view;
     }
@@ -127,7 +127,6 @@ public class FragmentStatistiche extends Fragment {
 
         TextView upperBlankLine = new TextView(this.getActivity());
         upperBlankLine.setText("\n");
-        upperBlankLine.setTextColor(Color.parseColor("#ffe7d4c7"));
         child.addView(upperBlankLine);
 
         TextView title = new TextView(this.getActivity());
@@ -135,54 +134,53 @@ public class FragmentStatistiche extends Fragment {
         title.setAllCaps(true);
         title.setTypeface(null, Typeface.NORMAL);
         title.setTypeface(null, Typeface.BOLD_ITALIC);
-        title.setTextColor(Color.parseColor("#ffe7d4c7"));
+        title.setTextColor(getResources().getColor(R.color.tortuga_green));
         child.addView(title);
 
         TextView lowerBlankLine = new TextView(this.getActivity());
         lowerBlankLine.setText("\n");
-        lowerBlankLine.setTextColor(Color.parseColor("#ffe7d4c7"));
         child.addView(lowerBlankLine);
 
         TextView date = new TextView(this.getActivity());
         date.setText("Data Rifornimento: " + db.getCorrectDataFormat(t));
-        date.setTextColor(Color.parseColor("#ffe7d4c7"));
+        date.setTextColor(getResources().getColor(R.color.walter_white));
         child.addView(date);
 
         TextView kilometers = new TextView(this.getActivity());
         kilometers.setText("Chilometri al momento del rifornimento: " + Integer.toString(k) + " KM");
-        kilometers.setTextColor(Color.parseColor("#ffe7d4c7"));
+        kilometers.setTextColor(getResources().getColor(R.color.walter_white));
         child.addView(kilometers);
 
         TextView liters = new TextView(this.getActivity());
         liters.setText("Litri erogati: " + Double.toString(l) + " L");
-        liters.setTextColor(Color.parseColor("#ffe7d4c7"));
+        liters.setTextColor(getResources().getColor(R.color.walter_white));
         child.addView(liters);
 
         TextView price = new TextView(this.getActivity());
         price.setText("Prezzo carburante: " + Double.toString(pr) + " €");
-        price.setTextColor(Color.parseColor("#ffe7d4c7"));
+        price.setTextColor(getResources().getColor(R.color.walter_white));
         child.addView(price);
 
         TextView paid = new TextView(this.getActivity());
         paid.setText("Importo pagato: " + Double.toString(pa) + " €");
-        paid.setTextColor(Color.parseColor("#ffe7d4c7"));
+        paid.setTextColor(getResources().getColor(R.color.walter_white));
         child.addView(paid);
 
         TextView station = new TextView(this.getActivity());
         station.setText("Stazione di servizio: " + s);
-        station.setTextColor(Color.parseColor("#ffe7d4c7"));
+        station.setTextColor(getResources().getColor(R.color.walter_white));
         child.addView(station);
 
         if (d != null) {
             TextView description = new TextView(this.getActivity());
             description.setText("Info distributore: " + d);
-            description.setTextColor(Color.parseColor("#ffe7d4c7"));
+            description.setTextColor(getResources().getColor(R.color.walter_white));
             child.addView(description);
         }
 
         TextView city = new TextView(this.getActivity());
         city.setText("Città: " + c);
-        city.setTextColor(Color.parseColor("#ffe7d4c7"));
+        city.setTextColor(getResources().getColor(R.color.walter_white));
         child.addView(city);
 
         child.addView(sv);

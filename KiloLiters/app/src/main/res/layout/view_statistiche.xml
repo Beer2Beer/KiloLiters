@@ -6,7 +6,7 @@
     android:layout_height="fill_parent"
     android:focusable="true"
     android:focusableInTouchMode="true"
-    android:background="#ff373537"
+    android:background="@color/hank_in_black"
     >
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -15,7 +15,7 @@
     android:layout_height="wrap_content"
     android:layout_width="fill_parent"
     android:orientation="vertical"
-    android:background="#ff373537"
+    android:background="@color/hank_in_black"
     >
 
 </LinearLayout>

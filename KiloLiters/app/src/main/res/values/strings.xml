@@ -4,7 +4,7 @@
     <string name="app_name">KiloLiters</string>
 
     <string name="action_about">Info su KiloLiters</string>
-    <string name="action_settings">Impostazioni</string>
+    <string name="action_drop_db">Cancella dati</string>
     <string name="actual_km">CHILOMETRI ATTUALI</string>
     <string name="city">CITTÀ</string>
     <string name="description">DESCRIZIONE</string>

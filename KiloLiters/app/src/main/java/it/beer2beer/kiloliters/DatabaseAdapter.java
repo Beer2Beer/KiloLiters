@@ -131,9 +131,10 @@ public class DatabaseAdapter {
     }
 
     public int getTotalKilometers () {
+
         Cursor c = db.rawQuery("SELECT MAX(chilometri)-MIN(chilometri) FROM rifornimenti", null);
         if (c != null) {
-            c.moveToFirst();
+           c.moveToFirst();
         }
         return c.getInt(0);
     }
@@ -209,13 +210,6 @@ public class DatabaseAdapter {
         String onlyData = completeData.substring(0, 8);
         String formattedData = onlyData.substring(0, 2) + "/" + onlyData.substring(2, 4) + "/" + onlyData.substring(4, 8);
         return formattedData;
-    }
-
-    public void dropDatabase () {
-
-        db.execSQL(VIEW_DROP);
-        db.execSQL(TABLE_DROP);
-
     }
 
 }

@@ -46,8 +46,7 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:textStyle="italic"
-        android:typeface="normal"
-        android:focusable="false" />
+        android:typeface="normal" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -74,8 +73,7 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:textStyle="italic"
-        android:typeface="normal"
-        android:focusable="false" />
+        android:typeface="normal" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -103,8 +101,7 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:textStyle="italic"
-        android:typeface="normal"
-        android:focusable="false" />
+        android:typeface="normal" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -130,8 +127,7 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:textStyle="italic"
-        android:typeface="normal"
-        android:focusable="false" />
+        android:typeface="normal" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -157,8 +153,7 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:textStyle="italic"
-        android:typeface="normal"
-        android:focusable="false" />
+        android:typeface="normal" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -186,8 +181,7 @@
         android:hint="@string/insert_description"
         android:textColorHint="#ff9b887d"
         android:textStyle="italic"
-        android:typeface="normal"
-        android:focusable="false" />
+        android:typeface="normal" />
 
     <Button
         android:layout_width="250dp"

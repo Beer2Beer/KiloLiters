@@ -31,7 +31,6 @@ public class DatabaseAdapter {
     public static final String DATABASE_TABLE = "rifornimenti";
     public static final int DATABASE_VERSION = 1;
 
-    // redo queries using Strings instead of hard-coded strings
     private static final String DATABASE_CREATE =
             "create table rifornimenti (_id integer primary key autoincrement, timestamp text not null, " +
                     "chilometri integer not null, prezzo real not null, litri integer not null, " +
@@ -175,13 +174,12 @@ public class DatabaseAdapter {
     public String getMostUsedStation () {
 
         Cursor c = db.rawQuery("SELECT distributore, descrizione, MAX(visite) FROM distributori_preferiti;", null);
-        if (c != null && c.moveToFirst()) {
 
-            return c.getString(0);
-        }
-        else {
-            return "Nessun distributore";
-        }
+        if (c != null && c.moveToFirst()) {
+                return c.getString(0) + ", " + c.getString(1);
+            }
+
+        return "Nessun distributore";
     }
 
     public int getLastId () {
@@ -195,7 +193,6 @@ public class DatabaseAdapter {
     public String getLastRefuel () {
 
         long id = getLastId();
-        // Cursor c = getRefuel(id);
 
         Cursor c = db.rawQuery("SELECT timestamp FROM rifornimenti where _id = " + id + ";", null);
 
@@ -203,7 +200,7 @@ public class DatabaseAdapter {
             return getCorrectDataFormat(c.getString(0));
         }
         else {
-            return "Nessun rifornimento";
+            return "";
         }
     }
 

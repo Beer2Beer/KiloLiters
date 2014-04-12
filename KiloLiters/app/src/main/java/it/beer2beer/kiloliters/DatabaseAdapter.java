@@ -211,4 +211,11 @@ public class DatabaseAdapter {
         return formattedData;
     }
 
+    public void dropDatabase () {
+
+        db.execSQL(VIEW_DROP);
+        db.execSQL(TABLE_DROP);
+
+    }
+
 }

@@ -99,7 +99,7 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
             case R.id.action_drop_db:
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                builder.setMessage("Sei sicuro di voler cancellare tutti i dati?")
+                builder.setMessage("Sei sicuro di voler eliminare tutti i dati?")
                         .setCancelable(false)
                         .setPositiveButton("Si", new DialogInterface.OnClickListener() {
                             @Override
@@ -112,7 +112,7 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
                                     t.printStackTrace();
                                 }
                                 if (context!=null) {
-                                    Toast t = Toast.makeText(context, "Dati cancellati!", Toast.LENGTH_LONG);
+                                    Toast t = Toast.makeText(context, "Dati eliminati!", Toast.LENGTH_LONG);
                                     t.show();
                                 }
                             }
@@ -134,7 +134,7 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
 
                 Context context_about = getApplicationContext();
                 Toast toast_about = Toast.makeText(context_about, "Coded by Federico Bertoli and " +
-                        "Francesco Trombi - 2014 - version 0.5 Alpha", Toast.LENGTH_LONG);
+                        "Francesco Trombi - 2014 - version 0.8 Beta", Toast.LENGTH_LONG);
                 toast_about.show();
 
                 //qui posso lanciare l'activity associata alle info sull'app (creare la classe)

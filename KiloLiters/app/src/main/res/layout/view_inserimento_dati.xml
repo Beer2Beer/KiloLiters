@@ -20,7 +20,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/price"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="60dp"
         android:layout_marginLeft="6dp"
         android:textColor="@color/walter_white"
         android:layout_alignParentRight="true"
@@ -37,22 +37,23 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:inputType="numberDecimal"
-        android:ems="9"
+        android:ems="8"
         android:maxLength="6"
-        android:layout_marginRight="6dp"
         android:textColor="@color/walter_white"
         android:id="@+id/insert_price"
-        android:layout_alignBottom="@id/price"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
         android:textStyle="italic"
-        android:typeface="normal" />
+        android:typeface="normal"
+        android:background="@drawable/edittext_border"
+        android:layout_alignBottom="@+id/price"
+        android:layout_alignRight="@+id/price"
+        android:layout_alignEnd="@+id/price"
+        android:layout_marginRight="6dp"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/liters"
-        android:layout_below="@id/price"
+        android:layout_below="@id/insert_price"
         android:textColor="@color/walter_white"
         android:text="@string/liters"
         android:layout_marginTop="20dp"
@@ -64,16 +65,16 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:inputType="numberDecimal"
-        android:ems="9"
+        android:ems="8"
         android:maxLength="6"
-        android:layout_marginRight="6dp"
         android:textColor="@color/walter_white"
         android:id="@+id/insert_liters"
-        android:layout_below="@id/price"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
         android:textStyle="italic"
-        android:typeface="normal" />
+        android:typeface="normal"
+        android:background="@drawable/edittext_border"
+        android:layout_alignBottom="@+id/liters"
+        android:layout_alignLeft="@+id/insert_price"
+        android:layout_alignStart="@+id/insert_price" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -91,17 +92,16 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:inputType="numberDecimal"
-        android:ems="9"
+        android:ems="8"
         android:maxLength="7"
-        android:layout_marginRight="6dp"
         android:textColor="@color/walter_white"
         android:id="@+id/insert_actual_km"
-        android:layout_below="@id/liters"
-        android:layout_alignBottom="@+id/actual_km"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
         android:textStyle="italic"
-        android:typeface="normal" />
+        android:typeface="normal"
+        android:background="@drawable/edittext_border"
+        android:layout_above="@+id/station"
+        android:layout_alignLeft="@+id/insert_liters"
+        android:layout_alignStart="@+id/insert_liters" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -119,15 +119,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:inputType="textCapSentences"
-        android:ems="9"
-        android:layout_marginRight="6dp"
+        android:ems="8"
         android:textColor="@color/walter_white"
         android:id="@+id/insert_station"
-        android:layout_below="@id/actual_km"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
         android:textStyle="italic"
-        android:typeface="normal" />
+        android:typeface="normal"
+        android:background="@drawable/edittext_border"
+        android:layout_alignBottom="@+id/station"
+        android:layout_alignLeft="@+id/insert_actual_km"
+        android:layout_alignStart="@+id/insert_actual_km" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -145,15 +145,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:inputType="textCapSentences"
-        android:ems="9"
-        android:layout_marginRight="6dp"
+        android:ems="8"
         android:textColor="@color/walter_white"
         android:id="@+id/insert_city"
-        android:layout_below="@id/station"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
         android:textStyle="italic"
-        android:typeface="normal" />
+        android:typeface="normal"
+        android:background="@drawable/edittext_border"
+        android:layout_above="@+id/description"
+        android:layout_alignLeft="@+id/insert_station"
+        android:layout_alignStart="@+id/insert_station" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -167,21 +167,21 @@
         android:textStyle="bold|italic"
         android:typeface="normal" />
 
-    s<EditText
+    <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:inputType="textCapSentences"
-        android:ems="9"
-        android:layout_marginRight="6dp"
+        android:ems="8"
         android:textColor="@color/walter_white"
         android:id="@+id/insert_description"
-        android:layout_below="@id/city"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
         android:hint="@string/insert_description"
         android:textColorHint="#ff9b887d"
         android:textStyle="italic"
-        android:typeface="normal" />
+        android:typeface="normal"
+        android:background="@drawable/edittext_border"
+        android:layout_alignBottom="@+id/description"
+        android:layout_alignLeft="@+id/insert_city"
+        android:layout_alignStart="@+id/insert_city" />
 
     <Button
         android:layout_width="250dp"

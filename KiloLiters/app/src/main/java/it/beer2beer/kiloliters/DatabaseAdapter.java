@@ -44,11 +44,11 @@ public class DatabaseAdapter {
     public static final String TABLE_DROP = "drop table if exists " + DATABASE_TABLE + ";";
     public static final String VIEW_DROP = "drop view if exists distributori_preferiti";
     public static final String VIEW_CREATE = "create view distributori_preferiti as " +
-            "select distinct" + KEY_DISTRIBUTORE + ", " + KEY_DESCRIZIONE  +
+            "select distinct " + KEY_DISTRIBUTORE + ", " + KEY_DESCRIZIONE  +
             ", count(" + KEY_DISTRIBUTORE + ") as visite " +
             "from " + DATABASE_TABLE +
-            "group by " + KEY_DISTRIBUTORE + KEY_DESCRIZIONE +
-            "order by visite;";
+            " group by " + KEY_DISTRIBUTORE + ", " + KEY_DESCRIZIONE +
+            " order by visite;";
 
     private final Context context;
     private DatabaseHelper DBHelper;
@@ -185,10 +185,12 @@ public class DatabaseAdapter {
                 "FROM distributori_preferiti;", null);
 
         if (c != null && c.moveToFirst()) {
-                return c.getString(0) + ", " + c.getString(1);
+                if (getLastId() != 0)
+                    return c.getString(0) + ", " + c.getString(1);
+                else return "Nessun rifornimento";
             }
 
-        return "Nessun distributore";
+        return "Nessun rifornimento";
     }
 
     public int getLastId () {
@@ -211,7 +213,7 @@ public class DatabaseAdapter {
             return getCorrectDataFormat(c.getString(0));
         }
         else {
-            return "";
+            return "Nessun rifornimento";
         }
     }
 

@@ -32,16 +32,22 @@ public class DatabaseAdapter {
     public static final int DATABASE_VERSION = 1;
 
     private static final String DATABASE_CREATE =
-            "create table rifornimenti (_id integer primary key autoincrement, timestamp text not null, " +
-                    "chilometri integer not null, prezzo real not null, litri integer not null, " +
-                    "importo real not null, distributore text not null, " +
-                    "citta text not null, descrizione text);";
-    public static final String TABLE_DROP = "drop table if exists rifornimenti;";
+            "create table " + DATABASE_TABLE + "("+ KEY_ID + " integer primary key autoincrement, " +
+                    KEY_TIMESTAMP + " text not null, " +
+                    KEY_CHILOMETRI + " integer not null, " +
+                    KEY_PREZZO + " real not null, " +
+                    KEY_LITRI + " integer not null, " +
+                    KEY_IMPORTO + " real not null, " +
+                    KEY_DISTRIBUTORE + " text not null, " +
+                    KEY_CITTA + " text not null, " +
+                    KEY_DESCRIZIONE + " text);";
+    public static final String TABLE_DROP = "drop table if exists " + DATABASE_TABLE + ";";
     public static final String VIEW_DROP = "drop view if exists distributori_preferiti";
     public static final String VIEW_CREATE = "create view distributori_preferiti as " +
-            "select distinct distributore, descrizione, count(distributore) as visite " +
-            "from rifornimenti " +
-            "group by distributore, descrizione " +
+            "select distinct" + KEY_DISTRIBUTORE + ", " + KEY_DESCRIZIONE  +
+            ", count(" + KEY_DISTRIBUTORE + ") as visite " +
+            "from " + DATABASE_TABLE +
+            "group by " + KEY_DISTRIBUTORE + KEY_DESCRIZIONE +
             "order by visite;";
 
     private final Context context;
@@ -87,7 +93,7 @@ public class DatabaseAdapter {
 
     public void checkOrInitializeDB () {
         try{
-            String sql = "SELECT _id FROM rifornimenti;";
+            String sql = "SELECT "+ KEY_ID +" FROM " + DATABASE_TABLE + ";";
             Cursor cursor = db.rawQuery(sql, null);
             cursor.close();
         }
@@ -132,7 +138,8 @@ public class DatabaseAdapter {
 
     public int getTotalKilometers () {
 
-        Cursor c = db.rawQuery("SELECT MAX(chilometri)-MIN(chilometri) FROM rifornimenti", null);
+        Cursor c = db.rawQuery("SELECT MAX("+ KEY_CHILOMETRI +")-MIN("+ KEY_CHILOMETRI +") " +
+                "FROM " + DATABASE_TABLE, null);
         if (c != null) {
            c.moveToFirst();
         }
@@ -140,7 +147,7 @@ public class DatabaseAdapter {
     }
 
     public int getSumLiters () {
-        Cursor c = db.rawQuery("SELECT SUM(litri) FROM rifornimenti", null);
+        Cursor c = db.rawQuery("SELECT SUM(" + KEY_LITRI + ") FROM " + DATABASE_TABLE, null);
         if (c != null) {
             c.moveToFirst();
         }
@@ -148,7 +155,7 @@ public class DatabaseAdapter {
     }
 
     public int getSumPaid () {
-        Cursor c = db.rawQuery("SELECT SUM(importo) FROM rifornimenti", null);
+        Cursor c = db.rawQuery("SELECT SUM(" + KEY_IMPORTO + ") FROM " + DATABASE_TABLE, null);
         if (c != null) {
             c.moveToFirst();
         }
@@ -156,7 +163,7 @@ public class DatabaseAdapter {
     }
 
     public double getAvgPrice () {
-        Cursor c = db.rawQuery("SELECT AVG(prezzo) FROM rifornimenti", null);
+        Cursor c = db.rawQuery("SELECT AVG(" + KEY_PREZZO + ") FROM " + DATABASE_TABLE, null);
         if (c != null) {
             c.moveToFirst();
         }
@@ -174,7 +181,8 @@ public class DatabaseAdapter {
 
     public String getMostUsedStation () {
 
-        Cursor c = db.rawQuery("SELECT distributore, descrizione, MAX(visite) FROM distributori_preferiti;", null);
+        Cursor c = db.rawQuery("SELECT " + KEY_DISTRIBUTORE + ", " + KEY_DESCRIZIONE + ", MAX(visite) " +
+                "FROM distributori_preferiti;", null);
 
         if (c != null && c.moveToFirst()) {
                 return c.getString(0) + ", " + c.getString(1);
@@ -184,7 +192,7 @@ public class DatabaseAdapter {
     }
 
     public int getLastId () {
-        Cursor c = db.rawQuery("SELECT MAX(_id) FROM rifornimenti", null);
+        Cursor c = db.rawQuery("SELECT MAX(" + KEY_ID + ") FROM " + DATABASE_TABLE, null);
         if (c != null) {
             c.moveToFirst();
         }
@@ -195,7 +203,9 @@ public class DatabaseAdapter {
 
         long id = getLastId();
 
-        Cursor c = db.rawQuery("SELECT timestamp FROM rifornimenti where _id = " + id + ";", null);
+        Cursor c = db.rawQuery("SELECT " + KEY_TIMESTAMP +
+                " FROM "+ DATABASE_TABLE +
+                " where " + KEY_ID + " = " + id + ";", null);
 
         if (c != null && c.moveToFirst()){
             return getCorrectDataFormat(c.getString(0));

@@ -1,7 +1,10 @@
 package it.beer2beer.kiloliters;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.app.Fragment;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.Typeface;
@@ -18,6 +21,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.sql.SQLException;
 
@@ -114,7 +118,7 @@ public class FragmentStatistiche extends Fragment {
         db.close();
     }
 
-    private void printLayout (int id, String t, int k, double pr, double l, double pa,
+    private void printLayout (final int id, String t, int k, double pr, double l, double pa,
                               String s, String c, String d) {
 
         ScrollView sv = new ScrollView(this.getActivity());
@@ -184,6 +188,44 @@ public class FragmentStatistiche extends Fragment {
         child.addView(city);
 
         child.addView(sv);
+
+        /* Inizio del codice critico: in caso di errore commentare il metodo seguente*/
+        child.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                AlertDialog.Builder dialog = new AlertDialog.Builder(getActivity());
+                dialog.setMessage("Sei sicuro di voler eliminare il rifornimento numero " + id + "?")
+                        .setCancelable(false)
+                        .setPositiveButton("Sì", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                        Context context = getActivity().getApplicationContext();
+                        try {
+                            db.deleteRefuel(id);
+                        }catch (Throwable t) {
+                            t.printStackTrace();
+                        }
+                        if (context!=null) {
+                            Toast t = Toast.makeText(context, "Rifornimento eliminato!", Toast.LENGTH_LONG);
+                            t.show();
+                        }
+                    }
+                });
+                dialog.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                        dialogInterface.cancel();
+                    }
+                });
+
+                AlertDialog alert = dialog.create();
+                alert.show();
+
+                return true;
+            }
+        });
 
         root.addView(child);
 

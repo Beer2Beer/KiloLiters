@@ -224,4 +224,8 @@ public class DatabaseAdapter {
         return formattedData;
     }
 
+    public void deleteRefuel (int id) {
+        db.execSQL("DELETE FROM " + DATABASE_TABLE + "WHERE " + KEY_ID + " = " + id + ";");
+    }
+
 }

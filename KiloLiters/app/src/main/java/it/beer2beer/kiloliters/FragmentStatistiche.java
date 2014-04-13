@@ -95,27 +95,37 @@ public class FragmentStatistiche extends Fragment {
         }
 
         db.checkOrInitializeDB ();
-
         long maxId = db.getLastId();
+
+        db.close();
 
         for (int i = 1; i <= maxId; i++) {
 
+            try {
+                db.open();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
             Cursor c = db.getRefuel(i);
-            String timestamp = c.getString(0);
-            int kilometers = c.getInt(1);
-            Double price = c.getDouble(2);
-            Double liters = c.getDouble(3);
-            Double paid = c.getDouble(4);
-            String station = c.getString(5);
-            String city = c.getString(6);
-            String description = c.getString(7);
+            db.close();
 
-            printLayout (i, timestamp, kilometers, price, liters, paid,
-                    station, city, description);
+            if (c != null && c.moveToFirst()) {
+                String timestamp = c.getString(0);
+                int kilometers = c.getInt(1);
+                Double price = c.getDouble(2);
+                Double liters = c.getDouble(3);
+                Double paid = c.getDouble(4);
+                String station = c.getString(5);
+                String city = c.getString(6);
+                String description = c.getString(7);
+
+                printLayout(i, timestamp, kilometers, price, liters, paid,
+                        station, city, description);
+            }
 
         }
 
-        db.close();
+
     }
 
     private void printLayout (final int id, String t, int k, double pr, double l, double pa,
@@ -202,7 +212,9 @@ public class FragmentStatistiche extends Fragment {
 
                         Context context = getActivity().getApplicationContext();
                         try {
+                            db.open();
                             db.deleteRefuel(id);
+                            db.close();
                         }catch (Throwable t) {
                             t.printStackTrace();
                         }
@@ -210,6 +222,7 @@ public class FragmentStatistiche extends Fragment {
                             Toast t = Toast.makeText(context, "Rifornimento eliminato!", Toast.LENGTH_LONG);
                             t.show();
                         }
+                        onResume();
                     }
                 });
                 dialog.setNegativeButton("No", new DialogInterface.OnClickListener() {

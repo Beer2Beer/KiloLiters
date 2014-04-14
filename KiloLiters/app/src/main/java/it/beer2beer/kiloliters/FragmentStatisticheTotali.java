@@ -1,7 +1,9 @@
 package it.beer2beer.kiloliters;
 
+import android.app.AlertDialog;
 import android.app.Fragment;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.database.Cursor;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -92,7 +94,7 @@ public class FragmentStatisticheTotali extends Fragment {
         statisticMediumPrice.setText(Double.toString(mp) + " €/L");
 
         TextView statisticFavStation = (TextView) view.findViewById(R.id.statistic_fav_station);
-        TextView statisticFavStationDescription = (TextView) view.findViewById(R.id.statistic_fav_station_description);
+        final TextView statisticFavStationDescription = (TextView) view.findViewById(R.id.statistic_fav_station_description);
         String temp = db.getMostUsedStation();
         if (temp.equals("Nessun rifornimento")) {
 
@@ -103,9 +105,31 @@ public class FragmentStatisticheTotali extends Fragment {
 
           String[] parts = temp.split("-");
           String favStation = parts[0];
-          String favStationDescription = parts[1];
+          final String favStationDescription = parts[1];
           statisticFavStation.setText(favStation);
-          statisticFavStationDescription.setText(favStationDescription);
+          if (favStationDescription.length() > 20) {
+              statisticFavStationDescription.setText(favStationDescription.substring(0, 20) + "...");
+              statisticFavStationDescription.setOnClickListener(new View.OnClickListener() {
+                  @Override
+                  public void onClick(View v) {
+                      AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                      builder.setMessage(favStationDescription.substring(0, 1) + favStationDescription.toLowerCase().substring(1))
+                              .setCancelable(true)
+                              .setNegativeButton("Ok", new DialogInterface.OnClickListener() {
+                                  @Override
+                                  public void onClick(DialogInterface dialogInterface, int i) {
+                                      dialogInterface.cancel();
+                                  }
+                              });
+
+                      AlertDialog aboutAlert = builder.create();
+                      aboutAlert.show();
+                  }
+              });
+          }
+          else {
+              statisticFavStationDescription.setText(favStationDescription);
+          }
 
         }
 

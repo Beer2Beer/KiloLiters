@@ -12,6 +12,7 @@ import android.graphics.drawable.Drawable;
 import android.text.Layout;
 import android.text.SpannableString;
 import android.text.style.StyleSpan;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -98,6 +99,17 @@ public class FragmentStatistiche extends Fragment {
         long maxId = db.getLastId();
 
         db.close();
+
+        if (maxId == 0) {
+            TextView noRefuel = (TextView) new TextView(this.getActivity());
+            noRefuel.setText("\n\nNessun rifornimento inserito");
+            noRefuel.setGravity(Gravity.CENTER_HORIZONTAL | Gravity.CENTER_VERTICAL);
+            noRefuel.setAllCaps(true);
+            noRefuel.setTypeface(null, Typeface.NORMAL);
+            noRefuel.setTypeface(null, Typeface.BOLD_ITALIC);
+            noRefuel.setTextColor(getResources().getColor(R.color.jesse_pinkman));
+            root.addView(noRefuel);
+        }
 
         for (int i = 1; i <= maxId; i++) {
 

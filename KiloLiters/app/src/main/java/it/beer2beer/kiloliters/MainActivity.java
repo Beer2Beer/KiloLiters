@@ -265,8 +265,8 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
         if (firstRun) {
 
             AlertDialog.Builder aboutBuilder = new AlertDialog.Builder(this);
-            aboutBuilder.setMessage("\nBenvenuto!\n\n" +
-                    "KiloLiters è un “diario” per i rifornimenti della tua auto, che ti permette di monitorare i consumi," +
+            aboutBuilder.setMessage("\nBenvenuti!\n\n" +
+                    "KiloLiters è un “diario” per i rifornimenti del tuo veicolo, che ti permette di monitorare i consumi," +
                     " i prezzi e le spese sostenute.\n\n" +
                     "L’applicazione è divisa in 5 parti:\n\n" +
                     "- Inserimento Dati: in cui inserire le informazioni sui rifornimenti;\n\n" +

@@ -125,7 +125,6 @@ public class FragmentStatistiche extends Fragment {
 
         }
 
-
     }
 
     private void printLayout (final int id, String t, int k, double pr, double l, double pa,
@@ -137,6 +136,10 @@ public class FragmentStatistiche extends Fragment {
 
 
         LinearLayout child = new LinearLayout(this.getActivity());
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        lp.setMargins(12,0,0,0);
+        child.setLayoutParams(lp);
         child.setOrientation(LinearLayout.VERTICAL);
 
         TextView upperBlankLine = new TextView(this.getActivity());
@@ -199,7 +202,6 @@ public class FragmentStatistiche extends Fragment {
 
         child.addView(sv);
 
-        /* Inizio del codice critico: in caso di errore commentare il metodo seguente*/
         child.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {

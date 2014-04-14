@@ -225,8 +225,9 @@ public class DatabaseAdapter {
     }
 
     public void deleteRefuel (int id) {
-        // db.execSQL("DELETE FROM " + DATABASE_TABLE + " WHERE " + KEY_ID + " = " + id + ";");
+
         db.delete(DATABASE_TABLE, KEY_ID + "=" + id, null);
+        db.execSQL("delete from sqlite_sequence where name='" + DATABASE_TABLE + "';");
     }
 
 }

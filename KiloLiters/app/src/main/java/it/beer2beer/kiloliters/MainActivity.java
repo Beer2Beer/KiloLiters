@@ -1,5 +1,6 @@
 package it.beer2beer.kiloliters;
 
+import java.io.FileOutputStream;
 import java.sql.SQLException;
 import java.util.Locale;
 
@@ -10,6 +11,7 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.support.v13.app.FragmentPagerAdapter;
 import android.os.Bundle;
@@ -24,6 +26,7 @@ import android.widget.Toast;
 public class MainActivity extends Activity implements ActionBar.TabListener {
 
     public static final String TAG = "MainActivity";
+    public static final String PREFS_NAME = "FirstRun";
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
      * fragments for each of the sections. We use a
@@ -78,6 +81,8 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
                             .setTabListener(this));
         }
         mViewPager.setCurrentItem(2); //setta la tab centrale come predefinita
+
+        doFirstRun();
     }
 
     @Override
@@ -98,8 +103,8 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
 
             case R.id.action_drop_db:
 
-                AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                builder.setMessage("Sei sicuro di voler eliminare tutti i dati?")
+                AlertDialog.Builder dropBuilder = new AlertDialog.Builder(this);
+                dropBuilder.setMessage("Sei sicuro di voler eliminare tutti i dati?")
                         .setCancelable(false)
                         .setPositiveButton("Si", new DialogInterface.OnClickListener() {
                             @Override
@@ -125,20 +130,29 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
                             }
                         });
 
-                AlertDialog alert = builder.create();
-                alert.show();
+                AlertDialog dropAlert = dropBuilder.create();
+                dropAlert.show();
 
                 return true;
 
             case R.id.action_about:
 
-                Context context_about = getApplicationContext();
-                Toast toast_about = Toast.makeText(context_about, "Coded by Federico Bertoli and " +
-                        "Francesco Trombi - 2014 - version 0.8 Beta", Toast.LENGTH_LONG);
-                toast_about.show();
+                AlertDialog.Builder aboutBuilder = new AlertDialog.Builder(this);
+                aboutBuilder.setMessage("KiloLiters \n\nCoded by Federico Bertoli and Francesco Trombi.\n \n" +
+                        "Versione 0.8 Beta - 2014\n\n" +
+                "Disclaimer:\nNon tutti i distributori potrebbero comparire sulla mappa, a causa di una limitazione " +
+                        "dei dati forniti da Google Inc.")
+                        .setCancelable(false)
+                        .setNegativeButton("Ok", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
 
-                //qui posso lanciare l'activity associata alle info sull'app (creare la classe)
+                                dialogInterface.cancel();
+                            }
+                        });
 
+                AlertDialog aboutAlert = aboutBuilder.create();
+                aboutAlert.show();
                 return true;
 
             default:
@@ -242,4 +256,39 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
 
     }
 
+    private void doFirstRun() {
+
+        SharedPreferences settings = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
+
+        boolean firstRun = settings.getBoolean("isFirstRun", true);
+
+        if (firstRun) {
+
+            AlertDialog.Builder aboutBuilder = new AlertDialog.Builder(this);
+            aboutBuilder.setMessage("\nBenvenuto!\n\n" +
+                    "KiloLiters è un “diario” per i rifornimenti della tua auto, che ti permette di monitorare i consumi," +
+                    " i prezzi e le spese sostenute.\n\n" +
+                    "L’applicazione è divisa in 5 parti:\n\n" +
+                    "- Inserimento Dati: in cui inserire le informazioni sui rifornimenti;\n\n" +
+                    "- Statistiche Totali: in cui trovi le informazioni globali che vengono aggiornate ad ogni rifornimento;\n\n" +
+                    "- Statistiche: con l’elenco di ogni rifornimento effettuato;\n\n" +
+                    "- Ricerca Stazioni: con la quale puoi cercare distributori nelle vicinanze;\n\n" +
+                    "- Calcolo Bollo: con collegamento diretto al sito dell’ACI." )
+                    .setCancelable(false)
+                    .setNegativeButton("Ok", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+
+                            dialogInterface.cancel();
+                        }
+                    });
+
+            AlertDialog aboutAlert = aboutBuilder.create();
+            aboutAlert.show();
+
+            SharedPreferences.Editor editor = settings.edit();
+            editor.putBoolean("isFirstRun", false);
+            editor.commit();
+        }
+    }
 }

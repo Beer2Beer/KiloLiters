@@ -164,7 +164,7 @@ public class FragmentStatistiche extends Fragment {
         child.addView(date);
 
         TextView kilometers = new TextView(this.getActivity());
-        kilometers.setText("Chilometri al momento del rifornimento: " + Integer.toString(k) + " KM");
+        kilometers.setText("Chilometri attuali: " + Integer.toString(k) + " KM");
         kilometers.setTextColor(getResources().getColor(R.color.walter_white));
         child.addView(kilometers);
 

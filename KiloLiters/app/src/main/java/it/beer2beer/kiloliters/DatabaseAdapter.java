@@ -186,7 +186,7 @@ public class DatabaseAdapter {
 
         if (c != null && c.moveToFirst()) {
                 if (getLastId() != 0)
-                    return c.getString(0) + ", " + c.getString(1);
+                    return c.getString(0) + "-" + c.getString(1);
                 else return "Nessun rifornimento";
             }
 

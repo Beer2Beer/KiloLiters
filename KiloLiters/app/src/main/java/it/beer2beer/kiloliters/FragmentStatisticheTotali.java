@@ -92,7 +92,22 @@ public class FragmentStatisticheTotali extends Fragment {
         statisticMediumPrice.setText(Double.toString(mp) + " €/L");
 
         TextView statisticFavStation = (TextView) view.findViewById(R.id.statistic_fav_station);
-        statisticFavStation.setText(db.getMostUsedStation());
+        TextView statisticFavStationDescription = (TextView) view.findViewById(R.id.statistic_fav_station_description);
+        String temp = db.getMostUsedStation();
+        if (temp.equals("Nessun rifornimento")) {
+
+            statisticFavStation.setText(temp);
+            statisticFavStationDescription.setText(temp);
+        }
+        else {
+
+          String[] parts = temp.split("-");
+          String favStation = parts[0];
+          String favStationDescription = parts[1];
+          statisticFavStation.setText(favStation);
+          statisticFavStationDescription.setText(favStationDescription);
+
+        }
 
         TextView statisticKiloliters = (TextView) view.findViewById(R.id.statistic_kiloliters);
         double k = db.getKiloliters(km, l);

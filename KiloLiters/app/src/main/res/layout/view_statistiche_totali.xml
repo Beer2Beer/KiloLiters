@@ -147,8 +147,34 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/kiloliters"
+        android:id="@+id/fav_station_description"
         android:layout_below="@id/fav_station"
+        android:text="@string/fav_station_description"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="6dp"
+        android:textColor="@color/walter_white"
+        android:textStyle="bold|italic"
+        android:typeface="normal"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/statistic_fav_station_description"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="20dp"
+        android:layout_below="@id/fav_station"
+        android:layout_alignBottom="@id/fav_station_description"
+        android:layout_marginRight="20dp"
+        android:textColor="@color/spline_yellow"
+        android:textStyle="italic"
+        android:typeface="normal"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/kiloliters"
+        android:layout_below="@id/fav_station_description"
         android:text="@string/kiloliters"
         android:layout_marginTop="20dp"
         android:layout_marginLeft="6dp"
@@ -162,7 +188,7 @@
         android:id="@+id/statistic_kiloliters"
         android:layout_alignParentRight="true"
         android:layout_marginTop="20dp"
-        android:layout_below="@id/fav_station"
+        android:layout_below="@id/fav_station_description"
         android:layout_alignBottom="@id/kiloliters"
         android:layout_marginRight="20dp"
         android:textColor="@color/spline_yellow"

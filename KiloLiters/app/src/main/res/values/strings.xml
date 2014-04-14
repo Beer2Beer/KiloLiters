@@ -9,6 +9,7 @@
     <string name="city">CITTÀ</string>
     <string name="description">DESCRIZIONE</string>
     <string name="fav_station">DISTRIBUTORE PREFERITO</string>
+    <string name="fav_station_description">INFO</string>
     <string name="insert_description">es. Indirizzo</string>
     <string name="kiloliters">CHILOMETRI/LITRO</string>
     <string name="last_refuel">DATA ULTIMO RIFORNIMENTO</string>

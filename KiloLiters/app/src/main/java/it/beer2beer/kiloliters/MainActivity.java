@@ -140,8 +140,11 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
                 AlertDialog.Builder aboutBuilder = new AlertDialog.Builder(this);
                 aboutBuilder.setMessage("KiloLiters \n\nCoded by Federico Bertoli and Francesco Trombi.\n \n" +
                         "Versione 0.8 Beta - 2014\n\n" +
-                "Disclaimer:\nNon tutti i distributori potrebbero comparire sulla mappa, a causa di una limitazione " +
-                        "dei dati forniti da Google Inc.")
+                "Disclaimer:\n\nNon tutti i distributori potrebbero comparire sulla mappa, a causa di una limitazione " +
+                        "dei dati forniti da Google Inc." +
+                        "\n" +
+                        "\nI dati forniti dall'applicazione sono approssimativi e potrebbero non rispecchiare " +
+                        "i reali consumi del veicolo.")
                         .setCancelable(false)
                         .setNegativeButton("Ok", new DialogInterface.OnClickListener() {
                             @Override

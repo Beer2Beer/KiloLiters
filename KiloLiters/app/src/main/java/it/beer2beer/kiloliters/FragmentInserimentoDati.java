@@ -166,15 +166,26 @@ public class FragmentInserimentoDati extends Fragment {
         else {
             insertRefuelFromUser(timeStamp, km, oilPrice, liters, price,
                     station.toUpperCase(), city.toUpperCase(), description.toUpperCase());
+            resetFields(k, l, p, s, c, d);
+
         }
 
     }
 
-    public double getOilPrice(double price, double liters) {
+    private double getOilPrice(double price, double liters) {
         double r = price/liters;
         int i = (int)(r*1000);
         double result = i/1000d;
         return result;
+    }
+
+    private void resetFields (EditText k, EditText l, EditText p, EditText s, EditText c, EditText d) {
+        k.setText("");
+        l.setText("");
+        p.setText("");
+        s.setText("");
+        c.setText("");
+        d.setText("");
     }
 
 }

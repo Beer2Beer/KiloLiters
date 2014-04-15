@@ -222,5 +222,31 @@
         android:typeface="normal"
         />
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/number_of_refuels"
+        android:layout_below="@id/last_refuel"
+        android:text="@string/number_of_refuels"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="6dp"
+        android:textColor="@color/walter_white"
+        android:textStyle="bold|italic"
+        android:typeface="normal"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/statistic_number_of_refuels"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="20dp"
+        android:layout_below="@id/last_refuel"
+        android:layout_alignBottom="@id/number_of_refuels"
+        android:layout_marginRight="20dp"
+        android:textColor="@color/spline_yellow"
+        android:textStyle="italic"
+        android:typeface="normal"
+        />
+
 </RelativeLayout>
 </ScrollView>

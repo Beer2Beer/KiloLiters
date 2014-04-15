@@ -15,6 +15,7 @@
     <string name="last_refuel">DATA ULTIMO RIFORNIMENTO</string>
     <string name="liters">LITRI EROGATI</string>
     <string name="medium_price">PREZZO MEDIO</string>
+    <string name="number_of_refuels">NUMERO DI RIFORNIMENTI INSERITI</string>
     <string name="oil_price">PREZZO CARBURANTE</string>
     <string name="price">IMPORTO PAGATO</string>
     <string name="save_data_button">SALVA RIFORNIMENTO</string>

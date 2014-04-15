@@ -230,4 +230,15 @@ public class DatabaseAdapter {
         db.execSQL("delete from sqlite_sequence where name='" + DATABASE_TABLE + "';");
     }
 
+    public int countRefuels () {
+
+        Cursor c = db.rawQuery("SELECT count(" + KEY_ID + ") FROM " + DATABASE_TABLE + ";", null);
+        if (c != null && c.moveToFirst()) {
+            return c.getInt(0);
+        }
+        else {
+            return 0;
+        }
+    }
+
 }

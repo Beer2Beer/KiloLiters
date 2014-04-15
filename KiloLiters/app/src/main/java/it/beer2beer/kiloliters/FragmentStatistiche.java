@@ -89,6 +89,8 @@ public class FragmentStatistiche extends Fragment {
 
         db = new DatabaseAdapter(this.getActivity());
 
+        int counter = 0;
+
         try {
             db.open();
         } catch (SQLException e) {
@@ -96,7 +98,8 @@ public class FragmentStatistiche extends Fragment {
         }
 
         db.checkOrInitializeDB ();
-        long maxId = db.getLastId();
+        int maxId = db.getLastId();
+        if (maxId > 50) counter = maxId - 50;
 
         db.close();
 
@@ -111,7 +114,7 @@ public class FragmentStatistiche extends Fragment {
             root.addView(noRefuel);
         }
 
-        for (int i = 1; i <= maxId; i++) {
+        for (int i = maxId; i > counter; i--) {
 
             try {
                 db.open();

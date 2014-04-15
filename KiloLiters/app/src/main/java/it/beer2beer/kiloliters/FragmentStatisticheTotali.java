@@ -140,6 +140,9 @@ public class FragmentStatisticheTotali extends Fragment {
         TextView statisticLastRefuel = (TextView) view.findViewById(R.id.statistic_last_refuel);
         statisticLastRefuel.setText(db.getLastRefuel());
 
+        TextView statisticNumberOfRefuels = (TextView) view.findViewById(R.id.statistic_number_of_refuels);
+        statisticNumberOfRefuels.setText(Integer.toString(db.countRefuels()));
+
         db.close();
     }
 

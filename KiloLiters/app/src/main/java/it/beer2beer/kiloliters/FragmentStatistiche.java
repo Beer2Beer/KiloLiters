@@ -34,6 +34,7 @@ public class FragmentStatistiche extends Fragment {
     DatabaseAdapter db;
     View view;
     LinearLayout root;
+    static final int MAX_REFUELS = 25;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -99,7 +100,7 @@ public class FragmentStatistiche extends Fragment {
 
         db.checkOrInitializeDB ();
         int maxId = db.getLastId();
-        if (maxId > 50) counter = maxId - 50;
+        if (maxId > MAX_REFUELS) counter = maxId - MAX_REFUELS;
 
         db.close();
 

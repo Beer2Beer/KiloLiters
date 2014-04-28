@@ -175,7 +175,7 @@ public class DatabaseAdapter {
 
         if (l == 0) return 0;
 
-        int kl = (int) (k/l*100);
+        double kl = (int) (k/l*100);
         return kl/100;
     }
 

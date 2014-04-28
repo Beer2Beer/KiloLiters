@@ -134,8 +134,14 @@ public class FragmentStatisticheTotali extends Fragment {
         }
 
         TextView statisticKiloliters = (TextView) view.findViewById(R.id.statistic_kiloliters);
-        double k = db.getKiloliters(km, l);
-        statisticKiloliters.setText(Double.toString(k) + " KM/L");
+
+        if (db.countRefuels() <= 15) {
+            statisticKiloliters.setText("Rifornimenti insufficienti");
+        }
+        else {
+            double k = db.getKiloliters(km, l);
+            statisticKiloliters.setText(Double.toString(k) + " KM/L");
+        }
 
         TextView statisticLastRefuel = (TextView) view.findViewById(R.id.statistic_last_refuel);
         statisticLastRefuel.setText(db.getLastRefuel());

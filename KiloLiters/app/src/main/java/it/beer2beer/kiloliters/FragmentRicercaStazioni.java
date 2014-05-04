@@ -271,7 +271,7 @@ public class FragmentRicercaStazioni extends Fragment
                         "json?location=" + location.getLatitude() + "," + location.getLongitude() +
                         "&radius=7500&sensor=true" +
                         "&keyword=stazioni%20di%20servizio" +
-                        "&key=AIzaSyDQOzSn_VhdDuz26Hes3wtci9HHW6WZnyQ";
+                        "&key=AIzaSyB6CoXLineGer5vuKqV40gHXO-z9iRzfiU";
 
                 Log.d(TAG, "getMarkers() chiamata");
                 new GetPlaces().execute(placesSearchStr);

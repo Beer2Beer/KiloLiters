@@ -139,7 +139,7 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
 
                 AlertDialog.Builder aboutBuilder = new AlertDialog.Builder(this);
                 aboutBuilder.setMessage("KiloLiters \n\nCoded by Federico Bertoli and Francesco Trombi.\n \n" +
-                        "Versione 1.0 - 2014\n\n" +
+                        "Versione 1.0.1 - 2014\n\n" +
                 "Disclaimer:\nNon tutti i distributori potrebbero comparire sulla mappa, a causa di una limitazione " +
                         "dei dati forniti da Google Inc.\n\n" +
                         "I dati forniti dall'applicazione sono approssimativi " +
